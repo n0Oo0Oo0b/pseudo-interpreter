@@ -20,6 +20,24 @@ class VariableState(ChainMap):
     def __init__(self):
         super().__init__()
 
+    def __getitem__(self, key):
+        if key not in self:
+            raise RuntimeError(f'{key} not defined')
+        super().__getitem__(key)
+
+    def get(self, key):
+        if key not in self:
+            return None
+        return self[key]
+
+    def __setitem__(self, key, value):
+        if key not in self:
+            raise RuntimeError(f'{key} not defined')
+        super().__setitem__(key, value)
+
+    def declare(self, key, type_, value=None):
+        super().__setitem__(key, type_(value) if value else type_())
+
 
 @dataclass
 class Token:
@@ -147,7 +165,6 @@ def parse_tokens(code: str) -> list[Token]:
     return res
 
 
-
 class Program(Block):
     def __init__(self):
         super().__init__('MAIN', None, [])
@@ -183,7 +200,7 @@ class Program(Block):
                     stack.append(current_frame := Block('IF', Expression.parse(expr), []))
                 case Token('WHILE'), *expr, Token('DO'):
                     stack.append(current_frame := Block('WHILE', Expression.parse(expr), []))
-                case Token('REPEAT'),:
+                case Token('REPEAT'), :
                     stack.append(current_frame := Block('UNTIL', None, []))
                 case (
                     Token('FOR'), Token('IDENTIFIER') as name,
