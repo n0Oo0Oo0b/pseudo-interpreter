@@ -31,10 +31,10 @@ TOKENS = [
     ('COMMENT', r'/\*.*\*/|(?://|#).*$'),
     ('NEWLINE', r'\n'),
     ('ASSIGN', r'<-'),
-    ('IDENTIFIER', r'[A-Za-z]+'),
     ('OPERATOR', r'[=<>+\-*/^]|DIV|MOD|<>|<=|>='),
     ('SYMBOL', r'[():]'),
     ('VALUE', r'[0-9]+(?:\.[0-9]+)?'),
+    ('IDENTIFIER', r'[A-Za-z]+'),
     ('IGNORE', r'[ \t]+'),
     ('INVALID', r'.'),
 ]
