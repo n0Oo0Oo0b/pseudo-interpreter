@@ -17,25 +17,27 @@ Line = namedtuple('Line', ['operation', 'params'])
 class VariableState(ChainMap):
     default_state = None
 
-    def __init__(self):
+    def __init__(self, set_as_default: bool = False) -> None:
         super().__init__()
+        if set_as_default:
+            VariableState.default_state = self
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> Value:
         if key not in self:
             raise RuntimeError(f'{key} not defined')
-        super().__getitem__(key)
+        return super().__getitem__(key)
 
-    def get(self, key):
+    def get(self, key) -> Value | None:
         if key not in self:
             return None
         return self[key]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value: Value) -> None:
         if key not in self:
             raise RuntimeError(f'{key} not defined')
         super().__setitem__(key, value)
 
-    def declare(self, key, type_, value=None):
+    def declare(self, key: str, type_: type, value: Value | None = None):
         super().__setitem__(key, type_(value) if value else type_())
 
 
@@ -44,14 +46,15 @@ class Token:
     type: str
     value: Value | str
 
-    def resolve(self, variables=None):
+    def resolve(self, variables: VariableState | None = None):
+        variables = variables or VariableState.default_state
         if self.type == 'VALUE':
             if '.' in self.value:
                 return float(self.value)
             else:
                 return int(self.value)
         elif self.type == 'IDENTIFIER':
-            return variables.get(self.value)
+            return variables[self.value]
         else:
             raise RuntimeError(f'Cannot resolve value of token {self}')
 
@@ -69,7 +72,8 @@ class Expression:
         else:
             return expr[0]
 
-    def resolve(self, variables=None):
+    def resolve(self, variables: VariableState | None = None):
+        variables = variables or VariableState.default_state
         left = self.left.resolve(variables)
         right = self.right.resolve(variables)
         return self.operator(left, right)
@@ -112,36 +116,38 @@ class Block:
     def add_line(self, line):
         self.content.append(line)
 
-    def execute(self: Block, variables: dict | None = None) -> None:
-        if variables is None:
-            variables = {}
+    def execute(self: Block, variables: VariableState | None = None) -> None:
+        if self.type == 'MAIN':
+            variables = VariableState(set_as_default=True)
+        variables = variables or VariableState.default_state
         for line in self.content:
             match line:
                 case Line('DECLARE', Token('IDENTIFIER', name)):
-                    variables[name] = 0
+                    variables.declare(name, int)
                 case Line('ASSIGN', (name, expr)):
-                    variables[name.value] = expr.resolve(variables)
+                    variables[name.value] = expr.resolve()
                 case Line('INPUT', name):
                     if name not in variables:
                         raise RuntimeError(f'{name.value} is not defined!')
                     variables[name.value] = int(input())
                 case Line('OUTPUT', expr):
-                    print(expr.resolve(variables))
+                    print(expr.resolve())
                 case Block('IF', expr) as block:
-                    if expr.resolve(variables):
-                        block.execute(variables)
+                    if expr.resolve():
+                        block.execute()
                 case Block('WHILE', expr) as block:
-                    while expr.resolve(variables):
-                        block.execute(variables)
+                    while expr.resolve():
+                        block.execute()
                 case Block('UNTIL', expr) as block:
                     while True:
-                        block.execute(variables)
-                        if expr.resolve(variables):
+                        block.execute()
+                        if expr.resolve():
                             break
                 case Block('FOR', (Token('IDENTIFIER', name), a, b)) as block:
-                    for n in range(a.resolve(variables), b.resolve(variables) + 1):
+                    variables.declare(name, int)
+                    for n in range(a.resolve(), b.resolve() + 1):
                         variables[name] = n
-                        block.execute(variables)
+                        block.execute()
 
 
 def parse_tokens(code: str) -> list[Token]:
