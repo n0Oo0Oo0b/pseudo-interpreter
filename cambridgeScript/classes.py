@@ -37,7 +37,7 @@ class VariableState(ChainMap):
             raise RuntimeError(f'{key} not defined')
         super().__setitem__(key, value)
 
-    def declare(self, key: str, type_: type, value: Value | None = None):
+    def declare(self, key: str, type_: type, value: Value | None = None) -> None:
         super().__setitem__(key, type_(value) if value else type_())
 
 
@@ -46,7 +46,7 @@ class Token:
     type: str
     value: Value | str
 
-    def resolve(self, variables: VariableState | None = None):
+    def resolve(self, variables: VariableState | None = None) -> Value:
         variables = variables or VariableState.default_state
         if self.type == 'VALUE':
             if '.' in self.value:
@@ -66,19 +66,19 @@ class Expression:
     right: Expression | Token
 
     @classmethod
-    def parse(cls, expr):
+    def parse(cls, expr: list[Token]) -> Expression | Token:
         if len(expr) > 1:
             return cls(expr)
         else:
             return expr[0]
 
-    def resolve(self, variables: VariableState | None = None):
+    def resolve(self, variables: VariableState | None = None) -> Value:
         variables = variables or VariableState.default_state
         left = self.left.resolve(variables)
         right = self.right.resolve(variables)
         return self.operator(left, right)
 
-    def __init__(self, expr: list[Token]):
+    def __init__(self, expr: list[Token]) -> None:
         # Resolve parenthesis
         stack = deque([current := []])
         for token in expr:
@@ -113,12 +113,10 @@ class Block:
     meta: Any
     content: list[Line | Block] = field(default_factory=list)
 
-    def add_line(self, line):
+    def add_line(self, line: Line | Block) -> None:
         self.content.append(line)
 
     def execute(self: Block, variables: VariableState | None = None) -> None:
-        if self.type == 'MAIN':
-            variables = VariableState(set_as_default=True)
         variables = variables or VariableState.default_state
         for line in self.content:
             match line:
@@ -252,3 +250,7 @@ class Program(Block):
                 case _:
                     raise RuntimeError(f'Invalid line {line}')
         return program
+
+    def execute(self: Block, variables: VariableState | None = None) -> None:
+        variables = VariableState(set_as_default=True)
+        super().execute(variables)
