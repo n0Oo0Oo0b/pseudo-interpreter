@@ -1,31 +1,41 @@
-from collections import ChainMap
+from dataclasses import dataclass
+
+from constants import TYPES
 
 
 Value = str | int | float | bool
 
 
-class VariableState(ChainMap):
+@dataclass
+class Variable:
+    type: type
+    _value: Value = None
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        self._value = self.type(value)
+
+
+class VariableState:
     default_state = None
 
     def __init__(self, set_as_default: bool = False) -> None:
-        super().__init__()
+        self._variables: dict[str, Variable] = {}
         if set_as_default:
             VariableState.default_state = self
 
     def __getitem__(self, key) -> Value:
-        if key not in self:
-            raise RuntimeError(f'{key} not defined')
-        return super().__getitem__(key)
-
-    def get(self, key) -> Value | None:
-        if key not in self:
-            return None
-        return self[key]
+        return self._variables[key].value
 
     def __setitem__(self, key: str, value: Value) -> None:
-        if key not in self:
+        if key not in self._variables:
             raise RuntimeError(f'{key} not defined')
-        super().__setitem__(key, value)
+        self._variables[key].value = value
 
-    def declare(self, key: str, type_: type, value: Value | None = None) -> None:
-        super().__setitem__(key, type_(value) if value else type_())
+    def declare(self, name: str, type_: type, value: Value | None = None) -> None:
+        value = type_(value) if value else type_()
+        self._variables.append(Variable(type_, value))
