@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from collections import namedtuple, deque, ChainMap
 from dataclasses import dataclass, field
 import re
@@ -57,26 +58,11 @@ class Token:
             raise RuntimeError(f'Cannot resolve value of token {self}')
 
 
-@dataclass
-class Expression:
-    operator: function
-    left: Expression | Token
-    right: Expression | Token
-
+class Expression(ABC):
     @classmethod
     def parse(cls, expr: list[Token]) -> Expression | Token:
-        if len(expr) > 1:
-            return cls(expr)
-        else:
+        if len(expr) == 1:
             return expr[0]
-
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        left = self.left.resolve(variables)
-        right = self.right.resolve(variables)
-        return self.operator(left, right)
-
-    def __init__(self, expr: list[Token]) -> None:
         # Resolve parenthesis
         stack = deque([current := []])
         for token in expr:
@@ -97,12 +83,29 @@ class Expression:
             '+', '-', '*', '/', '^',
         ]:
             if Token('OPERATOR', op) in expr:
+                operator = OPERATORS[op]
                 i = expr.index(Token('OPERATOR', op))
-                self.operator = OPERATORS[op]
-                self.left = Expression.parse(expr[:i])
-                self.right = Expression.parse(expr[i + 1:])
-                return
+                left = Expression.parse(expr[:i])
+                right = Expression.parse(expr[i + 1:])
+                return BinaryOp(operator, left, right)
         raise RuntimeError('Invalid expression', expr)
+
+    @abstractmethod
+    def resolve(self, variables: VariableState | None = None) -> Value:
+        pass
+
+
+@dataclass
+class BinaryOp(Expression):
+    operator: function
+    left: Expression | Token
+    right: Expression | Token
+
+    def resolve(self, variables: VariableState | None = None) -> Value:
+        variables = variables or VariableState.default_state
+        left = self.left.resolve(variables)
+        right = self.right.resolve(variables)
+        return self.operator(left, right)
 
 
 @dataclass
