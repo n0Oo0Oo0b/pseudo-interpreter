@@ -96,7 +96,7 @@ class Expression:
         for op in [  # Lower precedence goes first
             'OR', 'AND',
             '=', '<>', '<', '>', '<=', '>=',
-            '+', '-', 'DIV', 'MOD', '*', '/', '^',
+            '+', '-', '*', '/', '^',
         ]:
             if Token('OPERATOR', op) in expr:
                 i = expr.index(Token('OPERATOR', op))

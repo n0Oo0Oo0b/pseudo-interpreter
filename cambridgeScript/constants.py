@@ -31,7 +31,7 @@ TOKENS = [
     ('COMMENT', r'/\*.*\*/|(?://|#).*$'),
     ('NEWLINE', r'\n'),
     ('ASSIGN', r'<-'),
-    ('OPERATOR', r'[=<>+\-*/^]|DIV|MOD|<>|<=|>='),
+    ('OPERATOR', r'[=<>+\-*/^]|<>|<=|>='),
     ('SYMBOL', r'[():]'),
     ('VALUE', r'[0-9]+(?:\.[0-9]+)?'),
     ('IDENTIFIER', r'[A-Za-z]+'),
@@ -53,8 +53,6 @@ OPERATORS = {
     '^': operator.pow,
     '*': operator.mul,
     '/': operator.truediv,
-    'DIV': operator.floordiv,
-    'MOD': operator.mod,
     '+': operator.add,
     '-': operator.sub,
 }
