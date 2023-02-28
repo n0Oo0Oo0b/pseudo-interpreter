@@ -1,111 +1,16 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from collections import namedtuple, deque, ChainMap
+from collections import namedtuple, deque
 from dataclasses import dataclass, field
-import re
 from typing import Any
 
-from constants import KEYWORDS, TOKEN_REGEX, OPERATORS
+from tokens import Token, parse_tokens
+from expressions import Expression
+from variables import VariableState
 
 
 Value = str | int | float | bool
 Line = namedtuple('Line', ['operation', 'params'])
-
-
-class VariableState(ChainMap):
-    default_state = None
-
-    def __init__(self, set_as_default: bool = False) -> None:
-        super().__init__()
-        if set_as_default:
-            VariableState.default_state = self
-
-    def __getitem__(self, key) -> Value:
-        if key not in self:
-            raise RuntimeError(f'{key} not defined')
-        return super().__getitem__(key)
-
-    def get(self, key) -> Value | None:
-        if key not in self:
-            return None
-        return self[key]
-
-    def __setitem__(self, key: str, value: Value) -> None:
-        if key not in self:
-            raise RuntimeError(f'{key} not defined')
-        super().__setitem__(key, value)
-
-    def declare(self, key: str, type_: type, value: Value | None = None) -> None:
-        super().__setitem__(key, type_(value) if value else type_())
-
-
-@dataclass
-class Token:
-    type: str
-    value: Value | str | None
-
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        if self.type == 'VALUE':
-            if '.' in self.value:
-                return float(self.value)
-            else:
-                return int(self.value)
-        elif self.type == 'IDENTIFIER':
-            return variables[self.value]
-        else:
-            raise RuntimeError(f'Cannot resolve value of token {self}')
-
-
-class Expression(ABC):
-    @classmethod
-    def parse(cls, expr: list[Token]) -> Expression | Token:
-        if len(expr) == 1:
-            return expr[0]
-        # Resolve parenthesis
-        stack = deque([current := []])
-        for token in expr:
-            if token == Token('SYMBOL', '('):
-                stack.append(current := [])
-            elif token == Token('SYMBOL', ')'):
-                inside = stack.pop()
-                current = stack[-1]
-                inside = Expression.parse(inside)
-                current.append(inside)
-            else:
-                current.append(token)
-        # Resolve operations
-        expr = stack[0]
-        for op in [  # Lower precedence goes first
-            'OR', 'AND',
-            '=', '<>', '<', '>', '<=', '>=',
-            '+', '-', '*', '/', '^',
-        ]:
-            if Token('OPERATOR', op) in expr:
-                operator = OPERATORS[op]
-                i = expr.index(Token('OPERATOR', op))
-                left = Expression.parse(expr[:i])
-                right = Expression.parse(expr[i + 1:])
-                return BinaryOp(operator, left, right)
-        raise RuntimeError('Invalid expression', expr)
-
-    @abstractmethod
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        pass
-
-
-@dataclass
-class BinaryOp(Expression):
-    operator: function
-    left: Expression | Token
-    right: Expression | Token
-
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        left = self.left.resolve(variables)
-        right = self.right.resolve(variables)
-        return self.operator(left, right)
 
 
 @dataclass
@@ -147,27 +52,6 @@ class Block:
                     for n in range(a.resolve(), b.resolve() + 1):
                         variables[name] = n
                         block.execute()
-
-
-def parse_tokens(code: str) -> list[Token]:
-    """
-    Parse tokens from a program.
-    :param code: program to parse.
-    :type code: str
-    :return: a list containing the tokens in the program.
-    :rtype: list[Token]
-    """
-    code += '\n'
-    res: list[Token] = []
-    for match in re.finditer(TOKEN_REGEX, code, re.M):
-        if match.lastgroup == 'IGNORE' or match.lastgroup == 'COMMENT':
-            continue
-        if match.lastgroup == 'IDENTIFIER' and match.group() in KEYWORDS:
-            token = Token(str(match.group()), None)
-        else:
-            token = Token(match.lastgroup, str(match.group()))
-        res.append(token)
-    return res
 
 
 class Program(Block):
