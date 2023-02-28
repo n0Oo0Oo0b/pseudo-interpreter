@@ -9,8 +9,6 @@ from constants import KEYWORDS, TOKEN_REGEX, OPERATORS
 
 
 Value = str | int | float | bool
-Token = namedtuple('Token', ['type', 'value'])
-Expression = namedtuple('Expression', ['operator', 'left', 'right'])
 Line = namedtuple('Line', ['operation', 'params'])
 
 
@@ -44,7 +42,7 @@ class VariableState(ChainMap):
 @dataclass
 class Token:
     type: str
-    value: Value | str
+    value: Value | str | None
 
     def resolve(self, variables: VariableState | None = None) -> Value:
         variables = variables or VariableState.default_state
@@ -164,7 +162,7 @@ def parse_tokens(code: str) -> list[Token]:
         if match.lastgroup == 'IDENTIFIER' and match.group() in KEYWORDS:
             token = Token(str(match.group()), None)
         else:
-            token = Token(match.lastgroup, match.group())
+            token = Token(match.lastgroup, str(match.group()))
         res.append(token)
     return res
 
