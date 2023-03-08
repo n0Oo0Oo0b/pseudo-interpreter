@@ -17,6 +17,8 @@ class Variable:
 
     @value.setter
     def value(self, value):
+        if type(value) != self.type:
+            raise RuntimeError('Invalid type for assignment')
         self._value = self.type(value)
 
 
