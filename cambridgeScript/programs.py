@@ -4,6 +4,7 @@ from collections import namedtuple, deque
 from dataclasses import dataclass, field
 from typing import Any
 
+from constants import TYPES
 from tokens import Token, parse_tokens
 from expressions import Expression
 from variables import VariableState
@@ -26,8 +27,8 @@ class Block:
         variables = variables or VariableState.default_state
         for line in self.content:
             match line:
-                case Line('DECLARE', Token('IDENTIFIER', name)):
-                    variables.declare(name, int)
+                case Line('DECLARE', (Token('IDENTIFIER', name), Token('IDENTIFIER', type_))):
+                    variables.declare(name, TYPES[type_])
                 case Line('ASSIGN', (name, expr)):
                     variables[name.value] = expr.resolve()
                 case Line('INPUT', name):
@@ -124,8 +125,8 @@ class Program(Block):
                     current_frame = stack[-1]
                     current_frame.add_line(frame)
                 # Not a block
-                case Token('DECLARE'), Token('IDENTIFIER') as name:
-                    current_frame.add_line(Line('DECLARE', name))
+                case Token('DECLARE'), Token('IDENTIFIER') as name, Token('SYMBOL', ':'), Token('IDENTIFIER') as type_:
+                    current_frame.add_line(Line('DECLARE', (name, type_)))
                 case Token('INPUT'), Token('IDENTIFIER') as name:
                     current_frame.add_line(Line('INPUT', name))
                 case Token('OUTPUT'), *expr:
