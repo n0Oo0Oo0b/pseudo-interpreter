@@ -38,4 +38,4 @@ class VariableState:
 
     def declare(self, name: str, type_: type, value: Value | None = None) -> None:
         value = type_(value) if value else type_()
-        self._variables.append(Variable(type_, value))
+        self._variables[name] = Variable(type_, value)
