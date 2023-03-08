@@ -18,7 +18,7 @@ class Token:
 
     def resolve(self, variables: VariableState | None = None) -> Value:
         variables = variables or VariableState.default_state
-        if self.type == 'VALUE':
+        if self.type == 'LITERAL':
             return self.value
         elif self.type == 'IDENTIFIER':
             return variables[self.value]
@@ -43,7 +43,7 @@ def parse_tokens(code: str) -> list[Token]:
             continue
         elif token_type == 'IDENTIFIER' and token_value in KEYWORDS:
             token = Token(token_value, None)
-        elif token_type == 'VALUE':
+        elif token_type == 'LITERAL':
             if token_value.startswith('"') and token_value.endswith('"'):
                 token = Token(token_type, token_value[1:-1], 'STRING')
             elif '.' in token_value:

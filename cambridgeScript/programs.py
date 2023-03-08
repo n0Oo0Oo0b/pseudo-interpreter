@@ -95,7 +95,7 @@ class Program(Block):
                 case (
                     Token('FOR'), Token('IDENTIFIER') as name,
                     Token('ASSIGN'),
-                    Token('VALUE') as a, Token('TO'), Token('VALUE') as b,
+                    Token('LITERAL') as a, Token('TO'), Token('LITERAL') as b,
                     Token('DO'),
                 ):
                     stack.append(current_frame := Block('FOR', (name, a, b), []))
