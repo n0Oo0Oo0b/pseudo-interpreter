@@ -1,4 +1,4 @@
-from classes import Program
+from programs import Program
 
 
 if __name__ == '__main__':
