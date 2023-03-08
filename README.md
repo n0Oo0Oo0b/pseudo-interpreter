@@ -10,7 +10,7 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 
 ## Features
 
-- Variables (currently only supports numeric types, have to be declared with `DECLARE variable`)
+- Variables (`DECLARE variable: TYPE`)
 - Basic expressions, including parenthesis and order of operations
 - Selection - if/else conditionals
 - Iteration - for, while, repeat until loops
@@ -18,9 +18,10 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 
 ### Planned features
 
-- Variable types (`INTEGER`, `REAL`, `CHAR`, `STRING`, `BOOLEAN`)
+- Character type
 - Case statements
 - A command-line interface
+- Library functions (such as DIV and MOD)
 
 ## How to run
 
