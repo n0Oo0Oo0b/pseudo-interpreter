@@ -30,10 +30,10 @@ TYPES = {
 TOKENS = [
     ('COMMENT', r'/\*.*\*/|(?://|#).*$'),
     ('NEWLINE', r'\n'),
+    ('VALUE', r'[0-9]+(?:\.[0-9]+)?|".*?(?<!\\)"'),
     ('ASSIGN', r'<-'),
     ('OPERATOR', r'[=<>+\-*/^]|<>|<=|>='),
     ('SYMBOL', r'[():]'),
-    ('VALUE', r'[0-9]+(?:\.[0-9]+)?'),
     ('IDENTIFIER', r'[A-Za-z]+'),
     ('IGNORE', r'[ \t]+'),
     ('INVALID', r'.'),

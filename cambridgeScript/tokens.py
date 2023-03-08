@@ -44,7 +44,9 @@ def parse_tokens(code: str) -> list[Token]:
         elif token_type == 'IDENTIFIER' and token_value in KEYWORDS:
             token = Token(token_value, None)
         elif token_type == 'VALUE':
-            if '.' in token_value:
+            if token_value.startswith('"') and token_value.endswith('"'):
+                token = Token(token_type, token_value[1:-1], 'STRING')
+            elif '.' in token_value:
                 token = Token(token_type, float(token_value), 'REAL')
             else:
                 token = Token(token_type, int(token_value), 'INTEGER')
