@@ -16,15 +16,6 @@ class Token:
     value: Value | str | None
     meta: str | None = None
 
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        if self.type == 'LITERAL':
-            return self.value
-        elif self.type == 'IDENTIFIER':
-            return variables[self.value]
-        else:
-            raise RuntimeError(f'Cannot resolve value of token {self}')
-
 
 def parse_tokens(code: str) -> list[Token]:
     """
