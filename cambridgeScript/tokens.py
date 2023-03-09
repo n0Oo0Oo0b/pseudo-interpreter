@@ -46,8 +46,9 @@ def parse_tokens(code: str) -> list[Token]:
         elif token_type == 'LITERAL':
             if token_value.startswith('"') and token_value.endswith('"'):
                 token_value = token_value[1:-1] \
-                    .replace('\\"', '"') \
-                    .replace('\\\\', '\\')
+                    .replace(r'\"', '"') \
+                    .replace(r'\n', '\n') \
+                    .replace(r'\\', '\\')
                 token = Token(token_type, token_value, 'STRING')
             elif '.' in token_value:
                 token = Token(token_type, float(token_value), 'REAL')
