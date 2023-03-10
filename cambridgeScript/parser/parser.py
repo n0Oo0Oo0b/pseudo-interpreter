@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from collections import deque
 
 from cambridgeScript.constants import OPERATORS
