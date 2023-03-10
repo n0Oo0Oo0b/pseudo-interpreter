@@ -6,7 +6,7 @@ from typing import Any
 
 from constants import TYPES
 from tokens import Token, parse_tokens
-from expressions import Expression
+from expressions import parse_expression
 from variables import VariableState
 
 
@@ -87,9 +87,9 @@ class Program(Block):
             match line:
                 # Start block
                 case Token('IF'), *expr, Token('THEN'):
-                    stack.append(current_frame := Block('IF', Expression.parse(expr), []))
+                    stack.append(current_frame := Block('IF', parse_expression(expr), []))
                 case Token('WHILE'), *expr, Token('DO'):
-                    stack.append(current_frame := Block('WHILE', Expression.parse(expr), []))
+                    stack.append(current_frame := Block('WHILE', parse_expression(expr), []))
                 case Token('REPEAT'), :
                     stack.append(current_frame := Block('UNTIL', None, []))
                 case (
@@ -114,7 +114,7 @@ class Program(Block):
                         raise RuntimeError(f'Unexpected token {end_type}')
                     # Block-specific details
                     if block_type == 'UNTIL':
-                        current_frame.meta = Expression.parse(rest)
+                        current_frame.meta = parse_expression(rest)
                     elif block_type == 'FOR':
                         if len(rest) > 1:
                             raise RuntimeError('Invalid NEXT')
@@ -130,9 +130,9 @@ class Program(Block):
                 case Token('INPUT'), Token('IDENTIFIER') as name:
                     current_frame.add_line(Line('INPUT', name))
                 case Token('OUTPUT'), *expr:
-                    current_frame.add_line(Line('OUTPUT', Expression.parse(expr)))
+                    current_frame.add_line(Line('OUTPUT', parse_expression(expr)))
                 case Token('IDENTIFIER') as name, Token('ASSIGN'), *expr:
-                    current_frame.add_line(Line('ASSIGN', (name, Expression.parse(expr))))
+                    current_frame.add_line(Line('ASSIGN', (name, parse_expression(expr))))
                 case _:
                     raise RuntimeError(f'Invalid line {line}')
         return program
