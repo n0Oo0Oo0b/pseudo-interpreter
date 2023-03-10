@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Callable
+from typing import Any, Callable
 
 from cambridgeScript.parser.tokens import Token
+from cambridgeScript.visitors import ExpressionVisitor
 from cambridgeScript.interpreter.variables import VariableState
 
 
@@ -12,6 +13,10 @@ Value = str | int | float | bool
 class Expression(ABC):
     @abstractmethod
     def resolve(self, variables: VariableState | None = None) -> Value:
+        pass
+
+    @abstractmethod
+    def accept(self, visitor: ExpressionVisitor) -> Any:
         pass
 
 
@@ -26,6 +31,9 @@ class Value(Expression):
         else:
             return variables[self.token.value]
 
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_value(self)
+
 
 @dataclass
 class BinaryOp(Expression):
@@ -39,6 +47,9 @@ class BinaryOp(Expression):
         right = self.right.resolve(variables)
         return self.operator(left, right)
 
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_binary_op(self)
+
 
 @dataclass
 class FunctionCall(Expression):
@@ -49,3 +60,6 @@ class FunctionCall(Expression):
         func = variables[self.function_name]
         resolved_params = [item.resolve(variables) for item in self.params]
         return func(*resolved_params)
+
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_function_call(self)
