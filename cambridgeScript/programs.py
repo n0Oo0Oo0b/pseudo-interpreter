@@ -4,10 +4,10 @@ from collections import namedtuple, deque
 from dataclasses import dataclass, field
 from typing import Any
 
-from constants import TYPES
-from tokens import Token, parse_tokens
-from expressions import parse_expression
-from variables import VariableState
+from cambridgeScript.constants import TYPES
+from cambridgeScript.tokens import Token, parse_tokens
+from cambridgeScript.parser import parse_expression
+from cambridgeScript.variables import VariableState
 
 
 Value = str | int | float | bool
