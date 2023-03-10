@@ -2,12 +2,12 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from parser.syntax_tree import Value, BinaryOp, FunctionCall
+    from parser.syntax_tree import Primary, BinaryOp, FunctionCall
 
 
 class ExpressionVisitor(ABC):
     @abstractmethod
-    def visit_value(self, expr: 'Value'):
+    def visit_primary(self, expr: 'Primary'):
         pass
 
     @abstractmethod
