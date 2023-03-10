@@ -1,10 +1,12 @@
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Callable
 
 from cambridgeScript.parser.tokens import Token
 from cambridgeScript.interpreter.variables import VariableState
+
+
+Value = str | int | float | bool
 
 
 class Expression(ABC):
@@ -27,7 +29,7 @@ class Value(Expression):
 
 @dataclass
 class BinaryOp(Expression):
-    operator: function
+    operator: Callable
     left: Expression
     right: Expression
 
