@@ -36,6 +36,19 @@ class Primary(Expression):
 
 
 @dataclass
+class UnaryOp(Expression):
+    operator: Callable[[Value], Value]
+    operand: Expression
+
+    def resolve(self, variables: VariableState | None = None) -> Value:
+        variables = variables or VariableState.default_state
+        return self.operator(self.operand.resolve(variables))
+
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_unary_op(self)
+
+
+@dataclass
 class BinaryOp(Expression):
     operator: Callable
     left: Expression
