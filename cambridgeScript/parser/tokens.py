@@ -4,7 +4,6 @@ from dataclasses import dataclass
 import re
 
 from cambridgeScript.constants import KEYWORDS, TOKEN_REGEX
-from cambridgeScript.variables import VariableState
 
 
 Value = str | int | float | bool

@@ -3,8 +3,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from cambridgeScript.tokens import Token
-from cambridgeScript.variables import VariableState
+from cambridgeScript.parser.tokens import Token
+from cambridgeScript.interpreter.variables import VariableState
 
 
 class Expression(ABC):

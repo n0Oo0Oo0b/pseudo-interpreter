@@ -3,8 +3,8 @@ from __future__ import annotations
 from collections import deque
 
 from cambridgeScript.constants import OPERATORS
-from cambridgeScript.syntax_tree import Expression, Value, BinaryOp
-from cambridgeScript.tokens import Token
+from cambridgeScript.parser.syntax_tree import Expression, Value, BinaryOp
+from cambridgeScript.parser.tokens import Token
 
 
 def parse_expression(expr: list[Token]) -> Expression:

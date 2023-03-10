@@ -5,9 +5,9 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from cambridgeScript.constants import TYPES
-from cambridgeScript.tokens import Token, parse_tokens
-from cambridgeScript.parser import parse_expression
-from cambridgeScript.variables import VariableState
+from cambridgeScript.parser.tokens import Token, parse_tokens
+from cambridgeScript.parser.parser import parse_expression
+from cambridgeScript.interpreter.variables import VariableState
 
 
 Value = str | int | float | bool
