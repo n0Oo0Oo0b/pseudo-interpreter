@@ -1,4 +1,4 @@
-from programs import Program
+from cambridgeScript.programs import Program
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from constants import TYPES
+from cambridgeScript.constants import TYPES
 
 
 Value = str | int | float | bool
