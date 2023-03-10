@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import deque
 
 from cambridgeScript.constants import OPERATORS
-from cambridgeScript.expressions import Expression, Value, BinaryOp
+from cambridgeScript.syntax_tree import Expression, Value, BinaryOp
 from cambridgeScript.tokens import Token
 
 
