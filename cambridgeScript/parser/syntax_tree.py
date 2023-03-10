@@ -50,11 +50,11 @@ class UnaryOp(Expression):
 
 @dataclass
 class BinaryOp(Expression):
-    operator: Callable
+    operator: Callable[[Value, Value], Value]
     left: Expression
     right: Expression
 
-    def resolve(self, variables: VariableState | None = None) -> Primary:
+    def resolve(self, variables: VariableState | None = None) -> Value:
         variables = variables or VariableState.default_state
         left = self.left.resolve(variables)
         right = self.right.resolve(variables)
@@ -69,7 +69,7 @@ class FunctionCall(Expression):
     function_name: str
     params: list[Expression]
 
-    def resolve(self, variables: VariableState | None = None) -> Primary:
+    def resolve(self, variables: VariableState | None = None) -> Value:
         func = variables[self.function_name]
         resolved_params = [item.resolve(variables) for item in self.params]
         return func(*resolved_params)
