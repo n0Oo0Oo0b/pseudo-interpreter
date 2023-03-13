@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from cambridgeScript.constants import TYPES
+from cambridgeScript.visitors import ExpressionResolver
 from cambridgeScript.parser.tokens import Token, parse_tokens
 from cambridgeScript.parser.parser import parse_expression
 from cambridgeScript.interpreter.variables import VariableState
@@ -24,33 +25,33 @@ class Block:
         self.content.append(line)
 
     def execute(self: Block, variables: VariableState | None = None) -> None:
-        variables = variables or VariableState.default_state
+        resolver = ExpressionResolver(variables or VariableState.default_state)
         for line in self.content:
             match line:
                 case Line('DECLARE', (Token('IDENTIFIER', name), Token('IDENTIFIER', type_))):
                     variables.declare(name, TYPES[type_])
                 case Line('ASSIGN', (name, expr)):
-                    variables[name.value] = expr.resolve()
+                    variables[name.value] = expr.accept(resolver)
                 case Line('INPUT', name):
                     if name not in variables:
                         raise RuntimeError(f'{name.value} is not defined!')
                     variables[name.value] = int(input())
                 case Line('OUTPUT', expr):
-                    print(expr.resolve())
+                    print(expr.accept(resolver))
                 case Block('IF', expr) as block:
-                    if expr.resolve():
+                    if expr.accept(resolver):
                         block.execute()
                 case Block('WHILE', expr) as block:
-                    while expr.resolve():
+                    while expr.accept(resolver):
                         block.execute()
                 case Block('UNTIL', expr) as block:
                     while True:
                         block.execute()
-                        if expr.resolve():
+                        if expr.accept(resolver):
                             break
                 case Block('FOR', (Token('IDENTIFIER', name), a, b)) as block:
                     variables.declare(name, int)
-                    for n in range(a.resolve(), b.resolve() + 1):
+                    for n in range(a.accept(resolver), b.accept(resolver) + 1):
                         variables[name] = n
                         block.execute()
 

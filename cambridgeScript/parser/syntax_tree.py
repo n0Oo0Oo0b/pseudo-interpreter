@@ -12,10 +12,6 @@ Value = str | int | float | bool
 
 class Expression(ABC):
     @abstractmethod
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        pass
-
-    @abstractmethod
     def accept(self, visitor: ExpressionVisitor) -> Any:
         pass
 
@@ -24,25 +20,14 @@ class Expression(ABC):
 class Primary(Expression):
     token: Token
 
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        if self.token.type == 'LITERAL':
-            return self.token.value
-        else:
-            return variables[self.token.value]
-
     def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_value(self)
+        return visitor.visit_primary(self)
 
 
 @dataclass
 class UnaryOp(Expression):
     operator: Callable[[Value], Value]
     operand: Expression
-
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        return self.operator(self.operand.resolve(variables))
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
         return visitor.visit_unary_op(self)
@@ -54,12 +39,6 @@ class BinaryOp(Expression):
     left: Expression
     right: Expression
 
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        variables = variables or VariableState.default_state
-        left = self.left.resolve(variables)
-        right = self.right.resolve(variables)
-        return self.operator(left, right)
-
     def accept(self, visitor: ExpressionVisitor) -> Any:
         return visitor.visit_binary_op(self)
 
@@ -68,11 +47,6 @@ class BinaryOp(Expression):
 class FunctionCall(Expression):
     function_name: str
     params: list[Expression]
-
-    def resolve(self, variables: VariableState | None = None) -> Value:
-        func = variables[self.function_name]
-        resolved_params = [item.resolve(variables) for item in self.params]
-        return func(*resolved_params)
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
         return visitor.visit_function_call(self)
