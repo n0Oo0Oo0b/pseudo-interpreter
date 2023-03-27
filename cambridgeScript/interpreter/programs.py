@@ -29,7 +29,8 @@ class Block:
         for line in self.content:
             match line:
                 case Line(
-                    "DECLARE", (Token("IDENTIFIER", name), Token("IDENTIFIER", type_))
+                    "DECLARE", (Token("IDENTIFIER", name),
+                                Token("IDENTIFIER", type_))
                 ):
                     variables.declare(name, TYPES[type_])
                 case Line("ASSIGN", (name, expr)):
@@ -63,7 +64,7 @@ class Program(Block):
         super().__init__("MAIN", None, [])
 
     @classmethod
-    def from_code(cls, code: str) -> cls:
+    def from_code(cls, code: str) -> Program:
         """
         Parses blocks of a program into a Frame object.
         :param code: Program to parse.
@@ -97,7 +98,7 @@ class Program(Block):
                     stack.append(
                         current_frame := Block("WHILE", parse_expression(expr), [])
                     )
-                case Token("REPEAT"),:
+                case Token("REPEAT"), :
                     stack.append(current_frame := Block("UNTIL", None, []))
                 case (
                     Token("FOR"),
@@ -108,9 +109,11 @@ class Program(Block):
                     Token("LITERAL") as b,
                     Token("DO"),
                 ):
-                    stack.append(current_frame := Block("FOR", (name, a, b), []))
+                    stack.append(current_frame := Block(
+                        "FOR", (name, a, b), []))
                 case Token("CASE"), Token("OF"), *_:
-                    raise NotImplementedError("Case statements are not supported yet")
+                    raise NotImplementedError(
+                        "Case statements are not supported yet")
                 # End block
                 case Token("ENDIF" | "ENDWHILE" | "UNTIL" | "NEXT" as end_type), *rest:
                     block_type = stack[-1].type
@@ -142,7 +145,8 @@ class Program(Block):
                 case Token("INPUT"), Token("IDENTIFIER") as name:
                     current_frame.add_line(Line("INPUT", name))
                 case Token("OUTPUT"), *expr:
-                    current_frame.add_line(Line("OUTPUT", parse_expression(expr)))
+                    current_frame.add_line(
+                        Line("OUTPUT", parse_expression(expr)))
                 case Token("IDENTIFIER") as name, Token("ASSIGN"), *expr:
                     current_frame.add_line(
                         Line("ASSIGN", (name, parse_expression(expr)))

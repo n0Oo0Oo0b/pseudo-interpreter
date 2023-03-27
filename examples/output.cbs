@@ -1,0 +1,5 @@
+DECLARE variable: DATATYPE
+
+variable <- 2
+
+OUTPUT variable
