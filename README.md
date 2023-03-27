@@ -1,5 +1,7 @@
 # pseudo-interpreter (WIP)
 
+**YOU NEED 3.11 TO RUN THIS PROGRAM AS IT USES NEW REGEX**
+
 A program to execute pseudocode programs (syntax as taught in CiE IGCSE Computer Science).
 
 Made in vanilla python without any 3rd party modules.
@@ -25,4 +27,4 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 
 ## How to run
 
-Execute the `cambridgeScript` directory with python3.10 or above. The script to execute will be read from stdin.
+Execute the `cambridgeScript` directory with python 3.11 or above. The script to execute will be read from stdin.
