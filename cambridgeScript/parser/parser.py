@@ -67,7 +67,7 @@ class ExpressionParser:
 
     def _primary(self) -> Expression:
         token = self._advance()
-        if token.type == 'LITERAL':
+        if token.type == "LITERAL" or token.type == "IDENTIFIER":
             return Primary(token)
         elif token == Token('SYMBOL', '('):
             expr = self.expression()
