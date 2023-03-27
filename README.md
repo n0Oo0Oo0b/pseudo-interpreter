@@ -27,4 +27,4 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 
 ## How to run
 
-Execute the `cambridgeScript` directory with python 3.11 or above. The script to execute will be read from stdin.
+Execute with `python3 -m cambridgeScript` in the repository root. Python 3.11+ required (tested on 3.11.0). The script to execute will be read from stdin.
