@@ -26,3 +26,5 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 ## How to run
 
 Execute the `cambridgeScript` directory with python3.10 or above. The script to execute will be read from stdin.
+
+> `ModuleNotFoundError: No module named 'cambridgeScript'` If you get this error use the *outside* main.py file
