@@ -4,7 +4,6 @@ from typing import Any, Callable
 
 from cambridgeScript.parser.tokens import Token
 from cambridgeScript.visitors import ExpressionVisitor
-from cambridgeScript.interpreter.variables import VariableState
 
 
 Value = str | int | float | bool
