@@ -51,19 +51,19 @@ class ExpressionParser:
             expr = BinaryOp(OPERATORS[op.value], expr, right)
         return expr
 
-    def _unary(self) -> Expression:
-        if op := self._match("+", "-"):
-            operand = self._unary()
-            op = (lambda x: -x) if op.value == "-" else (lambda x: +x)  # bodge
-            return UnaryOp(op, operand)
-        return self._primary()
-
     def _factor(self) -> Expression:
         expr = self._unary()
         while op := self._match("*", "/"):
             right = self._unary()
             expr = BinaryOp(OPERATORS[op.value], expr, right)
         return expr
+
+    def _unary(self) -> Expression:
+        if op := self._match("+", "-"):
+            operand = self._unary()
+            op = (lambda x: -x) if op.value == "-" else (lambda x: +x)  # bodge
+            return UnaryOp(op, operand)
+        return self._primary()
 
     def _primary(self) -> Expression:
         token = self._advance()
