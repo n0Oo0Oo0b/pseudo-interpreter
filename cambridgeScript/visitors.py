@@ -4,7 +4,14 @@ from typing import Any, TYPE_CHECKING
 from cambridgeScript.interpreter.variables import VariableState
 
 if TYPE_CHECKING:
-    from cambridgeScript.syntax_tree import Primary, UnaryOp, BinaryOp, FunctionCall
+    from cambridgeScript.parser.syntax_tree import (
+        Primary,
+        UnaryOp,
+        BinaryOp,
+        FunctionCall,
+        InputStmt,
+        OutputStmt,
+    )
 
 
 Value = str | int | float | bool
@@ -48,4 +55,14 @@ class ExpressionResolver(ExpressionVisitor):
         return expr.operator(left, right)
 
     def visit_function_call(self, expr: "FunctionCall") -> Value:
+        pass
+
+
+class StatementVisitor(ABC):
+    @abstractmethod
+    def visit_input(self, stmt: "InputStmt") -> Any:
+        pass
+
+    @abstractmethod
+    def visit_output(self, stmt: "OutputStmt") -> Any:
         pass

@@ -3,8 +3,7 @@ from dataclasses import dataclass
 from typing import Any, Callable
 
 from cambridgeScript.parser.tokens import Token
-from cambridgeScript.visitors import ExpressionVisitor
-from cambridgeScript.interpreter.variables import VariableState
+from cambridgeScript.visitors import ExpressionVisitor, StatementVisitor
 
 
 Value = str | int | float | bool
@@ -50,3 +49,25 @@ class FunctionCall(Expression):
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
         return visitor.visit_function_call(self)
+
+
+class Statement(ABC):
+    @abstractmethod
+    def accept(self, visitor: StatementVisitor) -> Any:
+        pass
+
+
+@dataclass
+class InputStmt(Statement):
+    variable: Token
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_input(self)
+
+
+@dataclass
+class OutputStmt(Statement):
+    expr: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_output(self)
