@@ -11,8 +11,8 @@ Value = str | int | float | bool
 class Token:
     type: str
     value: Value | str | None
-    line: int
-    column: int
+    line: int | None = None
+    column: int | None = None
     meta: str | None = None
 
     def __eq__(self, other):
