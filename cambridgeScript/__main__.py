@@ -12,11 +12,12 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(help='sub-command help')
     run_parser = subparsers.add_parser("run", help="run a program")
     run_parser.add_argument("filename", type=str, help="name of the file")
-    
+    run_parser.add_argument("--debug", type=bool, help="print debug info")
+
     def run(args):
         with open(args.filename) as f:
             p = Program.from_code(f.read())
-            print(p)
+            if (args.debug): print(p)
             p.execute()
 
     run_parser.set_defaults(func=run)
