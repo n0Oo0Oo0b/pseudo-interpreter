@@ -31,10 +31,7 @@ def parse_literal(literal: str) -> tuple[Value, str]:
     """
     if literal.startswith('"') and literal.endswith('"'):
         value = (
-            literal[1:-1]
-            .replace(r"\"", '"')
-            .replace(r"\n", "\n")
-            .replace(r"\\", "\\")
+            literal[1:-1].replace(r"\"", '"').replace(r"\n", "\n").replace(r"\\", "\\")
         )
         return value, "STRING"
     elif "." in literal:
@@ -65,11 +62,19 @@ def parse_tokens(code: str) -> list[Token]:
             token = Token(token_value, None, line_number, token_start - line_start)
         elif token_type == "LITERAL":
             token_value, literal_type = parse_literal(token_value)
-            token = Token(token_type, token_value, line_number, token_start - line_start, literal_type)
+            token = Token(
+                token_type,
+                token_value,
+                line_number,
+                token_start - line_start,
+                literal_type,
+            )
         else:
             if token_type == "NEWLINE":
                 line_number += 1
                 line_start = token_start
-            token = Token(token_type, token_value, line_number, token_start - line_start)
+            token = Token(
+                token_type, token_value, line_number, token_start - line_start
+            )
         res.append(token)
     return res
