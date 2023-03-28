@@ -53,7 +53,7 @@ class Block:
                             break
                 case Block("FOR", (Token("IDENTIFIER", name), a, b)) as block:
                     variables.declare(name, int)
-                    for n in range(a.accept(resolver), b.accept(resolver) + 1):
+                    for n in range(a.value, b.value + 1):
                         variables[name] = n
                         block.execute()
 
@@ -63,7 +63,7 @@ class Program(Block):
         super().__init__("MAIN", None, [])
 
     @classmethod
-    def from_code(cls, code: str) -> cls:
+    def from_code(cls, code: str) -> "Program":
         """
         Parses blocks of a program into a Frame object.
         :param code: Program to parse.
