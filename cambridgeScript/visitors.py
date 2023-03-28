@@ -4,7 +4,7 @@ from typing import Any, TYPE_CHECKING
 from cambridgeScript.interpreter.variables import VariableState
 
 if TYPE_CHECKING:
-    from cambridgeScript.syntax_tree import Primary, UnaryOp, BinaryOp, FunctionCall
+    from cambridgeScript.parser.syntax_tree import Primary, UnaryOp, BinaryOp, FunctionCall
 
 
 Value = str | int | float | bool
