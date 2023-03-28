@@ -1,5 +1,3 @@
-from collections import deque
-
 from cambridgeScript.constants import OPERATORS
 from cambridgeScript.parser.syntax_tree import Expression, UnaryOp, BinaryOp, Primary
 from cambridgeScript.parser.tokens import Token
