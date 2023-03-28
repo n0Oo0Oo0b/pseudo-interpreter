@@ -21,6 +21,28 @@ class Token:
         return self.type == other.type and self.value == other.value
 
 
+def parse_literal(literal: str) -> tuple[Value, str]:
+    """
+    Parse a literal value.
+    :param literal: literal to parse
+    :type literal: str
+    :return: a tuple containing the value of the literal and the datatype as a string
+    :rtype: tuple[Value, str]
+    """
+    if literal.startswith('"') and literal.endswith('"'):
+        value = (
+            literal[1:-1]
+            .replace(r"\"", '"')
+            .replace(r"\n", "\n")
+            .replace(r"\\", "\\")
+        )
+        return value, "STRING"
+    elif "." in literal:
+        return float(literal), "REAL"
+    else:
+        return int(literal), "INTEGER"
+
+
 def parse_tokens(code: str) -> list[Token]:
     """
     Parse tokens from a program.
@@ -42,20 +64,7 @@ def parse_tokens(code: str) -> list[Token]:
         elif token_type == "IDENTIFIER" and token_value in KEYWORDS:
             token = Token(token_value, None, line_number, token_start - line_start)
         elif token_type == "LITERAL":
-            if token_value.startswith('"') and token_value.endswith('"'):
-                token_value = (
-                    token_value[1:-1]
-                    .replace(r"\"", '"')
-                    .replace(r"\n", "\n")
-                    .replace(r"\\", "\\")
-                )
-                literal_type = "STRING"
-            elif "." in token_value:
-                token_value = float(token_value)
-                literal_type = "REAL"
-            else:
-                token_value = int(token_value)
-                literal_type = "INTEGER"
+            token_value, literal_type = parse_literal(token_value)
             token = Token(token_type, token_value, line_number, token_start - line_start, literal_type)
         else:
             if token_type == "NEWLINE":
