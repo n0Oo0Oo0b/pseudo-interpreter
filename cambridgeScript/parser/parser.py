@@ -39,7 +39,7 @@ class ExpressionParser:
     # Recursive descent
     def _comparison(self) -> Expression:
         expr = self._term()
-        while op := self._match("==", "!=", "<", "<=", ">", ">="):
+        while op := self._match("=", "<>", "<", "<=", ">", ">="):
             right = self._term()
             expr = BinaryOp(OPERATORS[op.value], expr, right)
         return expr
