@@ -26,7 +26,8 @@ stack and appended to the previous block.
 
 ### Parsing expressions
 
-Parsing expressions is done with the [`ExpressionParser`](cambridgeScript/parser/parser.py) class, which is pretty much a python copy of the java code [here](https://craftinginterpreters.com/parsing-expressions.html).
+Parsing expressions is done with the [`Parser`](cambridgeScript/parser/parser.py) class, which is pretty much a python
+copy of the java code [here](https://craftinginterpreters.com/parsing-expressions.html).
 
 
 ## [Interpreter](cambridgeScript/programs.py#L26)

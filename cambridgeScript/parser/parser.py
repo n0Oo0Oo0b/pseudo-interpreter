@@ -5,7 +5,7 @@ from cambridgeScript.parser.syntax_tree import Expression, UnaryOp, BinaryOp, Pr
 from cambridgeScript.parser.tokens import Token
 
 
-class ExpressionParser:
+class Parser:
     def __init__(self, tokens: list[Token]):
         self.tokens = tokens
         self._next_index = 0
@@ -78,5 +78,5 @@ class ExpressionParser:
 
 
 def parse_expression(tokens: list[Token]) -> Expression:
-    parser = ExpressionParser(tokens)
+    parser = Parser(tokens)
     return parser.expression()
