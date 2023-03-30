@@ -1,6 +1,6 @@
-from cambridgeScript.constants import OPERATORS
-from cambridgeScript.parser.syntax_tree import Expression, UnaryOp, BinaryOp, Primary
-from cambridgeScript.parser.tokens import Token
+from ..constants import OPERATORS
+from .syntax_tree import Expression, UnaryOp, BinaryOp, Primary
+from .tokens import Token
 
 
 class Parser:

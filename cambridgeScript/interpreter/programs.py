@@ -4,12 +4,11 @@ from collections import namedtuple, deque
 from dataclasses import dataclass, field
 from typing import Any
 
-from cambridgeScript.constants import TYPES
-from cambridgeScript.visitors import ExpressionResolver
-from cambridgeScript.parser.tokens import Token, parse_tokens
-from cambridgeScript.parser.parser import parse_expression
-from cambridgeScript.interpreter.variables import VariableState
-
+from ..constants import TYPES
+from ..visitors import ExpressionResolver
+from ..parser.tokens import Token, parse_tokens
+from ..parser.parser import parse_expression
+from .variables import VariableState
 
 Value = str | int | float | bool
 Line = namedtuple("Line", ["operation", "params"])
@@ -53,7 +52,7 @@ class Block:
                             break
                 case Block("FOR", (Token("IDENTIFIER", name), a, b)) as block:
                     variables.declare(name, int)
-                    for n in range(a.accept(resolver), b.accept(resolver) + 1):
+                    for n in range(a.value, b.value + 1):
                         variables[name] = n
                         block.execute()
 
@@ -63,7 +62,7 @@ class Program(Block):
         super().__init__("MAIN", None, [])
 
     @classmethod
-    def from_code(cls, code: str) -> cls:
+    def from_code(cls, code: str) -> "Program":
         """
         Parses blocks of a program into a Frame object.
         :param code: Program to parse.

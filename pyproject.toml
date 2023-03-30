@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "pseudo-interpreter"
+version = "0.0.1"
+description = ""
+authors = ["Daniel Gu <daniel.gu25@stu.dulwich.org>"]
+readme = "README.md"
+packages = [{ include = "cambridgeScript" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
