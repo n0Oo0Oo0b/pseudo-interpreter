@@ -3,9 +3,11 @@
 Several parts of this project (namely the expression parser) are derived from [Crafting Interpreters](https://craftinginterpreters.com).
 It explains most of the concepts used in a straightforward way, and is definitely worth a read if you would like to try something like this yourself.
 
-If you see anything wrong, feel free to [open an issue](https://github.com/n0Oo0Oo0b/pseudo-interpreter/issues/new) describing the problem and I will get it sorted.
+If you see anything wrong, feel free to [open an issue](https://github.com/n0Oo0Oo0b/pseudo-interpreter/issues/new)
+describing the problem and I will get it sorted.
 
-**NOTE:** Some code snippets/links included here may not be up to date. While I will change this file when significant changes are made to the repo, smaller changes may not be reflected here.
+**NOTE:** Some code snippets/links included here may not be up-to-date. While I will change this file when significant
+changes are made to the repo, smaller changes may not be reflected here.
 
 
 # How it works
@@ -28,7 +30,6 @@ stack and appended to the previous block.
 
 Parsing expressions is done with the [`ExpressionParser`](cambridgeScript/parser/parser.py) class, which is pretty much a python copy of the java code [here](https://craftinginterpreters.com/parsing-expressions.html).
 
-
-## [Interpreter](cambridgeScript/programs.py#L26)
+## [Interpreter](cambridgeScript/interpreter/programs.py#L26)
 
 Again, match-case syntax comes in handy here. Variables are stored in a special [`VariableState`](cambridgeScript/interpreter/variables.py) class, which is a simple wrapper around a dict.

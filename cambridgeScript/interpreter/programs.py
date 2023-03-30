@@ -4,12 +4,11 @@ from collections import namedtuple, deque
 from dataclasses import dataclass, field
 from typing import Any
 
-from cambridgeScript.constants import TYPES
-from cambridgeScript.visitors import ExpressionResolver
-from cambridgeScript.parser.tokens import Token, parse_tokens
-from cambridgeScript.parser.parser import parse_expression
-from cambridgeScript.interpreter.variables import VariableState
-
+from ..constants import TYPES
+from ..visitors import ExpressionResolver
+from ..parser.tokens import Token, parse_tokens
+from ..parser.parser import parse_expression
+from .variables import VariableState
 
 Value = str | int | float | bool
 Line = namedtuple("Line", ["operation", "params"])

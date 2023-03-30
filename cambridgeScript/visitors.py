@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Any, TYPE_CHECKING
 
-from cambridgeScript.interpreter.variables import VariableState
+from .interpreter.variables import VariableState
 
 if TYPE_CHECKING:
-    from cambridgeScript.parser.syntax_tree import Primary, UnaryOp, BinaryOp, FunctionCall
+    from .parser.syntax_tree import Primary, UnaryOp, BinaryOp, FunctionCall
 
 
 Value = str | int | float | bool
