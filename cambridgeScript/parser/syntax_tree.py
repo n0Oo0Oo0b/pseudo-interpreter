@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Any, Callable
 
 from .tokens import Token
-from ..visitors import ExpressionVisitor
+from ..visitors import ExpressionVisitor, StatementVisitor
 
 Value = str | int | float | bool
 
