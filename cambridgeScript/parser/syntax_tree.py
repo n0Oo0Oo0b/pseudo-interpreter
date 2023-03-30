@@ -57,6 +57,14 @@ class Statement(ABC):
 
 
 @dataclass
+class ExpressionStmt(Statement):
+    expr: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_expr(self)
+
+
+@dataclass
 class InputStmt(Statement):
     variable: Token
 

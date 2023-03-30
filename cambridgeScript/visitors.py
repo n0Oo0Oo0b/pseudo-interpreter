@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         FunctionCall,
         InputStmt,
         OutputStmt,
+        ExpressionStmt,
     )
 
 
@@ -59,6 +60,10 @@ class ExpressionResolver(ExpressionVisitor):
 
 
 class StatementVisitor(ABC):
+    @abstractmethod
+    def visit_expr(self, stmt: "ExpressionStmt") -> Any:
+        pass
+
     @abstractmethod
     def visit_input(self, stmt: "InputStmt") -> Any:
         pass
