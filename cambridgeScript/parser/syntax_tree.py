@@ -97,3 +97,21 @@ class DeclareStmt(Statement):
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_declare(self)
+
+
+@dataclass
+class IfStmt(Statement):
+    condition: Expression
+    body: list[Statement]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_if(self)
+
+
+@dataclass
+class WhileStmt(Statement):
+    condition: Expression
+    body: list[Statement]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_while(self)
