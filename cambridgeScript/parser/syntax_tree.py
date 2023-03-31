@@ -78,3 +78,13 @@ class OutputStmt(Statement):
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_output(self)
+
+
+@dataclass
+class DeclareStmt(Statement):
+    variable: Token
+    type_: type
+    value: Any | None = None
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_declare(self)

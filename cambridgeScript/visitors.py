@@ -12,6 +12,7 @@ if TYPE_CHECKING:
         InputStmt,
         OutputStmt,
         ExpressionStmt,
+        DeclareStmt,
     )
 
 
@@ -70,4 +71,8 @@ class StatementVisitor(ABC):
 
     @abstractmethod
     def visit_output(self, stmt: "OutputStmt") -> Any:
+        pass
+
+    @abstractmethod
+    def visit_declare(self, stmt: "DeclareStmt") -> Any:
         pass
