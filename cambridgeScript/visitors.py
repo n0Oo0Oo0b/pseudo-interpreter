@@ -5,10 +5,12 @@ from .interpreter.variables import VariableState
 
 if TYPE_CHECKING:
     from .parser.syntax_tree import (
+        Expression,
         Primary,
         UnaryOp,
         BinaryOp,
         FunctionCall,
+        Statement,
         InputStmt,
         OutputStmt,
         ExpressionStmt,
@@ -20,6 +22,9 @@ Value = str | int | float | bool
 
 
 class ExpressionVisitor(ABC):
+    def visit(self, expr: "Expression") -> Any:
+        return expr.accept(self)
+
     @abstractmethod
     def visit_primary(self, expr: "Primary") -> Any:
         pass
@@ -48,12 +53,12 @@ class ExpressionResolver(ExpressionVisitor):
             return self._variables[expr.token.value]
 
     def visit_unary_op(self, expr: "UnaryOp") -> Value:
-        operand = expr.operand.accept(self)
+        operand = self.visit(expr.operand)
         return expr.operator(operand)
 
     def visit_binary_op(self, expr: "BinaryOp") -> Value:
-        left = expr.left.accept(self)
-        right = expr.right.accept(self)
+        left = self.visit(expr.left)
+        right = self.visit(expr.right)
         return expr.operator(left, right)
 
     def visit_function_call(self, expr: "FunctionCall") -> Value:
@@ -61,6 +66,9 @@ class ExpressionResolver(ExpressionVisitor):
 
 
 class StatementVisitor(ABC):
+    def visit(self, stmt: Statement) -> Any:
+        return stmt.accept(self)
+
     @abstractmethod
     def visit_expr(self, stmt: "ExpressionStmt") -> Any:
         pass
