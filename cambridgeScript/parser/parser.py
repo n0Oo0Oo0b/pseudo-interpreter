@@ -22,42 +22,46 @@ class Parser:
         self._next_index += 1
         return res
 
-    def _check(self, *targets) -> Token | None:
-        # Check if the next token matches specific operators
+    def _check(self, *targets: Token) -> Token | None:
+        # Return the next token if the next token is in targets
         next_token = self._peek()
-        return next_token if next_token.value in targets else None
+        return next_token if next_token in targets else None
 
-    def _match(self, *targets) -> Token | None:
-        # Consume the next token if the next token matches specific operators
+    def _match(self, *targets: Token) -> Token | None:
+        # Consume and return the next token if the next token is in targets
         res = self._check(*targets)
         if res:
             self._next_index += 1
         return res
 
+    def _match_operator(self, *operators: str) -> Token | None:
+        # Match certain operators
+        return self._match(*[Token("OPERATOR", op) for op in operators])
+
     # Recursive descent
     def _comparison(self) -> Expression:
         expr = self._term()
-        while op := self._match("=", "<>", "<", "<=", ">", ">="):
+        while op := self._match_operator("=", "<>", "<", "<=", ">", ">="):
             right = self._term()
             expr = BinaryOp(OPERATORS[op.value], expr, right)
         return expr
 
     def _term(self) -> Expression:
         expr = self._factor()
-        while op := self._match("+", "-"):
+        while op := self._match_operator("+", "-"):
             right = self._factor()
             expr = BinaryOp(OPERATORS[op.value], expr, right)
         return expr
 
     def _factor(self) -> Expression:
         expr = self._unary()
-        while op := self._match("*", "/"):
+        while op := self._match_operator("*", "/"):
             right = self._unary()
             expr = BinaryOp(OPERATORS[op.value], expr, right)
         return expr
 
     def _unary(self) -> Expression:
-        if op := self._match("+", "-"):
+        if op := self._match_operator("+", "-"):
             operand = self._unary()
             op = (lambda x: -x) if op.value == "-" else (lambda x: +x)  # bodge
             return UnaryOp(op, operand)
@@ -69,8 +73,7 @@ class Parser:
             return Primary(token)
         elif token == Token("SYMBOL", "("):
             expr = self.expression()
-            next_token = self._advance()
-            if next_token != Token("SYMBOL", ")"):
+            if not self._check(Token("SYMBOL", ")")):
                 raise RuntimeError("'(' was never closed")
             return expr
         raise RuntimeError("Unexpected token")
