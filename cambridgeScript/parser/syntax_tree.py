@@ -50,6 +50,15 @@ class FunctionCall(Expression):
         return visitor.visit_function_call(self)
 
 
+@dataclass
+class Assignment(Expression):
+    target: Token
+    value: Expression
+
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_assignment(self)
+
+
 class Statement(ABC):
     @abstractmethod
     def accept(self, visitor: StatementVisitor) -> Any:

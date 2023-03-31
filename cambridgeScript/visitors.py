@@ -10,6 +10,7 @@ if TYPE_CHECKING:
         UnaryOp,
         BinaryOp,
         FunctionCall,
+        Assignment,
         Statement,
         InputStmt,
         OutputStmt,
@@ -41,6 +42,10 @@ class ExpressionVisitor(ABC):
     def visit_function_call(self, expr: "FunctionCall") -> Any:
         pass
 
+    @abstractmethod
+    def visit_assignment(self, expr: "Assignment") -> Any:
+        pass
+
 
 class ExpressionResolver(ExpressionVisitor):
     def __init__(self, variables: VariableState):
@@ -63,6 +68,9 @@ class ExpressionResolver(ExpressionVisitor):
 
     def visit_function_call(self, expr: "FunctionCall") -> Value:
         pass
+
+    def visit_assignment(self, expr: "Assignment") -> Any:
+        raise NotImplementedError
 
 
 class StatementVisitor(ABC):
