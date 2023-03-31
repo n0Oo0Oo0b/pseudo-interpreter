@@ -1,5 +1,14 @@
 from ..constants import OPERATORS
-from .syntax_tree import Expression, UnaryOp, BinaryOp, Primary
+from .syntax_tree import (
+    Expression,
+    UnaryOp,
+    BinaryOp,
+    Primary,
+    Statement,
+    ExpressionStmt,
+    InputStmt,
+    OutputStmt,
+)
 from .tokens import Token
 
 
@@ -7,6 +16,12 @@ class Parser:
     def __init__(self, tokens: list[Token]):
         self.tokens = tokens
         self._next_index = 0
+
+    def block(self) -> list[Statement]:
+        res: list[Statement] = []
+        while stmt := self._statement():
+            res.append(stmt)
+        return res
 
     def expression(self) -> Expression:
         return self._comparison()
@@ -49,7 +64,24 @@ class Parser:
         # Match certain operators
         return self._match(*[Token("OPERATOR", op) for op in operators])
 
-    # Recursive descent
+    # Statements
+    def _statement(self) -> Statement | None:
+        while self._check("NEWLINE"):
+            self._advance()
+        if self._match("EOF"):
+            return None
+        elif self._match("INPUT"):
+            stmt = InputStmt(self._advance())
+            self._consume("NEWLINE", "Expected newline after INPUT statement")
+            return stmt
+        elif self._match("OUTPUT"):
+            stmt = OutputStmt(self.expression())
+            self._consume("NEWLINE", "Expected newline after OUTPUT statement")
+            return stmt
+        else:
+            return ExpressionStmt(self.expression())
+
+    # Expressions
     def _comparison(self) -> Expression:
         expr = self._term()
         while op := self._match_operator("=", "<>", "<", "<=", ">", ">="):
