@@ -16,9 +16,12 @@ class Token:
     meta: str | None = None
 
     def __eq__(self, other):
-        if not isinstance(other, Token):
+        if isinstance(other, str):
+            return self.type == other
+        elif isinstance(other, Token):
+            return self.type == other.type and self.value == other.value
+        else:
             return False
-        return self.type == other.type and self.value == other.value
 
 
 def parse_literal(literal: str) -> tuple[Value, str]:
