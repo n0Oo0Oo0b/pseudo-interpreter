@@ -12,9 +12,14 @@ class Parser:
         return self._comparison()
 
     # Helpers
+    def _is_at_end(self):
+        return self._next_index == len(self.tokens)
+
     def _peek(self) -> Token | None:
         # Returns the next token without consuming
-        return self.tokens[min(self._next_index, len(self.tokens) - 1)]
+        if self._is_at_end():
+            return Token("EOF", None)
+        return self.tokens[self._next_index]
 
     def _advance(self) -> Token:
         # Consume the next token
