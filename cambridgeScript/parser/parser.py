@@ -22,16 +22,22 @@ class Parser:
         self._next_index += 1
         return res
 
-    def _check(self, *targets: Token) -> Token | None:
+    def _check(self, *targets: Token | str) -> Token | None:
         # Return the next token if the next token is in targets
         next_token = self._peek()
         return next_token if next_token in targets else None
 
-    def _match(self, *targets: Token) -> Token | None:
+    def _match(self, *targets: Token | str) -> Token | None:
         # Consume and return the next token if the next token is in targets
         res = self._check(*targets)
         if res:
             self._next_index += 1
+        return res
+
+    def _consume(self, target: Token | str, fail_message: str) -> Token:
+        # Attempts to match a token or token type, raises error if fail
+        if not (res := self._match(target)):
+            raise RuntimeError(fail_message)
         return res
 
     def _match_operator(self, *operators: str) -> Token | None:
@@ -69,14 +75,13 @@ class Parser:
 
     def _primary(self) -> Expression:
         token = self._advance()
-        if token.type == "LITERAL" or token.type == "IDENTIFIER":
+        if token == "LITERAL" or token == "IDENTIFIER":
             return Primary(token)
         elif token == Token("SYMBOL", "("):
             expr = self.expression()
-            if not self._check(Token("SYMBOL", ")")):
-                raise RuntimeError("'(' was never closed")
+            self._consume(Token("SYMBOL", ")"), "'(' was never closed")
             return expr
-        raise RuntimeError("Unexpected token")
+        raise RuntimeError(f"Unexpected token {token}")
 
 
 def parse_expression(tokens: list[Token]) -> Expression:
