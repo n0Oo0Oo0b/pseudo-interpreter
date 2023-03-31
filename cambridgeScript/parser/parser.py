@@ -73,6 +73,7 @@ class Parser:
             if next_token != Token("SYMBOL", ")"):
                 raise RuntimeError("'(' was never closed")
             return expr
+        raise RuntimeError("Unexpected token")
 
 
 def parse_expression(tokens: list[Token]) -> Expression:
