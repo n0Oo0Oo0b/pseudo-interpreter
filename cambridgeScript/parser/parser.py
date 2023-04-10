@@ -9,9 +9,10 @@ from .syntax_tree import (
     InputStmt,
     OutputStmt,
     DeclareStmt,
-    IfStmt,
+    Assignment,
 )
 from .tokens import Token
+from ..constants import OPERATORS, TYPES
 
 
 class Parser:
@@ -81,45 +82,30 @@ class Parser:
             return None
         elif self._match("INPUT"):
             stmt = InputStmt(self._advance())
-            self._consume("NEWLINE", "Expected newline after INPUT statement")
-            return stmt
         elif self._match("OUTPUT"):
             stmt = OutputStmt(self.expression())
-            self._consume("NEWLINE", "Expected newline after OUTPUT statement")
-            return stmt
         elif self._match("DECLARE"):
             name = self._consume("IDENTIFIER", "Expected identifier for DECLARE")
             self._consume(Token("SYMBOL", ":"), "Expected ':' after variable name")
-            type_ = self._consume("IDENTIFIER", "Expected variable type after ':'")
+            type_ = self._consume("IDENTIFIER", "Expected variable type after ':'").value
             if type_ not in TYPES:
-                raise RuntimeError(f"Invalid type name {type_.value}")
+                raise RuntimeError(f"Invalid type name {type_}")
             stmt = DeclareStmt(name, TYPES[type_])
-            self._consume("NEWLINE", "Expected newline after DECLARE statement")
-            return stmt
-        elif token := self._match("IF") or self._match("WHILE"):
-            if token == "IF":
-                condition_end, block_end = "THEN", "ENDIF"
-            else:
-                condition_end, block_end = "DO", "ENDWHILE"
-            # Start
-            condition = self.expression()
-            self._consume(
-                condition_end,
-                f"{condition_end} expected after condition in if statement",
-            )
-            self._consume("NEWLINE", f"Newline expected after {condition_end}")
-            # Body
-            body: list[Statement] = []
-            while not self._match(block_end):
-                body.append(self._statement())
-            stmt = IfStmt(condition, body)
-            # Return
-            self._consume("NEWLINE", f"Newline expected after {block_end}")
-            return stmt
         else:
-            return ExpressionStmt(self.expression())
+            stmt = ExpressionStmt(self.expression())
+        self._consume("NEWLINE", "Expected newline after statement")
+        return stmt
 
     # Expressions
+    def _assignment(self) -> Expression:
+        expr = self._comparison()
+        if self._match_operator("<-"):
+            right = self._comparison()
+            if not isinstance(expr, Primary):
+                raise RuntimeError("Invalid assignment identifier")
+            expr = Assignment(expr.token, right)
+        return expr
+
     def _comparison(self) -> Expression:
         expr = self._term()
         while op := self._match_operator("=", "<>", "<", "<=", ">", ">="):
