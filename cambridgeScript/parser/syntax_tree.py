@@ -102,7 +102,8 @@ class DeclareStmt(Statement):
 @dataclass
 class IfStmt(Statement):
     condition: Expression
-    body: list[Statement]
+    true_branch: list[Statement]
+    false_branch: list[Statement] | None = None
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_if(self)
