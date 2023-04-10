@@ -19,10 +19,12 @@ class Parser:
         self.tokens = tokens
         self._next_index = 0
 
-    def block(self) -> list[Statement]:
+    def block(self, end_token: str | Token = "EOF") -> list[Statement]:
         res: list[Statement] = []
         while stmt := self._statement():
             res.append(stmt)
+        self._skip_newlines()
+        self._consume(end_token, f"{end_token} expected after block")
         return res
 
     def expression(self) -> Expression:
