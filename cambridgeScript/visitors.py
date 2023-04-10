@@ -76,7 +76,7 @@ class ExpressionResolver(ExpressionVisitor):
 
 
 class StatementVisitor(ABC):
-    def visit(self, stmt: Statement) -> Any:
+    def visit(self, stmt: "Statement") -> Any:
         return stmt.accept(self)
 
     @abstractmethod
