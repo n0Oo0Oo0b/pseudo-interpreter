@@ -26,10 +26,10 @@ class Parser:
         return res
 
     def expression(self) -> Expression:
-        return self._comparison()
+        return self._assignment()
 
     # Helpers
-    def _is_at_end(self):
+    def _is_at_end(self) -> bool:
         return self._next_index == len(self.tokens)
 
     def _peek(self) -> Token | None:
@@ -41,8 +41,16 @@ class Parser:
     def _advance(self) -> Token:
         # Consume the next token
         res = self._peek()
-        self._next_index += 1
+        if not self._is_at_end():
+            self._next_index += 1
         return res
+
+    def _skip_newlines(self) -> bool:
+        if not self._check("NEWLINE"):
+            return False
+        while self._match("NEWLINE"):
+            pass
+        return True
 
     def _check(self, *targets: Token | str) -> Token | None:
         # Return the next token if the next token is in targets
@@ -53,7 +61,7 @@ class Parser:
         # Consume and return the next token if the next token is in targets
         res = self._check(*targets)
         if res:
-            self._next_index += 1
+            self._advance()
         return res
 
     def _consume(self, target: Token | str, fail_message: str) -> Token:
@@ -68,9 +76,8 @@ class Parser:
 
     # Statements
     def _statement(self) -> Statement | None:
-        while self._check("NEWLINE"):
-            self._advance()
-        if self._match("EOF"):
+        self._skip_newlines()
+        if self._check("EOF"):
             return None
         elif self._match("INPUT"):
             stmt = InputStmt(self._advance())
