@@ -1,4 +1,3 @@
-from ..constants import OPERATORS, TYPES
 from .syntax_tree import (
     Expression,
     UnaryOp,
