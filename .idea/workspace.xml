@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="46cfdde9-0796-4529-a0d9-34b6966e99a2" name="Changes" comment="update .idea">
+      <change afterPath="$PROJECT_DIR$/CONTRIBUTING.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="2LzBYhAKcmvdOOER9yhCgpJMNtV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;parser-v2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/danielgu/Repositories/pseudo-interpreter&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Python&quot;,
+      &quot;HgIgnore&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/cambridgeScript/interpreter" />
+      <recent name="$PROJECT_DIR$/cambridgeScript/parser" />
+      <recent name="$PROJECT_DIR$/cambridgeScript" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="file" type="PythonConfigurationType" factoryName="Python">
+      <module name="pseudo-interpreter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="cambridgeScript" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="true" />
+      <option name="REDIRECT_INPUT" value="true" />
+      <option name="INPUT_FILE" value="$PROJECT_DIR$/input.txt" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="46cfdde9-0796-4529-a0d9-34b6966e99a2" name="Changes" comment="" />
+      <created>1676864079507</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676864079507</updated>
+      <workItem from="1676864080561" duration="1842000" />
+      <workItem from="1676869032560" duration="8623000" />
+      <workItem from="1676943818140" duration="20763000" />
+      <workItem from="1677044653234" duration="9667000" />
+      <workItem from="1677116030733" duration="15727000" />
+      <workItem from="1677202527880" duration="60000" />
+      <workItem from="1677285423680" duration="1956000" />
+      <workItem from="1677476877338" duration="13933000" />
+      <workItem from="1678243013762" duration="4341000" />
+      <workItem from="1678254110722" duration="23226000" />
+      <workItem from="1678502131650" duration="5071000" />
+      <workItem from="1678677873218" duration="3235000" />
+      <workItem from="1679016437285" duration="4000" />
+      <workItem from="1679282855162" duration="968000" />
+      <workItem from="1679468471798" duration="2320000" />
+      <workItem from="1679490686774" duration="5573000" />
+      <workItem from="1679884504619" duration="2367000" />
+      <workItem from="1679923940822" duration="18371000" />
+      <workItem from="1680066211944" duration="12880000" />
+      <workItem from="1680222283647" duration="7069000" />
+      <workItem from="1680230300714" duration="8773000" />
+      <workItem from="1680694350925" duration="10215000" />
+      <workItem from="1681090835473" duration="4524000" />
+      <workItem from="1681097248262" duration="7403000" />
+      <workItem from="1681121174384" duration="17904000" />
+      <workItem from="1681368484449" duration="93000" />
+    </task>
+    <task id="LOCAL-00051" summary="Reorder methods to match order of recursive descent">
+      <created>1679965986885</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1679965986885</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Reorder methods to match recursive descent">
+      <created>1679966059428</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1679966059428</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Fix incorrect equality and inequality operators in parser">
+      <created>1679969590010</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1679969590010</updated>
+    </task>
+    <task id="LOCAL-00054" summary="rename `ExpressionParser` to `Parser`">
+      <created>1679970006076</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1679970006076</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Remove unused import">
+      <created>1679970788363</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1679970788363</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Create Statement ABC and InputStmt, OutputStmt classes">
+      <created>1679970921471</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1679970921471</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Fix #6">
+      <created>1679974831940</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1679974831940</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Store line/column information in tokens">
+      <created>1679975113631</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1679975113631</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Refactor literal parsing into a function">
+      <created>1679975136156</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1679975136156</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Fix incorrect import">
+      <created>1679975573390</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1679975573390</updated>
+    </task>
+    <task id="LOCAL-00061" summary="remove unused import">
+      <created>1679975602366</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1679975602366</updated>
+    </task>
+    <task id="LOCAL-00062" summary="remove unused imports">
+      <created>1679975623678</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1679975623678</updated>
+    </task>
+    <task id="LOCAL-00063" summary="remove unused imports">
+      <created>1679975760011</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1679975760011</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Set default values for token line and column numbers">
+      <created>1679976451511</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1679976451511</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Make token line and columns optional">
+      <created>1679978545714</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1679978545714</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Make token line and column fields optional">
+      <created>1679978558624</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1679978558624</updated>
+    </task>
+    <task id="LOCAL-00067" summary="reformat with black">
+      <created>1679978777921</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1679978777921</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Delete main.py">
+      <created>1679979006832</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1679979006832</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Use poetry">
+      <created>1679979820766</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1679979820766</updated>
+    </task>
+    <task id="LOCAL-00070" summary="fix LEARN.md">
+      <created>1679980200267</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1679980200267</updated>
+    </task>
+    <task id="LOCAL-00071" summary="remove unused imports">
+      <created>1679980239729</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1679980239729</updated>
+    </task>
+    <task id="LOCAL-00072" summary="add click to dependencies">
+      <created>1680068573597</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1680068573598</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Use relative imports">
+      <created>1680139391806</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1680139391806</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Basic CLI for running files">
+      <created>1680153679672</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1680153679673</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Add additional info to pyproject.toml">
+      <created>1680154345470</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1680154345470</updated>
+    </task>
+    <task id="LOCAL-00076" summary="fix import">
+      <created>1680157677105</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1680157677105</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Create expression statement class">
+      <created>1680158245515</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1680158245515</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Create expression statement">
+      <created>1680158259182</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1680158259182</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Fix &gt;=, &lt;=, &lt;&gt; operators being lexed as 2 tokens">
+      <created>1680223747848</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1680223747848</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Raise error if the next token for primary expression is invalid">
+      <created>1680223879279</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1680223879279</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Make check and match functions more generic">
+      <created>1680224875081</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1680224875081</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Allow comparing tokens with token type as string">
+      <created>1680235615791</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1680235615791</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Use token-string comparisons">
+      <created>1680236387758</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1680236387758</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Create `_is_at_end`">
+      <created>1680236399877</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1680236399877</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Rudimentary statement parser">
+      <created>1680236419085</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1680236419085</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Temporary main file to test statement parsing">
+      <created>1680236516060</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1680236516060</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Add declare statement">
+      <created>1680237860883</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1680237860883</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Create generic `visit()` functions for visitor ABCs">
+      <created>1680238049693</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1680238049694</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Temporary assignment expression">
+      <created>1680242586348</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1680242586348</updated>
+    </task>
+    <task id="LOCAL-00090" summary="If and while statements">
+      <created>1680242609025</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1680242609025</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Improve helper functions">
+      <created>1681093697969</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1681093697969</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Parse expression statements">
+      <created>1681093822372</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1681093822372</updated>
+    </task>
+    <task id="LOCAL-00093" summary="type-checking fix">
+      <created>1681093828496</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1681093828496</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Amend 9cf711bf to include constants.py">
+      <created>1681093901441</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1681093901441</updated>
+    </task>
+    <task id="LOCAL-00095" summary="better imports">
+      <created>1681094592545</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1681094592545</updated>
+    </task>
+    <task id="LOCAL-00096" summary="remove duplicate import">
+      <created>1681094600755</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1681094600755</updated>
+    </task>
+    <task id="LOCAL-00097" summary="force blocks to end with specific token">
+      <created>1681094646913</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1681094646913</updated>
+    </task>
+    <task id="LOCAL-00098" summary="separate true/false branches in if statement">
+      <created>1681094684574</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1681094684574</updated>
+    </task>
+    <task id="LOCAL-00099" summary="update .idea">
+      <created>1681095120790</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1681095120790</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="variable-types" />
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add additional info to pyproject.toml" />
+    <MESSAGE value="fix import" />
+    <MESSAGE value="Create expression statement class" />
+    <MESSAGE value="Create expression statement" />
+    <MESSAGE value="Fix &gt;=, &lt;=, &lt;&gt; operators being lexed as 2 tokens" />
+    <MESSAGE value="Raise error if the next token for primary expression is invalid" />
+    <MESSAGE value="Make check and match functions more generic" />
+    <MESSAGE value="Allow comparing tokens with token type as string" />
+    <MESSAGE value="Use token-string comparisons" />
+    <MESSAGE value="Create `_is_at_end`" />
+    <MESSAGE value="Rudimentary statement parser" />
+    <MESSAGE value="Temporary main file to test statement parsing" />
+    <MESSAGE value="Add declare statement" />
+    <MESSAGE value="Create generic `visit()` functions for visitor ABCs" />
+    <MESSAGE value="Temporary assignment expression" />
+    <MESSAGE value="If and while statements" />
+    <MESSAGE value="Improve helper functions" />
+    <MESSAGE value="Parse expression statements" />
+    <MESSAGE value="type-checking fix" />
+    <MESSAGE value="Amend 9cf711bf to include constants.py" />
+    <MESSAGE value="better imports" />
+    <MESSAGE value="remove duplicate import" />
+    <MESSAGE value="force blocks to end with specific token" />
+    <MESSAGE value="separate true/false branches in if statement" />
+    <MESSAGE value="update .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="update .idea" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$__main__.coverage" NAME="cambridgeScript Coverage Results" MODIFIED="1679974751394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$constants.coverage" NAME="constants Coverage Results" MODIFIED="1677114210599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$students.coverage" NAME="students Coverage Results" MODIFIED="1679532370211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$programs__1_.coverage" NAME="programs (1) Coverage Results" MODIFIED="1679974672468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cambridgeScript/interpreter" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$file.coverage" NAME="file Coverage Results" MODIFIED="1681108594406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$scratch_1.coverage" NAME="scratch_1 Coverage Results" MODIFIED="1681207196547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$scratch.coverage" NAME="scratch Coverage Results" MODIFIED="1681091494642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$tokens__1_.coverage" NAME="tokens (1) Coverage Results" MODIFIED="1680139067970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cambridgeScript/parser" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$tokens.coverage" NAME="tokens Coverage Results" MODIFIED="1677125719032" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$main.coverage" NAME="main Coverage Results" MODIFIED="1679539526811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$classes.coverage" NAME="classes Coverage Results" MODIFIED="1677547563504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$scratch_2.coverage" NAME="scratch_2 Coverage Results" MODIFIED="1681181170097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$APPLICATION_CONFIG_DIR$/scratches" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$cambridgeScript.coverage" NAME="cambridgeScript Coverage Results" MODIFIED="1680242772081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pseudo_interpreter$parser.coverage" NAME="parser Coverage Results" MODIFIED="1681093216908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cambridgeScript/parser" />
+  </component>
+</project>

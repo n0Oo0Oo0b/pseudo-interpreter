@@ -1,0 +1,22 @@
+Index: pyproject.toml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[tool.poetry]\nname = \"pseudo-interpreter\"\nversion = \"0.0.1\"\ndescription = \"\"\nauthors = [\"Daniel Gu <daniel.gu25@stu.dulwich.org>\"]\nreadme = \"README.md\"\npackages = [{ include = \"cambridgeScript\" }]\n\n[tool.poetry.dependencies]\npython = \"^3.11\"\nclick = \"^8.1.3\"\n\n\n[build-system]\nrequires = [\"poetry-core\"]\nbuild-backend = \"poetry.core.masonry.api\"\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pyproject.toml b/pyproject.toml
+--- a/pyproject.toml	(revision f30b6e295cc79a63b05d3636f8eca2b8548854a4)
++++ b/pyproject.toml	(date 1680154243609)
+@@ -2,8 +2,11 @@
+ name = "pseudo-interpreter"
+ version = "0.0.1"
+ description = ""
++license = "MIT"
+ authors = ["Daniel Gu <daniel.gu25@stu.dulwich.org>"]
+ readme = "README.md"
++repository = "https://github.com/n0Oo0Oo0b/pseudo-interpreter"
++documentation = "https://github.com/n0Oo0Oo0b/pseudo-interpreter/wiki"
+ packages = [{ include = "cambridgeScript" }]
+ 
+ [tool.poetry.dependencies]
