@@ -1,60 +1,61 @@
+from enum import Enum, StrEnum
 import operator
 
+
 # Reserved words
-KEYWORDS = {
-    "PROCEDURE",
-    "ENDPROCEDURE",
-    "FUNCTION",
-    "RETURNS",
-    "ENDFUNCTION",
-    "IF",
-    "THEN",
-    "ELSE",
-    "ENDIF",
-    "CASE",
-    "OF",
-    "OTHERWISE",
-    "ENDCASE",
-    "FOR",
-    "TO",
-    "STEP",
-    "NEXT",
-    "REPEAT",
-    "UNTIL",
-    "WHILE",
-    "DO",
-    "ENDWHILE",
-    "DECLARE",
-    "CONSTANT",
-    "INPUT",
-    "OUTPUT",
-    "RETURN",
-    "OPENFILE",
-    "FOR",
-    "READFILE",
-    "WRITEFILE",
-    "CLOSEFILE",
-    "CALL",
-    "ARRAY",
-    "INTEGER",
-    "REAL",
-    "CHAR",
-    "STRING",
-    "BOOLEAN",
-    "READ",
-    "WRITE",
-    "TRUE",
-    "FALSE"
-}
+class KEYWORDS(StrEnum):
+    PROCEDURE = "PROCEDURE"
+    ENDPROCEDURE = "ENDPROCEDURE"
+    FUNCTION = "FUNCTION"
+    RETURNS = "RETURNS"
+    ENDFUNCTION = "ENDFUNCTION"
+    IF = "IF"
+    THEN = "THEN"
+    ELSE = "ELSE"
+    ENDIF = "ENDIF"
+    CASE = "CASE"
+    OF = "OF"
+    OTHERWISE = "OTHERWISE"
+    ENDCASE = "ENDCASE"
+    FOR = "FOR"
+    TO = "TO"
+    STEP = "STEP"
+    NEXT = "NEXT"
+    REPEAT = "REPEAT"
+    UNTIL = "UNTIL"
+    WHILE = "WHILE"
+    DO = "DO"
+    ENDWHILE = "ENDWHILE"
+    DECLARE = "DECLARE"
+    CONSTANT = "CONSTANT"
+    INPUT = "INPUT"
+    OUTPUT = "OUTPUT"
+    RETURN = "RETURN"
+    OPENFILE = "OPENFILE"
+    READFILE = "READFILE"
+    WRITEFILE = "WRITEFILE"
+    CLOSEFILE = "CLOSEFILE"
+    CALL = "CALL"
+    ARRAY = "ARRAY"
+    INTEGER = "INTEGER"
+    REAL = "REAL"
+    CHAR = "CHAR"
+    STRING = "STRING"
+    BOOLEAN = "BOOLEAN"
+    READ = "READ"
+    WRITE = "WRITE"
+    TRUE = "TRUE"
+    FALSE = "FALSE"
+
 
 # Variable types
-TYPES = {
-    "INTEGER": int,
-    "REAL": float,
-    "CHAR": str,
-    "STRING": str,
-    "BOOLEAN": bool,
-}
+class TYPES(Enum):
+    INTEGER = int
+    REAL = float
+    CHAR = str
+    STRING = str
+    BOOLEAN = bool
+
 
 # Regex patterns for tokens
 TOKENS = [
