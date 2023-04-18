@@ -1,26 +1,40 @@
-
-statement       = procDecl
+blocks          = procDecl
                 | functionDecl
-                | declareStmt
-                | constantDecl
-                | inputStmt
-                | outputStmt
-                | returnStmt
-                | fOpenStmt
-                | fReadStmt
-                | fWriteStmt
-                | fCloseStmt
-                | exprStmt ;
+                | ifStmt
+                | caseStmt
+                | statement ;
 
 procDecl        = "PROCEDURE" IDENTIFIER "(" parameters? ")"
                     statement* "ENDPROCEDURE" ;
 functionDecl    = "FUNCTION" IDENTIFIER "(" parameters? ")" "RETURNS" datatype
                     statement* "ENDFUNCTION";
+ifStmt          = "IF" expression
+                    "THEN" statement*
+                    ("ELSE" statement*)?
+                    "ENDIF"
+caseStmt        = "CASE" "OF" IDENTIFIER
+                    (literal ":" statement)+
+                    ("OTHERWISE" statement)?
+                    "ENDCASE"
+
+
+statement       = declareStmt
+                | constantDecl
+                | inputStmt
+                | outputStmt
+                | returnStmt
+                | fileOp
+                | exprStmt ;
+
 declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
 constantDecl    = "CONSTANT" IDENTIFIER "<-" literal ;
 inputStmt       = "INPUT" IDENTIFIER ;
 outputStmt      = "OUTPUT" arguments ;
 returnStmt      = "RETURN" expression ;
+fileOp          = fOpenStmt
+                | fReadStmt
+                | fWriteStmt
+                | fCloseStmt
 fOpenStmt       = "OPENFILE" fileIdentifier "FOR" fileMode ;
 fReadStmt       = "READFILE" fileIdentifier "," IDENTIFIER ;
 fWriteStmt      = "WRITEFILE" fileIdentifier "," IDENTIFIER ;
@@ -39,7 +53,7 @@ logicNot        = "NOT"? logicNot | comparison ;
 comparison      = term ( ( "<>" | "=" | "<=" | ">=" | "<" | ">") term )* ;
 term            = factor ( ( "-" | "+" ) factor )* ;
 factor          = call ( ( "/" | "*" ) call )* ;
-call            = primary ( "(" arguments? ")" | "[" expression "]" )* ;
+call            = primary ( "(" arguments? ")" | "[" arguments "]" )* ;
 primary         = literal | IDENTIFIER | "(" expression ")" ;
 
 
