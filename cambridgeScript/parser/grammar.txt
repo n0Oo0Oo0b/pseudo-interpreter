@@ -13,7 +13,7 @@ statement       = procDecl
                 | exprStmt ;
 
 procDecl        = "PROCEDURE" IDENTIFIER "(" parameters? ")"
-                    statement* "ENDPROCEDURE"
+                    statement* "ENDPROCEDURE" ;
 functionDecl    = "FUNCTION" IDENTIFIER "(" parameters? ")" "RETURNS" datatype
                     statement* "ENDFUNCTION";
 declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
@@ -33,8 +33,9 @@ expression      = assignment ;
 
 assignment      = IDENTIFIER () "=" logicOr
                 | logicOr ;
-logicOr         = logicAnd ( "or" logicAnd )* ;
-logicAnd        = equality ( "and" comparison )* ;
+logicOr         = logicAnd ( "OR" logicAnd )* ;
+logicAnd        = logicNot ( "AND" logicNot )* ;
+logicNot        = "NOT"? logicNot | comparison ;
 comparison      = term ( ( "<>" | "=" | "<=" | ">=" | "<" | ">") term )* ;
 term            = factor ( ( "-" | "+" ) factor )* ;
 factor          = call ( ( "/" | "*" ) call )* ;
