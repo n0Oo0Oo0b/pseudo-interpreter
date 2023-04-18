@@ -1,0 +1,67 @@
+
+statement       = procDecl
+                | functionDecl
+                | declareStmt
+                | constantDecl
+                | inputStmt
+                | outputStmt
+                | returnStmt
+                | fOpenStmt
+                | fReadStmt
+                | fWriteStmt
+                | fCloseStmt
+                | exprStmt ;
+
+procDecl        = "PROCEDURE" IDENTIFIER "(" parameters? ")"
+                    statement* "ENDPROCEDURE"
+functionDecl    = "FUNCTION" IDENTIFIER "(" parameters? ")" "RETURNS" datatype
+                    statement* "ENDFUNCTION";
+declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
+constantDecl    = "CONSTANT" IDENTIFIER "<-" literal ;
+inputStmt       = "INPUT" IDENTIFIER ;
+outputStmt      = "OUTPUT" arguments ;
+returnStmt      = "RETURN" expression ;
+fOpenStmt       = "OPENFILE" fileIdentifier "FOR" fileMode ;
+fReadStmt       = "READFILE" fileIdentifier "," IDENTIFIER ;
+fWriteStmt      = "WRITEFILE" fileIdentifier "," IDENTIFIER ;
+fCloseStmt      = "CLOSEFILE" fileIdentifier ;
+exprStmt        = expression ;
+
+
+
+expression      = assignment ;
+
+assignment      = IDENTIFIER () "=" logicOr
+                | logicOr ;
+logicOr         = logicAnd ( "or" logicAnd )* ;
+logicAnd        = equality ( "and" comparison )* ;
+comparison      = term ( ( "<>" | "=" | "<=" | ">=" | "<" | ">") term )* ;
+term            = factor ( ( "-" | "+" ) factor )* ;
+factor          = call ( ( "/" | "*" ) call )* ;
+call            = primary ( "(" arguments? ")" | "[" expression "]" )* ;
+primary         = literal | IDENTIFIER | "(" expression ")" ;
+
+
+
+datatype        = basicType | arrayType ;
+arrayType       = "ARRAY" "[" arrayRange ("," arrayRange)* "]" "OF" basicType ;
+arrayRange      = expression ":" expression ;
+basicType       = "INTEGER" | "REAL" | "CHAR" | "STRING" | "BOOLEAN" ;
+literal         = INTEGER | REAL | CHAR | STRING | BOOLEAN ;
+arguments       = expression ("," expression)* ;
+parameters      = IDENTIFIER ":" datatype ("," IDENTIFIER ":" datatype)* ;
+
+fileIdentifier  = STRING ;
+fileMode        = "READ" | "WRITE" ;
+
+
+
+INTEGER         = "-"? DIGIT+ ;
+REAL            = "-"? DIGIT+ "." DIGIT+ ;
+CHAR            = "'" <any char except "'"> "'" ;
+STRING          = "\"" <any char except "\"">* "\"" ;
+BOOLEAN         = "TRUE" | "FALSE" ;
+IDENTIFIER      = ALPHA ( ALPHA | DIGIT )* ;
+ALPHA           = "a" ... "z" | "A" ... "Z" ;
+DIGIT           = "0" ... "9" ;
+NEWLINE         = "\n" ;
