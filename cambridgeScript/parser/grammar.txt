@@ -45,7 +45,7 @@ exprStmt        = expression ;
 
 expression      = assignment ;
 
-assignment      = IDENTIFIER () "=" logicOr
+assignment      = IDENTIFIER () "<-" logicOr
                 | logicOr ;
 logicOr         = logicAnd ( "OR" logicAnd )* ;
 logicAnd        = logicNot ( "AND" logicNot )* ;
