@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import re
 
-from ..constants import KEYWORDS, TOKEN_REGEX
+from ..constants import Keyword, TOKEN_REGEX
 
 
 Value = str | int | float | bool
@@ -58,7 +58,7 @@ def parse_tokens(code: str) -> list[Token]:
         token_start = match.start()
         if token_type == "IGNORE" or token_type == "COMMENT":
             continue
-        elif token_type == "IDENTIFIER" and token_value in KEYWORDS:
+        elif token_type == "IDENTIFIER" and token_value in Keyword:
             token = Token(token_value, None, line_number, token_start - line_start)
         elif token_type == "LITERAL":
             token_value, literal_type = parse_literal(token_value)

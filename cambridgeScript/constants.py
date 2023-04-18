@@ -3,7 +3,7 @@ import operator
 
 
 # Reserved words
-class KEYWORDS(StrEnum):
+class Keyword(StrEnum):
     PROCEDURE = "PROCEDURE"
     ENDPROCEDURE = "ENDPROCEDURE"
     FUNCTION = "FUNCTION"
@@ -46,6 +46,26 @@ class KEYWORDS(StrEnum):
     WRITE = "WRITE"
     TRUE = "TRUE"
     FALSE = "FALSE"
+
+
+class Symbol(Enum):
+    LPAREN = "("
+    RPAREN = ")"
+    LBRACKET = "["
+    RBRAKET = "]"
+    COLON = ":"
+    ASSIGN = "<-"
+    EQUAL = "="
+    NOT_EQUAL = "<>"
+    LESS = "<"
+    LESS_EQUAL = "<="
+    GREAT = ">"
+    GREAT_EQUAL = ">="
+    ADD = "+"
+    SUB = "-"
+    MUL = "*"
+    DIV = "/"
+    POW = "^"
 
 
 # Variable types
