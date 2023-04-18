@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46cfdde9-0796-4529-a0d9-34b6966e99a2" name="Changes" comment="update .idea">
-      <change afterPath="$PROJECT_DIR$/CONTRIBUTING.md" afterDir="false" />
+    <list default="true" id="46cfdde9-0796-4529-a0d9-34b6966e99a2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/cambridgeScript/parser/grammar.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cambridgeScript/parser/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/cambridgeScript/parser/parser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +28,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="KEEP" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -128,6 +131,8 @@
       <workItem from="1681097248262" duration="7403000" />
       <workItem from="1681121174384" duration="17904000" />
       <workItem from="1681368484449" duration="93000" />
+      <workItem from="1681708989677" duration="4000" />
+      <workItem from="1681713730308" duration="6288000" />
     </task>
     <task id="LOCAL-00051" summary="Reorder methods to match order of recursive descent">
       <created>1679965986885</created>
