@@ -1,34 +1,51 @@
 import operator
 
-
 # Reserved words
 KEYWORDS = {
-    # General command words
-    "DECLARE",
-    "INPUT",
-    "OUTPUT",
-    # Selection
+    "PROCEDURE",
+    "ENDPROCEDURE",
+    "FUNCTION",
+    "RETURNS",
+    "ENDFUNCTION",
     "IF",
     "THEN",
     "ELSE",
-    "DO",
     "ENDIF",
     "CASE",
     "OF",
     "OTHERWISE",
     "ENDCASE",
-    # Iteration
     "FOR",
     "TO",
-    "DO",
+    "STEP",
     "NEXT",
+    "REPEAT",
+    "UNTIL",
     "WHILE",
     "DO",
     "ENDWHILE",
-    "REPEAT",
-    "UNTIL",
+    "DECLARE",
+    "CONSTANT",
+    "INPUT",
+    "OUTPUT",
+    "RETURN",
+    "OPENFILE",
+    "FOR",
+    "READFILE",
+    "WRITEFILE",
+    "CLOSEFILE",
+    "CALL",
+    "ARRAY",
+    "INTEGER",
+    "REAL",
+    "CHAR",
+    "STRING",
+    "BOOLEAN",
+    "READ",
+    "WRITE",
+    "TRUE",
+    "FALSE"
 }
-
 
 # Variable types
 TYPES = {
@@ -38,7 +55,6 @@ TYPES = {
     "STRING": str,
     "BOOLEAN": bool,
 }
-
 
 # Regex patterns for tokens
 TOKENS = [
@@ -53,7 +69,6 @@ TOKENS = [
     ("INVALID", r"."),
 ]
 TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in TOKENS)
-
 
 OPERATORS = {
     "OR": lambda a, b: (bool(a) or bool(b)),
