@@ -10,6 +10,8 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 
 ## Features
 
+I am currently rewriting the statement parser in the [`parser-v2`](https://github.com/n0Oo0Oo0b/pseudo-interpreter/tree/parser-v2) branch
+
 - Variables (`DECLARE variable: TYPE`)
 - Basic expressions, including parenthesis and order of operations
 - Selection - if/else conditionals
@@ -25,4 +27,4 @@ Pseudocode is supposed to be a flexible way of outlining code, and shouldn't fol
 
 ## How to run
 
-Execute the `cambridgeScript` directory with python3.10 or above. The script to execute will be read from stdin.
+Execute with `python3 -m cambridgeScript run [filename]` in the repository root, where `[filename]`is the path to the file with the script to execute. Python 3.11+ required (tested on 3.11.0).

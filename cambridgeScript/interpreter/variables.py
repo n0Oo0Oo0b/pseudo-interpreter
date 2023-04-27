@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-from cambridgeScript.constants import TYPES
-
 
 Value = str | int | float | bool
 
@@ -18,7 +16,7 @@ class Variable:
     @value.setter
     def value(self, value):
         if type(value) != self.type:
-            raise RuntimeError('Invalid type for assignment')
+            raise RuntimeError("Invalid type for assignment")
         self._value = self.type(value)
 
 
@@ -35,7 +33,7 @@ class VariableState:
 
     def __setitem__(self, key: str, value: Value) -> None:
         if key not in self._variables:
-            raise RuntimeError(f'{key} not defined')
+            raise RuntimeError(f"{key} not defined")
         self._variables[key].value = value
 
     def declare(self, name: str, type_: type, value: Value | None = None) -> None:
