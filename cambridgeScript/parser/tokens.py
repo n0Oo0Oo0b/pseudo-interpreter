@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 from ..constants import Keywords, TOKEN_REGEX, Symbols
 
@@ -10,6 +10,11 @@ Value = str | int | float | bool
 class Token:
     line: int | None
     column: int | None
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return False
+        return super().__eq__(other)
 
 
 @dataclass(frozen=True)
@@ -44,6 +49,9 @@ class Literal(Token):
 @dataclass(frozen=True)
 class Identifier(Token):
     value: str
+
+    def __eq__(self, other):
+        return self.value == other
 
 
 def parse_literal(literal: str) -> Value:
@@ -91,6 +99,9 @@ def parse_tokens(code: str) -> list[Token]:
             continue
         elif token_type == "NEWLINE":
             line_number += 1
+            # Collapse consecutive newlines
+            if line_start == token_start - 1:
+                continue
             line_start = token_start
             token_type = "SYMBOL"
         elif token_type == "INVALID":
