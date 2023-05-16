@@ -1,11 +1,26 @@
-blocks          = procDecl
+program         = statement* ;
+
+
+
+statement       = procDecl
                 | functionDecl
                 | ifStmt
                 | caseStmt
                 | forLoop
                 | repeatLoop
                 | whileLoop
-                | statement ;
+                | statement
+                | declareStmt
+                | constantDecl
+                | inputStmt
+                | outputStmt
+                | returnStmt
+                | fOpenStmt
+                | fReadStmt
+                | fWriteStmt
+                | fCloseStmt
+                | procedureCall
+                | exprStmt ;
 
 procDecl        = "PROCEDURE" IDENTIFIER "(" parameters? ")"
                     statement* "ENDPROCEDURE" ;
@@ -24,27 +39,11 @@ forLoop         = "FOR" IDENTIFIER "<-" expression "TO" expression ("STEP" expre
 repeatLoop      = "REPEAT" statement* "UNTIL" expression ;
 whileLoop       = "WHILE" expression "DO" statement* "ENDWHILE";
 
-
-statement       = declareStmt
-                | constantDecl
-                | assignment
-                | inputStmt
-                | outputStmt
-                | returnStmt
-                | fileOp
-                | procedureCall
-                | exprStmt ;
-
 declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
 constantDecl    = "CONSTANT" IDENTIFIER "<-" literal ;
-assignment      = call "<-" expression ;
 inputStmt       = "INPUT" IDENTIFIER ;
 outputStmt      = "OUTPUT" arguments ;
 returnStmt      = "RETURN" expression ;
-fileOp          = fOpenStmt
-                | fReadStmt
-                | fWriteStmt
-                | fCloseStmt ;
 fOpenStmt       = "OPENFILE" fileIdentifier "FOR" fileMode ;
 fReadStmt       = "READFILE" fileIdentifier "," IDENTIFIER ;
 fWriteStmt      = "WRITEFILE" fileIdentifier "," IDENTIFIER ;
@@ -54,7 +53,8 @@ exprStmt        = expression ;
 
 
 
-expression      = logicOr ;
+expression      = assignment ;
+assignment      = logicOr ( "<-" logicOr )?
 logicOr         = logicAnd ( "OR" logicAnd )* ;
 logicAnd        = logicNot ( "AND" logicNot )* ;
 logicNot        = "NOT"? logicNot | comparison ;
@@ -81,8 +81,8 @@ fileMode        = "READ" | "WRITE" ;
 
 INTEGER         = "-"? DIGIT+ ;
 REAL            = "-"? DIGIT+ "." DIGIT+ ;
-CHAR            = "'" <any char except "'"> "'" ;
-STRING          = "\"" <any char except "\"">* "\"" ;
+CHAR            = "'" ( ~"'" ) "'" ;
+STRING          = "\"" ( ~"\"" )* "\"" ;
 BOOLEAN         = "TRUE" | "FALSE" ;
 IDENTIFIER      = ALPHA ( ALPHA | DIGIT )* ;
 ALPHA           = "a" ... "z" | "A" ... "Z" ;
