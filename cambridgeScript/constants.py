@@ -79,14 +79,11 @@ class TYPES(Enum):
 
 # Regex patterns for tokens
 TOKENS = [
-    ("COMMENT", r"/\*.*\*/|(?://|#).*$"),
+    ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
     ("NEWLINE", r"\n"),
     ("LITERAL", r'[0-9]+(?:\.[0-9]+)?|".*?(?<=[^\\])(?:\\\\)*+"'),
-    ("ASSIGN", r"<-"),
-    ("OPERATOR", r"[=<>+\-*/^]|<>|<=|>="),
-    ("SYMBOL", r"[():]"),
+    ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():]"),
     ("IDENTIFIER", r"[A-Za-z]+"),
-    ("IGNORE", r"[ \t]+"),
     ("INVALID", r"."),
 ]
 TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in TOKENS)
