@@ -3,7 +3,7 @@ import operator
 
 
 # Reserved words
-class Keyword(StrEnum):
+class Keywords(StrEnum):
     PROCEDURE = "PROCEDURE"
     ENDPROCEDURE = "ENDPROCEDURE"
     FUNCTION = "FUNCTION"
@@ -48,7 +48,7 @@ class Keyword(StrEnum):
     FALSE = "FALSE"
 
 
-class Symbol(Enum):
+class Symbols(Enum):
     LPAREN = "("
     RPAREN = ")"
     LBRACKET = "["
