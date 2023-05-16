@@ -1,46 +1,74 @@
 from dataclasses import dataclass
 import re
 
-from ..constants import KEYWORDS, TOKEN_REGEX
-
+from ..constants import Keywords, TOKEN_REGEX, Symbols
 
 Value = str | int | float | bool
 
 
 @dataclass(frozen=True)
 class Token:
-    type: str
-    value: Value | str | None
-    line: int | None = None
-    column: int | None = None
-    meta: str | None = None
+    line: int | None
+    column: int | None
+
+
+@dataclass(frozen=True)
+class KeywordToken(Token):
+    value: Keywords
 
     def __eq__(self, other):
-        if isinstance(other, str):
-            return self.type == other
-        elif isinstance(other, Token):
-            return self.type == other.type and self.value == other.value
-        else:
-            return False
+        if isinstance(other, Keywords):
+            return self.value == other
+        return super().__eq__(other)
 
 
-def parse_literal(literal: str) -> tuple[Value, str]:
-    """
-    Parse a literal value.
-    :param literal: literal to parse
-    :type literal: str
-    :return: a tuple containing the value of the literal and the datatype as a string
-    :rtype: tuple[Value, str]
-    """
+@dataclass(frozen=True)
+class SymbolToken(Token):
+    value: Symbols
+
+    def __eq__(self, other):
+        if isinstance(other, Symbols):
+            return self.value == other
+        return super().__eq__(other)
+
+
+@dataclass(frozen=True)
+class Literal(Token):
+    value: Value
+
+    @property
+    def type(self):
+        return type(self.value)
+
+
+@dataclass(frozen=True)
+class Identifier(Token):
+    value: str
+
+
+def parse_literal(literal: str) -> Value:
     if literal.startswith('"') and literal.endswith('"'):
-        value = (
-            literal[1:-1].replace(r"\"", '"').replace(r"\n", "\n").replace(r"\\", "\\")
-        )
-        return value, "STRING"
-    elif "." in literal:
-        return float(literal), "REAL"
-    else:
-        return int(literal), "INTEGER"
+        return literal[1:-1]
+    try:
+        if "." in literal:
+            return float(literal)
+        else:
+            return int(literal)
+    except ValueError:
+        raise ValueError("Invalid literal")
+
+
+def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
+    if token_type == "IDENTIFIER":
+        try:
+            return KeywordToken(value=Keywords(token_string), **token_kwargs)
+        except ValueError:
+            return Identifier(value=token_string, **token_kwargs)
+    elif token_type == "SYMBOL":
+        return SymbolToken(value=Symbols(token_string), **token_kwargs)
+    elif token_type == "LITERAL":
+        value = parse_literal(token_string)
+        return Literal(value=value, **token_kwargs)
 
 
 def parse_tokens(code: str) -> list[Token]:
@@ -59,25 +87,25 @@ def parse_tokens(code: str) -> list[Token]:
         token_type = match.lastgroup
         token_value = str(match.group())
         token_start = match.start()
-        if token_type == "IGNORE" or token_type == "COMMENT":
+        if token_type == "IGNORE":
             continue
-        elif token_type == "IDENTIFIER" and token_value in KEYWORDS:
-            token = Token(token_value, None, line_number, token_start - line_start)
-        elif token_type == "LITERAL":
-            token_value, literal_type = parse_literal(token_value)
-            token = Token(
-                token_type,
+        elif token_type == "NEWLINE":
+            line_number += 1
+            line_start = token_start
+            token_type = "SYMBOL"
+        elif token_type == "INVALID":
+            raise ValueError(
+                f"Invalid token at line {line_number}, column {token_start - line_start}"
+            )
+        try:
+            token = parse_token(
                 token_value,
-                line_number,
-                token_start - line_start,
-                literal_type,
+                token_type,
+                line=line_number,
+                column=token_start - line_start,
             )
-        else:
-            if token_type == "NEWLINE":
-                line_number += 1
-                line_start = token_start
-            token = Token(
-                token_type, token_value, line_number, token_start - line_start
-            )
+        except ValueError:
+            print(f"Invalid literal {token_value}")
+            raise
         res.append(token)
     return res
