@@ -1,5 +1,4 @@
 from enum import Enum, StrEnum
-import operator
 
 
 # Reserved words
@@ -66,6 +65,7 @@ class Symbols(Enum):
     MUL = "*"
     DIV = "/"
     POW = "^"
+    NEWLINE = "\n"
 
 
 # Variable types
@@ -78,7 +78,7 @@ class TYPES(Enum):
 
 
 # Regex patterns for tokens
-TOKENS = [
+_TOKENS = [
     ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
     ("NEWLINE", r"\n"),
     ("LITERAL", r'[0-9]+(?:\.[0-9]+)?|".*?(?<=[^\\])(?:\\\\)*+"'),
@@ -86,20 +86,4 @@ TOKENS = [
     ("IDENTIFIER", r"[A-Za-z]+"),
     ("INVALID", r"."),
 ]
-TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in TOKENS)
-
-OPERATORS = {
-    "OR": lambda a, b: (bool(a) or bool(b)),
-    "AND": lambda a, b: (bool(a) and bool(b)),
-    "=": operator.eq,
-    "<>": operator.ne,
-    "<": operator.lt,
-    ">": operator.gt,
-    "<=": operator.le,
-    ">=": operator.ge,
-    "^": operator.pow,
-    "*": operator.mul,
-    "/": operator.truediv,
-    "+": operator.add,
-    "-": operator.sub,
-}
+TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in _TOKENS)
