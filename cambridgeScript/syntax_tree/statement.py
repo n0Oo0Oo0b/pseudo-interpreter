@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, TypeVar
 
 from .expression import Expression
@@ -115,7 +115,7 @@ class FunctionDecl(Statement):
 class IfStmt(Statement):
     condition: Expression
     then_branch: list[Statement]
-    else_branch: list[Statement] | None = None
+    else_branch: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_if(self)
@@ -125,7 +125,7 @@ class IfStmt(Statement):
 class CaseStmt(Statement):
     expr: Expression
     cases: list[Token]
-    stmts: list[Statement]
+    body: list[Statement]
     otherwise: Statement | None = None
 
     def accept(self, visitor: StatementVisitor) -> Any:
@@ -138,7 +138,7 @@ class ForStmt(Statement):
     start: Expression
     end: Expression
     step: Expression
-    stmts: list[Statement]
+    body: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_for_loop(self)
@@ -146,7 +146,7 @@ class ForStmt(Statement):
 
 @dataclass
 class RepeatUntilStmt(Statement):
-    stmts: list[Statement]
+    body: list[Statement]
     condition: Expression
 
     def accept(self, visitor: StatementVisitor) -> Any:
@@ -156,7 +156,7 @@ class RepeatUntilStmt(Statement):
 @dataclass
 class WhileStmt(Statement):
     condition: Expression
-    stmts: list[Statement]
+    body: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_while(self)
