@@ -65,7 +65,6 @@ class Symbols(Enum):
     MUL = "*"
     DIV = "/"
     POW = "^"
-    NEWLINE = "\n"
 
 
 # Variable types

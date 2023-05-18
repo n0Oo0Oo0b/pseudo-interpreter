@@ -99,11 +99,8 @@ def parse_tokens(code: str) -> list[Token]:
             continue
         elif token_type == "NEWLINE":
             line_number += 1
-            # Collapse consecutive newlines
-            if line_start == token_start - 1:
-                continue
             line_start = token_start
-            token_type = "SYMBOL"
+            continue
         elif token_type == "INVALID":
             raise ValueError(
                 f"Invalid token at line {line_number}, column {token_start - line_start}"
