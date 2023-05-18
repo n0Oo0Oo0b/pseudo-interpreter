@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Any, TYPE_CHECKING
 
-from .interpreter.variables import VariableState
+from ..interpreter.variables import VariableState
 
 if TYPE_CHECKING:
-    from .parser.syntax_tree import (
+    from .syntax_tree import (
         Expression,
         Primary,
         UnaryOp,

@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, Callable
 
-from .tokens import Token
-from ..visitors import ExpressionVisitor, StatementVisitor
+from ..parser.tokens import Token
+from .visitors import ExpressionVisitor, StatementVisitor
 
 Value = str | int | float | bool
 
