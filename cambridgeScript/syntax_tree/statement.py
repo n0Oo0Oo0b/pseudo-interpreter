@@ -1,62 +1,40 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Any, Callable
+from dataclasses import dataclass, field
+from typing import Any, TypeVar
 
+from .expression import Expression
 from ..parser.tokens import Token
-from .visitors import ExpressionVisitor, StatementVisitor
 
-Value = str | int | float | bool
+T = TypeVar('T')
 
 
-class Expression(ABC):
+class StatementVisitor(ABC):
+    def visit(self, stmt: "Statement") -> T:
+        return stmt.accept(self)
+
     @abstractmethod
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def visit_expr(self, stmt: "ExpressionStmt") -> T:
         pass
 
+    @abstractmethod
+    def visit_input(self, stmt: "InputStmt") -> T:
+        pass
 
-@dataclass
-class Primary(Expression):
-    token: Token
+    @abstractmethod
+    def visit_output(self, stmt: "OutputStmt") -> T:
+        pass
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_primary(self)
+    @abstractmethod
+    def visit_declare(self, stmt: "DeclareStmt") -> T:
+        pass
 
+    @abstractmethod
+    def visit_if(self, stmt: "IfStmt") -> T:
+        pass
 
-@dataclass
-class UnaryOp(Expression):
-    operator: Callable[[Value], Value]
-    operand: Expression
-
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_unary_op(self)
-
-
-@dataclass
-class BinaryOp(Expression):
-    operator: Callable[[Value, Value], Value]
-    left: Expression
-    right: Expression
-
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_binary_op(self)
-
-
-@dataclass
-class FunctionCall(Expression):
-    function_name: str
-    params: list[Expression]
-
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_function_call(self)
-
-
-@dataclass
-class Assignment(Expression):
-    target: Token
-    value: Expression
-
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_assignment(self)
+    @abstractmethod
+    def visit_while(self, stmt: "WhileStmt") -> T:
+        pass
 
 
 class Statement(ABC):
@@ -103,7 +81,7 @@ class DeclareStmt(Statement):
 class IfStmt(Statement):
     condition: Expression
     true_branch: list[Statement]
-    false_branch: list[Statement] | None = None
+    false_branch: list[Statement] = field(default_factory=list)
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_if(self)
