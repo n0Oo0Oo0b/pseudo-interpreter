@@ -1,7 +1,7 @@
 program         = block EOF ;
 
 
-block           = statement* ;
+block           = block ;
 
 
 
@@ -12,7 +12,6 @@ statement       = procDecl
                 | forLoop
                 | repeatLoop
                 | whileLoop
-                | statement
                 | declareStmt
                 | constantDecl
                 | inputStmt
@@ -25,22 +24,22 @@ statement       = procDecl
                 | procedureCall
                 | exprStmt ;
 
-procDecl        = "PROCEDURE" IDENTIFIER "(" parameters? ")"
-                    statement* "ENDPROCEDURE" ;
-functionDecl    = "FUNCTION" IDENTIFIER "(" parameters? ")" "RETURNS" datatype
-                    statement* "ENDFUNCTION";
+procDecl        = "PROCEDURE" IDENTIFIER ( "(" parameters ")" )?
+                    block "ENDPROCEDURE" ;
+functionDecl    = "FUNCTION" IDENTIFIER ( "(" parameters ")" )? "RETURNS" datatype
+                    block "ENDFUNCTION";
 ifStmt          = "IF" expression
-                    "THEN" statement*
-                    ("ELSE" statement*)?
+                    "THEN" block
+                    ("ELSE" block)?
                     "ENDIF" ;
 caseStmt        = "CASE" "OF" IDENTIFIER
                     (literal ":" statement)+
                     ("OTHERWISE" statement)?
                     "ENDCASE" ;
 forLoop         = "FOR" IDENTIFIER "<-" expression "TO" expression ("STEP" expression)?
-                    statement* "NEXT" IDENTIFIER ;
-repeatLoop      = "REPEAT" statement* "UNTIL" expression ;
-whileLoop       = "WHILE" expression "DO" statement* "ENDWHILE";
+                    block "NEXT" IDENTIFIER ;
+repeatLoop      = "REPEAT" block "UNTIL" expression ;
+whileLoop       = "WHILE" expression "DO" block "ENDWHILE";
 
 declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
 constantDecl    = "CONSTANT" IDENTIFIER "<-" literal ;
