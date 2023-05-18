@@ -13,11 +13,7 @@ class ExpressionVisitor(ABC):
         return expr.accept(self)
 
     @abstractmethod
-    def visit_primary(self, expr: "Primary") -> T:
-        pass
-
-    @abstractmethod
-    def visit_unary_op(self, expr: "UnaryOp") -> T:
+    def visit_assignment(self, expr: "Assignment") -> T:
         pass
 
     @abstractmethod
@@ -25,11 +21,23 @@ class ExpressionVisitor(ABC):
         pass
 
     @abstractmethod
+    def visit_unary_op(self, expr: "UnaryOp") -> T:
+        pass
+
+    @abstractmethod
     def visit_function_call(self, expr: "FunctionCall") -> T:
         pass
 
     @abstractmethod
-    def visit_assignment(self, expr: "Assignment") -> T:
+    def visit_array_index(self, expr: "ArrayIndex") -> T:
+        pass
+
+    @abstractmethod
+    def visit_literal(self, expr: "Literal") -> T:
+        pass
+
+    @abstractmethod
+    def visit_identifier(self, expr: "Identifier") -> T:
         pass
 
 
@@ -40,20 +48,12 @@ class Expression(ABC):
 
 
 @dataclass
-class Primary(Expression):
-    token: Token
+class Assignment(Expression):
+    target: Expression
+    value: Expression
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_primary(self)
-
-
-@dataclass
-class UnaryOp(Expression):
-    operator: Callable[[Value], Value]
-    operand: Expression
-
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_unary_op(self)
+        return visitor.visit_assignment(self)
 
 
 @dataclass
@@ -67,6 +67,15 @@ class BinaryOp(Expression):
 
 
 @dataclass
+class UnaryOp(Expression):
+    operator: Callable[[Value], Value]
+    operand: Expression
+
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_unary_op(self)
+
+
+@dataclass
 class FunctionCall(Expression):
     function_name: str
     params: list[Expression]
@@ -76,9 +85,25 @@ class FunctionCall(Expression):
 
 
 @dataclass
-class Assignment(Expression):
-    target: Token
-    value: Expression
+class ArrayIndex(Expression):
+    array: Expression
+    index: list[Expression]
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_assignment(self)
+        return visitor.visit_array_index(self)
+
+
+@dataclass
+class Literal(Expression):
+    token: Token
+
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_literal(self)
+
+
+@dataclass
+class Identifier(Expression):
+    token: Token
+
+    def accept(self, visitor: ExpressionVisitor) -> Any:
+        return visitor.visit_identifier(self)
