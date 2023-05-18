@@ -13,27 +13,75 @@ class StatementVisitor(ABC):
         return stmt.accept(self)
 
     @abstractmethod
-    def visit_expr(self, stmt: "ExpressionStmt") -> T:
+    def visit_proc_decl(self, stmt) -> T:
         pass
 
     @abstractmethod
-    def visit_input(self, stmt: "InputStmt") -> T:
+    def visit_func_decl(self, stmt) -> T:
         pass
 
     @abstractmethod
-    def visit_output(self, stmt: "OutputStmt") -> T:
+    def visit_if(self, stmt) -> T:
         pass
 
     @abstractmethod
-    def visit_declare(self, stmt: "DeclareStmt") -> T:
+    def visit_case(self, stmt) -> T:
         pass
 
     @abstractmethod
-    def visit_if(self, stmt: "IfStmt") -> T:
+    def visit_for_loop(self, stmt) -> T:
         pass
 
     @abstractmethod
-    def visit_while(self, stmt: "WhileStmt") -> T:
+    def visit_repeat_until(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_while(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_variable_decl(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_constant_decl(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_input(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_output(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_return(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_f_open(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_f_read(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_f_write(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_f_close(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_proc_call(self, stmt) -> T:
+        pass
+
+    @abstractmethod
+    def visit_expr_stmt(self, stmt) -> T:
         pass
 
 
@@ -44,11 +92,92 @@ class Statement(ABC):
 
 
 @dataclass
-class ExpressionStmt(Statement):
-    expr: Expression
+class ProcedureDecl(Statement):
+    name: Token
+    params: list[Token]
+    body: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
-        return visitor.visit_expr(self)
+        return visitor.visit_proc_decl(self)
+
+
+class FunctionDecl(Statement):
+    name: Token
+    params: list[Token]
+    return_type: Token
+    body: list[Statement]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_func_decl(self)
+
+
+@dataclass
+class IfStmt(Statement):
+    condition: Expression
+    then_branch: list[Statement]
+    else_branch: list[Statement] | None = None
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_if(self)
+
+
+@dataclass
+class CaseStmt(Statement):
+    expr: Expression
+    cases: list[Token]
+    stmts: list[Statement]
+    otherwise: Statement | None = None
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_case(self)
+
+
+@dataclass
+class ForStmt(Statement):
+    variable: Token
+    start: Expression
+    end: Expression
+    step: Expression
+    stmts: list[Statement]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_for_loop(self)
+
+
+@dataclass
+class RepeatUntilStmt(Statement):
+    stmts: list[Statement]
+    condition: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_repeat_until(self)
+
+
+@dataclass
+class WhileStmt(Statement):
+    condition: Expression
+    stmts: list[Statement]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_while(self)
+
+
+@dataclass
+class VariableDecl(Statement):
+    name: Token
+    type: Token
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_variable_decl(self)
+
+
+@dataclass
+class ConstantDecl(Statement):
+    name: Token
+    value: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_constant_decl(self)
 
 
 @dataclass
@@ -61,36 +190,67 @@ class InputStmt(Statement):
 
 @dataclass
 class OutputStmt(Statement):
-    expr: Expression
+    values: list[Expression]
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_output(self)
 
 
 @dataclass
-class DeclareStmt(Statement):
+class ReturnStmt(Statement):
+    value: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_return(self)
+
+
+@dataclass
+class FileOpenStmt(Statement):
+    file: Token
+    mode: Token
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_f_open(self)
+
+
+@dataclass
+class FileReadStmt(Statement):
+    file: Token
     variable: Token
-    type_: type
-    value: Any | None = None
 
     def accept(self, visitor: StatementVisitor) -> Any:
-        return visitor.visit_declare(self)
+        return visitor.visit_f_read(self)
 
 
 @dataclass
-class IfStmt(Statement):
-    condition: Expression
-    true_branch: list[Statement]
-    false_branch: list[Statement] = field(default_factory=list)
+class FileWriteStmt(Statement):
+    file: Token
+    value: Expression
 
     def accept(self, visitor: StatementVisitor) -> Any:
-        return visitor.visit_if(self)
+        return visitor.visit_f_write(self)
 
 
 @dataclass
-class WhileStmt(Statement):
-    condition: Expression
-    body: list[Statement]
+class FileCloseStmt(Statement):
+    file: Token
 
     def accept(self, visitor: StatementVisitor) -> Any:
-        return visitor.visit_while(self)
+        return visitor.visit_f_close(self)
+
+
+@dataclass
+class ProcedureCallStmt(Statement):
+    name: Token
+    args: list[Expression]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_proc_call(self)
+
+
+@dataclass
+class ExprStmt(Statement):
+    expr: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_expr_stmt(self)
