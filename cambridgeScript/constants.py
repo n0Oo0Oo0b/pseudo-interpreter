@@ -2,7 +2,7 @@ from enum import Enum, StrEnum
 
 
 # Reserved words
-class Keywords(StrEnum):
+class Keyword(StrEnum):
     PROCEDURE = "PROCEDURE"
     ENDPROCEDURE = "ENDPROCEDURE"
     FUNCTION = "FUNCTION"
@@ -47,7 +47,7 @@ class Keywords(StrEnum):
     FALSE = "FALSE"
 
 
-class Symbols(Enum):
+class Symbol(Enum):
     LPAREN = "("
     RPAREN = ")"
     LBRACKET = "["

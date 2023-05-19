@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from ..constants import Keywords, TOKEN_REGEX, Symbols
+from ..constants import Keyword, TOKEN_REGEX, Symbol
 
 Value = str | int | float | bool
 
@@ -19,20 +19,20 @@ class Token:
 
 @dataclass(frozen=True)
 class KeywordToken(Token):
-    value: Keywords
+    value: Keyword
 
     def __eq__(self, other):
-        if isinstance(other, Keywords):
+        if isinstance(other, Keyword):
             return self.value == other
         return super().__eq__(other)
 
 
 @dataclass(frozen=True)
 class SymbolToken(Token):
-    value: Symbols
+    value: Symbol
 
     def __eq__(self, other):
-        if isinstance(other, Symbols):
+        if isinstance(other, Symbol):
             return self.value == other
         return super().__eq__(other)
 
@@ -69,11 +69,11 @@ def parse_literal(literal: str) -> Value:
 def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
     if token_type == "IDENTIFIER":
         try:
-            return KeywordToken(value=Keywords(token_string), **token_kwargs)
+            return KeywordToken(value=Keyword(token_string), **token_kwargs)
         except ValueError:
             return Identifier(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
-        return SymbolToken(value=Symbols(token_string), **token_kwargs)
+        return SymbolToken(value=Symbol(token_string), **token_kwargs)
     elif token_type == "LITERAL":
         value = parse_literal(token_string)
         return Literal(value=value, **token_kwargs)
