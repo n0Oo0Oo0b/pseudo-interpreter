@@ -11,10 +11,8 @@ class Token:
     line: int | None
     column: int | None
 
-    def __eq__(self, other):
-        if not isinstance(other, type(self)):
-            return False
-        return super().__eq__(other)
+
+TokenComparable = Token | Keyword | Symbol | str | Value
 
 
 @dataclass(frozen=True)
@@ -51,7 +49,7 @@ class Identifier(Token):
     value: str
 
     def __eq__(self, other):
-        return self.value == other
+        return self.value == other or super().__eq__(other)
 
 
 def parse_literal(literal: str) -> Value:

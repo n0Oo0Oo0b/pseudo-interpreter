@@ -1,16 +1,11 @@
-from .syntax_tree import (
-    Expression,
-    UnaryOp,
-    BinaryOp,
-    Primary,
-    Statement,
-    ExpressionStmt,
-    InputStmt,
-    OutputStmt,
-    DeclareStmt,
-    Assignment,
-)
-from .tokens import Token
+from ..constants import Keyword, Symbol
+from ..syntax_tree.expression import Expression
+from ..syntax_tree.statement import Statement
+from .tokens import Token, TokenComparable
+
+
+class ParserError(Exception):
+    pass
 
 
 class Parser:
@@ -36,12 +31,12 @@ class Parser:
             self._next_index += 1
         return res
 
-    def _check(self, *targets: Token | str) -> Token | None:
+    def _check(self, *targets: TokenComparable) -> Token | None:
         """Return the token if the next token matches"""
         next_token = self._peek()
         return next_token if next_token in targets else None
 
-    def _match(self, *targets: Token | str) -> Token | None:
+    def _match(self, *targets: TokenComparable) -> Token | None:
         """Consume and return the token if the next token matches"""
         res = self._check(*targets)
         if res:
