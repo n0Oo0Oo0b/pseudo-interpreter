@@ -11,6 +11,10 @@ class Token:
     line: int | None
     column: int | None
 
+    @property
+    def location(self) -> str:
+        return f"Line {self.line} Column {self.column}"
+
 
 TokenComparable = Token | Keyword | Symbol | str | Value
 
