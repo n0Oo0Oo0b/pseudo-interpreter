@@ -40,7 +40,7 @@ class SymbolToken(Token):
 
 
 @dataclass(frozen=True)
-class Literal(Token):
+class LiteralToken(Token):
     value: Value
 
     @property
@@ -49,7 +49,7 @@ class Literal(Token):
 
 
 @dataclass(frozen=True)
-class Identifier(Token):
+class IdentifierToken(Token):
     value: str
 
     def __eq__(self, other):
@@ -73,12 +73,12 @@ def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
         try:
             return KeywordToken(value=Keyword(token_string), **token_kwargs)
         except ValueError:
-            return Identifier(value=token_string, **token_kwargs)
+            return IdentifierToken(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
         return SymbolToken(value=Symbol(token_string), **token_kwargs)
     elif token_type == "LITERAL":
         value = parse_literal(token_string)
-        return Literal(value=value, **token_kwargs)
+        return LiteralToken(value=value, **token_kwargs)
 
 
 def parse_tokens(code: str) -> list[Token]:
