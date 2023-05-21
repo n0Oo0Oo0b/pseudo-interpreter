@@ -12,7 +12,22 @@ class Parser:
         self.tokens = tokens
         self._next_index = 0
 
+    @classmethod
+    def parse_expression(cls, tokens: list[Token]) -> Expression:
+        """
+        Parses a list of tokens as an expression
+        :param tokens: tokens to parse
+        :return: an Expression
+        """
+        instance = cls(tokens)
+        result = instance._expression()
+        if not instance._is_at_end():
+            next_token = instance._peek()
+            raise ParserError(f"Extra token {next_token} found")
+        return result
+
     # Helpers
+
     def _is_at_end(self) -> bool:
         """Returns whether the pointer is at the end"""
         return self._next_index == len(self.tokens)
