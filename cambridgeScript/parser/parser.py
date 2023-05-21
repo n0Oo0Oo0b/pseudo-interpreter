@@ -96,4 +96,18 @@ class Parser:
         pass
 
     def _primary(self) -> Expression:
-        pass
+        if start := self._match(Symbol.LPAREN):
+            res = self._expression()
+            self._consume(
+                Symbol.RPAREN, error_message=f"Unmatched '(' at {start.location}"
+            )
+            return res
+        next_token = self._peek()
+        if isinstance(next_token, LiteralToken):
+            self._advance()
+            return Literal(next_token)
+        elif isinstance(next_token, IdentifierToken):
+            self._advance()
+            return Identifier(next_token)
+        else:
+            raise ParserError(f"Expected expression, found {next_token} instead")
