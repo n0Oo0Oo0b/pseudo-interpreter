@@ -1,5 +1,5 @@
 from ..constants import Keyword, Symbol
-from ..syntax_tree import Expression, Literal, Identifier, Statement
+from ..syntax_tree import Expression, Literal, Identifier, FunctionCall, ArrayIndex, Statement
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken
 
 
@@ -66,6 +66,24 @@ class Parser:
             raise ParserError(error_message)
         return res
 
+    # Helper rules
+
+    def _arguments(
+            self, delimiter: TokenComparable = Symbol.COMMA, allow_empty: bool = True
+    ) -> list[Expression]:
+        # Get the first argument
+        try:
+            result = [self._expression()]
+        except ParserError:
+            if allow_empty:
+                return []
+            else:
+                raise
+        # Get successive arguments
+        while self._match(delimiter):
+            result.append(self._expression())
+        return result
+
     # Expressions
 
     def _expression(self) -> Expression:
@@ -93,7 +111,18 @@ class Parser:
         pass
 
     def _call(self) -> Expression:
-        pass
+        left = self._primary()
+        while start := self._match(Symbol.LPAREN, Symbol.LBRACKET):
+            if start == Symbol.LPAREN:
+                end_type = Symbol.RPAREN
+                ast_class = FunctionCall
+            else:
+                end_type = Symbol.RBRAKET
+                ast_class = ArrayIndex
+            arg_list = self._arguments()
+            self._consume(end_type, error_message=f"Unmatched '(' at {start.location}")
+            left = ast_class(left, arg_list)
+        return left
 
     def _primary(self) -> Expression:
         if start := self._match(Symbol.LPAREN):
