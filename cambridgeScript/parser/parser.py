@@ -1,7 +1,6 @@
 from ..constants import Keyword, Symbol
-from ..syntax_tree.expression import Expression
-from ..syntax_tree.statement import Statement
-from .tokens import Token, TokenComparable
+from ..syntax_tree import Expression, Literal, Identifier, Statement
+from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken
 
 
 class ParserError(Exception):
