@@ -90,7 +90,7 @@ class UnaryOp(Expression):
 
 @dataclass
 class FunctionCall(Expression):
-    function_name: str
+    function: Expression
     params: list[Expression]
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
