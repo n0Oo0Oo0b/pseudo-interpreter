@@ -51,3 +51,35 @@ class Parser:
         if not (res := self._match(*targets)):
             raise ParserError(error_message)
         return res
+
+    # Expressions
+
+    def _expression(self) -> Expression:
+        return self._assignment()
+
+    def _assignment(self) -> Expression:
+        pass
+
+    def _logic_or(self) -> Expression:
+        pass
+
+    def _logic_and(self) -> Expression:
+        pass
+
+    def _logic_not(self) -> Expression:
+        pass
+
+    def _comparison(self) -> Expression:
+        pass
+
+    def _term(self) -> Expression:
+        pass
+
+    def _factor(self) -> Expression:
+        pass
+
+    def _call(self) -> Expression:
+        pass
+
+    def _primary(self) -> Expression:
+        pass
