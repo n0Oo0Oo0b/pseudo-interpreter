@@ -52,6 +52,7 @@ class Symbol(Enum):
     RPAREN = ")"
     LBRACKET = "["
     RBRAKET = "]"
+    COMMA = ","
     COLON = ":"
     ASSIGN = "<-"
     EQUAL = "="
@@ -81,7 +82,7 @@ _TOKENS = [
     ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
     ("NEWLINE", r"\n"),
     ("LITERAL", r'[0-9]+(?:\.[0-9]+)?|".*?(?<=[^\\])(?:\\\\)*+"'),
-    ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():]"),
+    ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():,]"),
     ("IDENTIFIER", r"[A-Za-z]+"),
     ("INVALID", r"."),
 ]
