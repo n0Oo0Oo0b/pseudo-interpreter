@@ -105,7 +105,7 @@ def parse_tokens(code: str) -> list[Token]:
     res: list[Token] = []
     line_number: int = 0
     line_start: int = 0
-    for match in re.finditer(TOKEN_REGEX, code, re.M):
+    for match in re.finditer(_TOKEN_REGEX, code, re.M):
         token_type = match.lastgroup
         token_value = str(match.group())
         token_start = match.start()
