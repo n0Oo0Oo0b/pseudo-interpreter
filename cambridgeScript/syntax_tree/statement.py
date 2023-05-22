@@ -104,6 +104,10 @@ class StatementVisitor(ABC):
         pass
 
     @abstractmethod
+    def visit_assign(self, stmt) -> T:
+        pass
+
+    @abstractmethod
     def visit_expr_stmt(self, stmt) -> T:
         pass
 
@@ -269,6 +273,15 @@ class ProcedureCallStmt(Statement):
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_proc_call(self)
+
+
+@dataclass
+class AssignmentStmt(Statement):
+    target: Expression
+    value: Expression
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_assign(self)
 
 
 @dataclass

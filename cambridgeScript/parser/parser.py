@@ -96,10 +96,7 @@ class Parser:
     # Expressions
 
     def _expression(self) -> Expression:
-        return self._assignment()
-
-    def _assignment(self) -> Expression:
-        pass
+        return self._logic_or()
 
     def _logic_or(self) -> Expression:
         left = self._logic_and()

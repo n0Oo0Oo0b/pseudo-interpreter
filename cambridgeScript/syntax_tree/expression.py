@@ -26,10 +26,6 @@ class ExpressionVisitor(ABC):
         return expr.accept(self)
 
     @abstractmethod
-    def visit_assignment(self, expr: "Assignment") -> T:
-        pass
-
-    @abstractmethod
     def visit_binary_op(self, expr: "BinaryOp") -> T:
         pass
 
@@ -58,15 +54,6 @@ class Expression(ABC):
     @abstractmethod
     def accept(self, visitor: ExpressionVisitor) -> Any:
         pass
-
-
-@dataclass
-class Assignment(Expression):
-    target: Expression
-    value: Expression
-
-    def accept(self, visitor: ExpressionVisitor) -> Any:
-        return visitor.visit_assignment(self)
 
 
 @dataclass
