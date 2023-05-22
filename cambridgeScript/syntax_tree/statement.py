@@ -18,6 +18,7 @@ __all__ = [
     "FileWriteStmt",
     "FileCloseStmt",
     "ProcedureCallStmt",
+    "AssignmentStmt",
     "ExprStmt",
 ]
 

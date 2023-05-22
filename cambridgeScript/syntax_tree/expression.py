@@ -1,7 +1,6 @@
 __all__ = [
     "ExpressionVisitor",
     "Expression",
-    "Assignment",
     "BinaryOp",
     "UnaryOp",
     "FunctionCall",
