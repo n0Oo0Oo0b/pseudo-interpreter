@@ -6,6 +6,7 @@ from ..syntax_tree import (
     FunctionCall,
     ArrayIndex,
     BinaryOp,
+    UnaryOp,
     Statement,
 )
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken
@@ -101,13 +102,31 @@ class Parser:
         pass
 
     def _logic_or(self) -> Expression:
-        pass
+        left = self._logic_and()
+        while self._match(Keyword.OR):
+            right = self._logic_and()
+            left = BinaryOp(
+                operator=Operator.OR,
+                left=left,
+                right=right,
+            )
+        return left
 
     def _logic_and(self) -> Expression:
-        pass
+        left = self._logic_not()
+        while self._match(Keyword.AND):
+            right = self._logic_not()
+            left = BinaryOp(
+                operator=Operator.AND,
+                left=left,
+                right=right,
+            )
+        return left
 
     def _logic_not(self) -> Expression:
-        pass
+        if not self._match(Keyword.NOT):
+            return self._comparison()
+        return UnaryOp(Operator.NOT, self._logic_not())
 
     def _comparison(self) -> Expression:
         left = self._term()
