@@ -110,7 +110,34 @@ class Parser:
         pass
 
     def _comparison(self) -> Expression:
-        pass
+        left = self._term()
+        while op := self._match(
+            Symbol.EQUAL,
+            Symbol.NOT_EQUAL,
+            Symbol.LESS_EQUAL,
+            Symbol.GREAT_EQUAL,
+            Symbol.LESS,
+            Symbol.GREAT,
+        ):
+            if op == Symbol.EQUAL:
+                op = Operator.EQUAL
+            elif op == Symbol.NOT_EQUAL:
+                op = Operator.NOT_EQUAL
+            elif op == Symbol.LESS_EQUAL:
+                op = Operator.LESS_EQUAL
+            elif op == Symbol.GREAT_EQUAL:
+                op = Operator.GREAT_EQUAL
+            elif op == Symbol.LESS:
+                op = Operator.LESS_THAN
+            else:
+                op = Operator.GREATER_THAN
+            right = self._term()
+            left = BinaryOp(
+                operator=op,
+                left=left,
+                right=right,
+            )
+        return left
 
     def _term(self) -> Expression:
         left = self._factor()
