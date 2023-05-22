@@ -108,7 +108,19 @@ class Parser:
         pass
 
     def _factor(self) -> Expression:
-        pass
+        left = self._call()
+        while op := self._match(Symbol.DIV, Symbol.MUL):
+            if op == Symbol.DIV:
+                op = Operator.DIV
+            else:
+                op = Operator.MUL
+            right = self._call()
+            left = BinaryOp(
+                operator=op,
+                left=left,
+                right=right,
+            )
+        return left
 
     def _call(self) -> Expression:
         left = self._primary()
