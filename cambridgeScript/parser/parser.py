@@ -1,3 +1,5 @@
+from typing import Callable
+
 from ..constants import Keyword, Symbol, Operator
 from ..syntax_tree import (
     Expression,
@@ -9,7 +11,7 @@ from ..syntax_tree import (
     UnaryOp,
     Statement,
 )
-from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken
+from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken, Value
 
 
 class ParserError(Exception):
@@ -93,21 +95,29 @@ class Parser:
             result.append(self._expression())
         return result
 
+    def _binary_op(
+        self,
+        operand_getter: Callable[[], Expression],
+        operator_mapping: dict[Symbol | Keyword, Callable[[Value, Value], Value]],
+    ) -> Expression:
+        left = operand_getter()
+        while op_token := self._match(*operator_mapping):
+            op = operator_mapping[op_token.value]  # type: ignore
+            right = operand_getter()
+            left = BinaryOp(
+                operator=op,
+                left=left,
+                right=right,
+            )
+        return left
+
     # Expressions
 
     def _expression(self) -> Expression:
         return self._logic_or()
 
     def _logic_or(self) -> Expression:
-        left = self._logic_and()
-        while self._match(Keyword.OR):
-            right = self._logic_and()
-            left = BinaryOp(
-                operator=Operator.OR,
-                left=left,
-                right=right,
-            )
-        return left
+        return self._binary_op(self._logic_and, {Keyword.OR: Operator.OR})
 
     def _logic_and(self) -> Expression:
         left = self._logic_not()
@@ -126,64 +136,27 @@ class Parser:
         return UnaryOp(Operator.NOT, self._logic_not())
 
     def _comparison(self) -> Expression:
-        left = self._term()
-        while op := self._match(
-            Symbol.EQUAL,
-            Symbol.NOT_EQUAL,
-            Symbol.LESS_EQUAL,
-            Symbol.GREAT_EQUAL,
-            Symbol.LESS,
-            Symbol.GREAT,
-        ):
-            if op == Symbol.EQUAL:
-                op = Operator.EQUAL
-            elif op == Symbol.NOT_EQUAL:
-                op = Operator.NOT_EQUAL
-            elif op == Symbol.LESS_EQUAL:
-                op = Operator.LESS_EQUAL
-            elif op == Symbol.GREAT_EQUAL:
-                op = Operator.GREAT_EQUAL
-            elif op == Symbol.LESS:
-                op = Operator.LESS_THAN
-            else:
-                op = Operator.GREATER_THAN
-            right = self._term()
-            left = BinaryOp(
-                operator=op,
-                left=left,
-                right=right,
-            )
-        return left
+        return self._binary_op(
+            self._term,
+            {
+                Symbol.EQUAL: Operator.EQUAL,
+                Symbol.NOT_EQUAL: Operator.NOT_EQUAL,
+                Symbol.LESS_EQUAL: Operator.LESS_EQUAL,
+                Symbol.GREAT_EQUAL: Operator.GREAT_EQUAL,
+                Symbol.LESS: Operator.LESS_THAN,
+                Symbol.GREAT: Operator.GREATER_THAN,
+            },
+        )
 
     def _term(self) -> Expression:
-        left = self._factor()
-        while op := self._match(Symbol.ADD, Symbol.SUB):
-            if op == Symbol.ADD:
-                op = Operator.ADD
-            else:
-                op = Operator.SUB
-            right = self._factor()
-            left = BinaryOp(
-                operator=op,
-                left=left,
-                right=right,
-            )
-        return left
+        return self._binary_op(
+            self._factor, {Symbol.ADD: Operator.ADD, Symbol.SUB: Operator.SUB}
+        )
 
     def _factor(self) -> Expression:
-        left = self._call()
-        while op := self._match(Symbol.DIV, Symbol.MUL):
-            if op == Symbol.DIV:
-                op = Operator.DIV
-            else:
-                op = Operator.MUL
-            right = self._call()
-            left = BinaryOp(
-                operator=op,
-                left=left,
-                right=right,
-            )
-        return left
+        return self._binary_op(
+            self._call, {Symbol.MUL: Operator.MUL, Symbol.DIV: Operator.DIV}
+        )
 
     def _call(self) -> Expression:
         left = self._primary()
