@@ -1,3 +1,4 @@
+import operator
 from enum import Enum, StrEnum
 
 
@@ -66,6 +67,27 @@ class Symbol(Enum):
     MUL = "*"
     DIV = "/"
     POW = "^"
+
+
+def _unary_sub(n):
+    return -n
+
+
+class Operator:
+    OR = operator.or_
+    AND = operator.and_
+    NOT = operator.not_
+    NOT_EQUAL = operator.ne
+    EQUAL = operator.eq
+    LESS_EQUAL = operator.le
+    GREAT_EQUAL = operator.ge
+    LESS_THAN = operator.lt
+    GREATER_THAN = operator.gt
+    SUB = operator.sub
+    ADD = operator.add
+    UNARY_SUB = _unary_sub
+    MUL = operator.mul
+    DIV = operator.truediv
 
 
 # Variable types
