@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from ..constants import Keyword, TOKEN_REGEX, Symbol
+from ..constants import Keyword, Symbol
 
 Value = str | int | float | bool
 
@@ -54,6 +54,18 @@ class IdentifierToken(Token):
 
     def __eq__(self, other):
         return self.value == other or super().__eq__(other)
+
+
+# Regex patterns for tokens
+_TOKENS = [
+    ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
+    ("NEWLINE", r"\n"),
+    ("LITERAL", r'[0-9]+(?:\.[0-9]+)?|".*?(?<=[^\\])(?:\\\\)*+"'),
+    ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():,]"),
+    ("IDENTIFIER", r"[A-Za-z]+"),
+    ("INVALID", r"."),
+]
+_TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in _TOKENS)
 
 
 def parse_literal(literal: str) -> Value:

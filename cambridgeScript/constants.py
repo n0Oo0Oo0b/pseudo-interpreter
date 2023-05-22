@@ -97,15 +97,3 @@ class TYPES(Enum):
     CHAR = str
     STRING = str
     BOOLEAN = bool
-
-
-# Regex patterns for tokens
-_TOKENS = [
-    ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
-    ("NEWLINE", r"\n"),
-    ("LITERAL", r'[0-9]+(?:\.[0-9]+)?|".*?(?<=[^\\])(?:\\\\)*+"'),
-    ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():,]"),
-    ("IDENTIFIER", r"[A-Za-z]+"),
-    ("INVALID", r"."),
-]
-TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in _TOKENS)
