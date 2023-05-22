@@ -88,7 +88,7 @@ def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
             return IdentifierToken(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
         return SymbolToken(value=Symbol(token_string), **token_kwargs)
-    elif token_type == "LITERAL":
+    else:
         value = parse_literal(token_string)
         return LiteralToken(value=value, **token_kwargs)
 
@@ -107,6 +107,8 @@ def parse_tokens(code: str) -> list[Token]:
     line_start: int = 0
     for match in re.finditer(_TOKEN_REGEX, code, re.M):
         token_type = match.lastgroup
+        if token_type is None:
+            raise ValueError("An error occured")
         token_value = str(match.group())
         token_start = match.start()
         if token_type == "IGNORE":

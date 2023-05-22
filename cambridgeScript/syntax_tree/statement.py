@@ -24,92 +24,90 @@ __all__ = [
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, TypeVar
+from typing import Any
 
 from .expression import Expression
 from ..parser.tokens import Token
 
-T = TypeVar("T")
-
 
 class StatementVisitor(ABC):
-    def visit(self, stmt: "Statement") -> T:
+    def visit(self, stmt: "Statement") -> Any:
         return stmt.accept(self)
 
     @abstractmethod
-    def visit_proc_decl(self, stmt) -> T:
+    def visit_proc_decl(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_func_decl(self, stmt) -> T:
+    def visit_func_decl(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_if(self, stmt) -> T:
+    def visit_if(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_case(self, stmt) -> T:
+    def visit_case(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_for_loop(self, stmt) -> T:
+    def visit_for_loop(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_repeat_until(self, stmt) -> T:
+    def visit_repeat_until(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_while(self, stmt) -> T:
+    def visit_while(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_variable_decl(self, stmt) -> T:
+    def visit_variable_decl(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_constant_decl(self, stmt) -> T:
+    def visit_constant_decl(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_input(self, stmt) -> T:
+    def visit_input(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_output(self, stmt) -> T:
+    def visit_output(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_return(self, stmt) -> T:
+    def visit_return(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_f_open(self, stmt) -> T:
+    def visit_f_open(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_f_read(self, stmt) -> T:
+    def visit_f_read(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_f_write(self, stmt) -> T:
+    def visit_f_write(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_f_close(self, stmt) -> T:
+    def visit_f_close(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_proc_call(self, stmt) -> T:
+    def visit_proc_call(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_assign(self, stmt) -> T:
+    def visit_assign(self, stmt) -> Any:
         pass
 
     @abstractmethod
-    def visit_expr_stmt(self, stmt) -> T:
+    def visit_expr_stmt(self, stmt) -> Any:
         pass
 
 

@@ -7,7 +7,7 @@ Value = str | int | float | bool
 @dataclass
 class Variable:
     type: type
-    _value: Value = None
+    _value: Value
 
     @property
     def value(self):
@@ -36,6 +36,6 @@ class VariableState:
             raise RuntimeError(f"{key} not defined")
         self._variables[key].value = value
 
-    def declare(self, name: str, type_: type, value: Value | None = None) -> None:
+    def declare(self, name: str, type_: type, value: Value) -> None:
         value = type_(value) if value else type_()
         self._variables[name] = Variable(type_, value)

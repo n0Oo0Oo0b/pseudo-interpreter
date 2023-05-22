@@ -9,7 +9,6 @@ from ..syntax_tree import (
     ArrayIndex,
     BinaryOp,
     UnaryOp,
-    Statement,
 )
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken, Value
 
@@ -52,7 +51,7 @@ class Parser:
             return None
         return self.tokens[target]
 
-    def _advance(self) -> Token:
+    def _advance(self) -> Token | None:
         """Consumes and returns the next token"""
         res = self._peek()
         if not self._is_at_end():
@@ -161,6 +160,7 @@ class Parser:
     def _call(self) -> Expression:
         left = self._primary()
         while start := self._match(Symbol.LPAREN, Symbol.LBRACKET):
+            ast_class: type[FunctionCall | ArrayIndex]
             if start == Symbol.LPAREN:
                 end_type = Symbol.RPAREN
                 ast_class = FunctionCall

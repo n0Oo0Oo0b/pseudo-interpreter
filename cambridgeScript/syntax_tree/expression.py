@@ -12,40 +12,39 @@ __all__ = [
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import TypeVar, Callable, Any
+from typing import Callable, Any
 
 from ..parser.tokens import Token
 
 Value = str | int | float | bool
-T = TypeVar("T")
 
 
 class ExpressionVisitor(ABC):
-    def visit(self, expr: "Expression") -> T:
+    def visit(self, expr: "Expression") -> Any:
         return expr.accept(self)
 
     @abstractmethod
-    def visit_binary_op(self, expr: "BinaryOp") -> T:
+    def visit_binary_op(self, expr: "BinaryOp") -> Any:
         pass
 
     @abstractmethod
-    def visit_unary_op(self, expr: "UnaryOp") -> T:
+    def visit_unary_op(self, expr: "UnaryOp") -> Any:
         pass
 
     @abstractmethod
-    def visit_function_call(self, expr: "FunctionCall") -> T:
+    def visit_function_call(self, expr: "FunctionCall") -> Any:
         pass
 
     @abstractmethod
-    def visit_array_index(self, expr: "ArrayIndex") -> T:
+    def visit_array_index(self, expr: "ArrayIndex") -> Any:
         pass
 
     @abstractmethod
-    def visit_literal(self, expr: "Literal") -> T:
+    def visit_literal(self, expr: "Literal") -> Any:
         pass
 
     @abstractmethod
-    def visit_identifier(self, expr: "Identifier") -> T:
+    def visit_identifier(self, expr: "Identifier") -> Any:
         pass
 
 
