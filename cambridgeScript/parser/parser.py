@@ -113,7 +113,19 @@ class Parser:
         pass
 
     def _term(self) -> Expression:
-        pass
+        left = self._factor()
+        while op := self._match(Symbol.ADD, Symbol.SUB):
+            if op == Symbol.ADD:
+                op = Operator.ADD
+            else:
+                op = Operator.SUB
+            right = self._factor()
+            left = BinaryOp(
+                operator=op,
+                left=left,
+                right=right,
+            )
+        return left
 
     def _factor(self) -> Expression:
         left = self._call()
