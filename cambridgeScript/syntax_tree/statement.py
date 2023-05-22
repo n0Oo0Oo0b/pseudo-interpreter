@@ -28,7 +28,7 @@ from typing import Any, TypeVar
 from .expression import Expression
 from ..parser.tokens import Token
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class StatementVisitor(ABC):

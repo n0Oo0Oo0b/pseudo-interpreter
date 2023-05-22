@@ -1,8 +1,8 @@
 __all__ = [
-    'Keyword',
-    'Symbol',
-    'Operator',
-    'TYPES',
+    "Keyword",
+    "Symbol",
+    "Operator",
+    "TYPES",
 ]
 
 

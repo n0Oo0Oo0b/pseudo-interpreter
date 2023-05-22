@@ -18,7 +18,7 @@ from typing import TypeVar, Callable, Any
 from ..parser.tokens import Token
 
 Value = str | int | float | bool
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class ExpressionVisitor(ABC):

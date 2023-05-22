@@ -1,5 +1,13 @@
-from ..constants import Keyword, Symbol
-from ..syntax_tree import Expression, Literal, Identifier, FunctionCall, ArrayIndex, Statement
+from ..constants import Keyword, Symbol, Operator
+from ..syntax_tree import (
+    Expression,
+    Literal,
+    Identifier,
+    FunctionCall,
+    ArrayIndex,
+    BinaryOp,
+    Statement,
+)
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken
 
 
@@ -69,7 +77,7 @@ class Parser:
     # Helper rules
 
     def _arguments(
-            self, delimiter: TokenComparable = Symbol.COMMA, allow_empty: bool = True
+        self, delimiter: TokenComparable = Symbol.COMMA, allow_empty: bool = True
     ) -> list[Expression]:
         # Get the first argument
         try:
