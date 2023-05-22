@@ -54,6 +54,9 @@ class Keyword(StrEnum):
     WRITE = "WRITE"
     TRUE = "TRUE"
     FALSE = "FALSE"
+    AND = "AND"
+    OR = "OR"
+    NOT = "NOT"
 
 
 class Symbol(Enum):
