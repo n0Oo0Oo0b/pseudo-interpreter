@@ -59,7 +59,7 @@ class Keyword(StrEnum):
     NOT = "NOT"
 
 
-class Symbol(Enum):
+class Symbol(StrEnum):
     LPAREN = "("
     RPAREN = ")"
     LBRACKET = "["
@@ -78,6 +78,7 @@ class Symbol(Enum):
     MUL = "*"
     DIV = "/"
     POW = "^"
+    EOF = "EOF"
 
 
 def _unary_sub(n):
