@@ -64,6 +64,7 @@ _TOKENS = [
     ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():,]"),
     ("IDENTIFIER", r"[A-Za-z]+"),
     ("INVALID", r"."),
+    ("EOF", r"$")
 ]
 _TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in _TOKENS)
 
@@ -88,6 +89,8 @@ def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
             return IdentifierToken(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
         return SymbolToken(value=Symbol(token_string), **token_kwargs)
+    elif token_type == "EOF":
+        return SymbolToken(value=Symbol.EOF, **token_kwargs)
     else:
         value = parse_literal(token_string)
         return LiteralToken(value=value, **token_kwargs)
@@ -101,7 +104,6 @@ def parse_tokens(code: str) -> list[Token]:
     :return: a list containing the tokens in the program.
     :rtype: list[Token]
     """
-    code += "\n"
     res: list[Token] = []
     line_number: int = 0
     line_start: int = 0
