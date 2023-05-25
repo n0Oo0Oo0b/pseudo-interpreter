@@ -72,6 +72,13 @@ class Parser:
             raise ParserError(error_message)
         return res
 
+    def _consume_type(self, type_: type[Token], *, error_message: str) -> Token:
+        """Attempt to match a token type, throw error if fail"""
+        next_token = self._peek()
+        if not isinstance(next_token, type_):
+            raise ParserError(error_message)
+        return next_token
+
     # Helper rules
 
     def _arguments(
