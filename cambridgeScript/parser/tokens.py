@@ -64,7 +64,7 @@ _TOKENS = [
     ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():,]"),
     ("IDENTIFIER", r"[A-Za-z]+"),
     ("INVALID", r"."),
-    ("EOF", r"$")
+    ("EOF", r"$"),
 ]
 _TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in _TOKENS)
 
