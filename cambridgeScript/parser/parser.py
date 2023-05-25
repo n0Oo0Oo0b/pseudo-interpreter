@@ -9,6 +9,7 @@ from ..syntax_tree import (
     ArrayIndex,
     BinaryOp,
     UnaryOp,
+    Statement,
 )
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken, Value
 
@@ -69,14 +70,14 @@ class Parser:
         """Attempt to match a token, and raise an error if it fails"""
         res = self._match(*targets)
         if res is None:
-            raise ParserError(error_message)
+            raise ParserError(error_message.format(actual_token=self._peek()))
         return res
 
     def _consume_type(self, type_: type[Token], *, error_message: str) -> Token:
         """Attempt to match a token type, throw error if fail"""
         next_token = self._peek()
         if not isinstance(next_token, type_):
-            raise ParserError(error_message)
+            raise ParserError(error_message.format(actual_token=next_token))
         return next_token
 
     # Helper rules
@@ -112,6 +113,52 @@ class Parser:
                 right=right,
             )
         return left
+
+    def _block(self) -> list[Statement]:
+        res = []
+        while True:
+            try:
+                res.append(self._statement())
+            except ParserError:
+                break
+        return res
+
+    # Statements
+    def _statement(self) -> Statement:
+        if self._match(Keyword.PROCEDURE):
+            pass
+        elif self._match(Keyword.FUNCTION):
+            pass
+        elif self._match(Keyword.IF):
+            pass
+        elif self._match(Keyword.CASE):
+            pass
+        elif self._match(Keyword.CASE):
+            pass
+        elif self._match(Keyword.FOR):
+            pass
+        elif self._match(Keyword.REPEAT):
+            pass
+        elif self._match(Keyword.WHILE):
+            pass
+        elif self._match(Keyword.DECLARE):
+            pass
+        elif self._match(Keyword.CONSTANT):
+            pass
+        elif self._match(Keyword.RETURN):
+            pass
+        elif self._match(Keyword.OPENFILE):
+            pass
+        elif self._match(Keyword.READFILE):
+            pass
+        elif self._match(Keyword.WRITEFILE):
+            pass
+        elif self._match(Keyword.CLOSEFILE):
+            pass
+        elif self._match(Keyword.CALL):
+            pass
+        else:
+            pass
 
     # Expressions
 
