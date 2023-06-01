@@ -8,7 +8,9 @@ from ..syntax_tree import (
     FunctionCall,
     ArrayIndex,
     BinaryOp,
-    UnaryOp, CaseStmt,
+    UnaryOp,
+    CaseStmt,
+    Statement,
 )
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken, Value
 
@@ -110,8 +112,31 @@ class Parser:
             )
         return left
 
+    # Statements
+
+    def _statement(self) -> Statement:
+        pass
+
     def _case_stmt(self) -> CaseStmt:
-        identifier = self._call()
+        identifier = self._expression()
+        cases = []
+        bodies = []
+        otherwise = None
+        while True:
+            case = self._advance()
+            self._consume(Symbol.COLON, error_message="':' expected after case")
+            if case == Keyword.OTHERWISE:
+                pass
+            body = self._statement()
+            if case == Keyword.OTHERWISE:
+                otherwise = body
+                self._consume(Keyword.ENDCASE, error_message="'ENDCASE' expected after OTHERWISE case")
+                break
+            cases.append(case)
+            bodies.append(body)
+            if self._match(Keyword.ENDCASE):
+                break
+        return CaseStmt(identifier, cases, bodies, otherwise)
 
     # Expressions
 
