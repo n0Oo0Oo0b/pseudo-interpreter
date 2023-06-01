@@ -2,12 +2,11 @@ __all__ = [
     "Keyword",
     "Symbol",
     "Operator",
-    "TYPES",
 ]
 
 
 import operator
-from enum import Enum, StrEnum
+from enum import StrEnum
 
 
 # Reserved words
@@ -99,12 +98,3 @@ class Operator:
     UNARY_SUB = _unary_sub
     MUL = operator.mul
     DIV = operator.truediv
-
-
-# Variable types
-class TYPES(Enum):
-    INTEGER = int
-    REAL = float
-    CHAR = str
-    STRING = str
-    BOOLEAN = bool
