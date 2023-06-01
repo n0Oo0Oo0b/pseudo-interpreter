@@ -21,7 +21,7 @@ class Keyword(StrEnum):
     THEN = "THEN"
     ELSE = "ELSE"
     ENDIF = "ENDIF"
-    CASE = "CASE"
+    CASE_OF = "CASE OF"
     OF = "OF"
     OTHERWISE = "OTHERWISE"
     ENDCASE = "ENDCASE"
@@ -59,7 +59,7 @@ class Keyword(StrEnum):
     NOT = "NOT"
 
 
-class Symbol(Enum):
+class Symbol(StrEnum):
     LPAREN = "("
     RPAREN = ")"
     LBRACKET = "["
@@ -68,11 +68,11 @@ class Symbol(Enum):
     COLON = ":"
     ASSIGN = "<-"
     EQUAL = "="
+    LESS_EQUAL = "<="
+    GREAT_EQUAL = ">="
     NOT_EQUAL = "<>"
     LESS = "<"
-    LESS_EQUAL = "<="
     GREAT = ">"
-    GREAT_EQUAL = ">="
     ADD = "+"
     SUB = "-"
     MUL = "*"
