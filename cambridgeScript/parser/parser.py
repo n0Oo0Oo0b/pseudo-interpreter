@@ -8,7 +8,7 @@ from ..syntax_tree import (
     FunctionCall,
     ArrayIndex,
     BinaryOp,
-    UnaryOp,
+    UnaryOp, CaseStmt,
 )
 from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken, Value
 
@@ -109,6 +109,9 @@ class Parser:
                 right=right,
             )
         return left
+
+    def _case_stmt(self) -> CaseStmt:
+        identifier = self._call()
 
     # Expressions
 
