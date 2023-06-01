@@ -60,8 +60,9 @@ class IdentifierToken(Token):
 _TOKENS = [
     ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
     ("NEWLINE", r"\n"),
-    ("LITERAL", r'-?[0-9]+(?:\.[0-9]+)?|".*?(?<=[^\\])(?:\\\\)*+"'),
-    ("SYMBOL", r"<-|<>|<=|>=|[=<>+\-*/^():,]"),
+    ("KEYWORD", "|".join(Keyword)),
+    ("LITERAL", r'-?[0-9]+(?:\.[0-9]+)?|".*?"'),
+    ("SYMBOL", "|".join("\\" + s for s in Symbol)),
     ("IDENTIFIER", r"[A-Za-z]+"),
     ("INVALID", r"."),
 ]
@@ -81,11 +82,10 @@ def parse_literal(literal: str) -> Value:
 
 
 def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
-    if token_type == "IDENTIFIER":
-        try:
-            return KeywordToken(value=Keyword(token_string), **token_kwargs)
-        except ValueError:
-            return IdentifierToken(value=token_string, **token_kwargs)
+    if token_type == "KEYWORD":
+        return KeywordToken(value=Keyword(token_string), **token_kwargs)
+    elif token_type == "IDENTIFIER":
+        return IdentifierToken(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
         return SymbolToken(value=Symbol(token_string), **token_kwargs)
     else:
