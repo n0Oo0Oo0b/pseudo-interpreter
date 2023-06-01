@@ -141,7 +141,7 @@ class FunctionDecl(Statement):
 class IfStmt(Statement):
     condition: Expression
     then_branch: list[Statement]
-    else_branch: list[Statement]
+    else_branch: list[Statement] | None
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_if(self)
@@ -163,7 +163,7 @@ class ForStmt(Statement):
     variable: Token
     start: Expression
     end: Expression
-    step: Expression
+    step: Expression | None
     body: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
