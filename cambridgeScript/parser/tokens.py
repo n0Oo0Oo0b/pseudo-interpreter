@@ -21,21 +21,21 @@ TokenComparable = Token | Keyword | Symbol | str | Value
 
 @dataclass(frozen=True)
 class KeywordToken(Token):
-    value: Keyword
+    keyword: Keyword
 
     def __eq__(self, other):
         if isinstance(other, Keyword):
-            return self.value == other
+            return self.keyword == other
         return super().__eq__(other)
 
 
 @dataclass(frozen=True)
 class SymbolToken(Token):
-    value: Symbol
+    symbol: Symbol
 
     def __eq__(self, other):
         if isinstance(other, Symbol):
-            return self.value == other
+            return self.symbol == other
         return super().__eq__(other)
 
 
@@ -83,11 +83,11 @@ def parse_literal(literal: str) -> Value:
 
 def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
     if token_type == "KEYWORD":
-        return KeywordToken(value=Keyword(token_string), **token_kwargs)
+        return KeywordToken(symbol=Keyword(token_string), **token_kwargs)
     elif token_type == "IDENTIFIER":
         return IdentifierToken(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
-        return SymbolToken(value=Symbol(token_string), **token_kwargs)
+        return SymbolToken(symbol=Symbol(token_string), **token_kwargs)
     else:
         value = parse_literal(token_string)
         return LiteralToken(value=value, **token_kwargs)
