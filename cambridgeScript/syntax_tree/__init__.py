@@ -1,3 +1,3 @@
-from .statement import *
 from .expression import *
 from .types import *
+from .statement import *

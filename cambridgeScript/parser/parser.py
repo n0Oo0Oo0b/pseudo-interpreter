@@ -1,7 +1,7 @@
 from typing import Callable, TypeVar
 
-from ..constants import Keyword, Symbol, Operator
-from ..syntax_tree import (
+from cambridgeScript.constants import Keyword, Symbol, Operator
+from cambridgeScript.syntax_tree import (
     # Expressions
     Expression,
     Assignable,
@@ -36,7 +36,7 @@ from ..syntax_tree import (
     PrimitiveType,
     ArrayType,
 )
-from .tokens import (
+from cambridgeScript.parser.tokens import (
     Token,
     TokenComparable,
     LiteralToken,

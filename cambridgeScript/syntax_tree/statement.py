@@ -24,13 +24,11 @@ __all__ = [
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, TYPE_CHECKING
+from typing import Any
 
-from .expression import Expression, Assignable
-from ..parser.tokens import Token
-
-if TYPE_CHECKING:
-    from . import Type
+from cambridgeScript.parser.tokens import Token
+from cambridgeScript.syntax_tree.expression import Expression, Assignable
+from cambridgeScript.syntax_tree.types import Type
 
 
 class StatementVisitor(ABC):
