@@ -8,7 +8,7 @@ __all__ = [
 from dataclasses import dataclass
 from enum import Enum
 
-from ..syntax_tree import Expression
+from cambridgeScript.syntax_tree import Expression
 
 
 class PrimitiveType(Enum):

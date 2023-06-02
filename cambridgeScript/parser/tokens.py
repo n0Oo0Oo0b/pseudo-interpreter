@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from ..constants import Keyword, Symbol
+from cambridgeScript.constants import Keyword, Symbol
 
 Value = str | int | float | bool
 

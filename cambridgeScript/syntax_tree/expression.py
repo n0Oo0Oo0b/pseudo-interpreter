@@ -15,7 +15,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, Any
 
-from ..parser.tokens import Token
+from cambridgeScript.parser.tokens import Token
 
 Value = str | int | float | bool
 
