@@ -267,7 +267,19 @@ class Parser:
         return FunctionDecl(name, parameters, type_, body)
 
     def _if_stmt(self) -> IfStmt:
-        pass
+        if not self._match(Keyword.IF):
+            raise _InvalidMatchError
+        condition = self._expression()
+        self._consume(Keyword.THEN, error_message="'THEN' expected")
+        then_branch = self._statements_until(
+            Keyword.ELSE, Keyword.ENDIF, consume_end=False
+        )
+        if self._match(Keyword.ELSE):
+            else_branch = self._statements_until(Keyword.ENDIF)
+        else:
+            else_branch = None
+            self._consume(Keyword.ENDIF, error_message="'ENDIF' expected")
+        return IfStmt(condition, then_branch, else_branch)
 
     def _case_stmt(self) -> CaseStmt:
         identifier = self._expression()
