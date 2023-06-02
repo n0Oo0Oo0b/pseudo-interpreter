@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, TypeVar
 
 from ..constants import Keyword, Symbol, Operator
 from ..syntax_tree import (
@@ -11,8 +11,30 @@ from ..syntax_tree import (
     UnaryOp,
     CaseStmt,
     Statement,
+    ProcedureDecl,
+    FunctionDecl,
+    IfStmt,
+    ForStmt,
+    RepeatUntilStmt,
+    WhileStmt,
+    VariableDecl,
+    ConstantDecl,
+    InputStmt,
+    OutputStmt,
+    Type,
+    PrimitiveType,
+    ArrayType,
 )
-from .tokens import Token, TokenComparable, LiteralToken, IdentifierToken, Value
+from .tokens import (
+    Token,
+    TokenComparable,
+    LiteralToken,
+    KeywordToken,
+    IdentifierToken,
+    Value,
+)
+
+T = TypeVar("T")
 
 
 class ParserError(Exception):
