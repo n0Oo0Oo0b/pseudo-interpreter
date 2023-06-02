@@ -336,7 +336,12 @@ class Parser:
         return WhileStmt(condition, body)
 
     def _declare(self) -> VariableDecl:
-        pass
+        if not self._match(Keyword.DECLARE):
+            raise _InvalidMatchError
+        name = self._advance()  # ensure identifier
+        self._consume(Symbol.COLON, error_message="Expected ':' after variable name")
+        type_ = self._type()
+        return VariableDecl(name, type_)
 
     def _declare_constant(self) -> ConstantDecl:
         pass
