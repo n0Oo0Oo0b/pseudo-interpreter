@@ -332,7 +332,7 @@ class Parser:
     def _for_loop(self) -> ForStmt:
         if not self._match(Keyword.FOR):
             raise _InvalidMatchError
-        identifier = self._advance()  # ensure identifier
+        identifier = self._assignable()  # ensure identifier
         start_value = self._expression()
         self._consume(Keyword.TO, error_message="Expected 'TO'")
         end_value = self._expression()
@@ -378,7 +378,7 @@ class Parser:
     def _input(self) -> InputStmt:
         if not self._match(Keyword.INPUT):
             raise _InvalidMatchError
-        identifier = self._expression()
+        identifier = self._assignable()
         return InputStmt(identifier)
 
     def _output(self) -> OutputStmt:

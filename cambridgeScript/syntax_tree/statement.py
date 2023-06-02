@@ -26,7 +26,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, TYPE_CHECKING
 
-from .expression import Expression
+from .expression import Expression, Assignable
 from ..parser.tokens import Token
 
 if TYPE_CHECKING:
@@ -163,7 +163,7 @@ class CaseStmt(Statement):
 
 @dataclass
 class ForStmt(Statement):
-    variable: Token
+    variable: Assignable
     start: Expression
     end: Expression
     step: Expression | None
@@ -211,7 +211,7 @@ class ConstantDecl(Statement):
 
 @dataclass
 class InputStmt(Statement):
-    variable: Expression
+    variable: Assignable
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_input(self)
