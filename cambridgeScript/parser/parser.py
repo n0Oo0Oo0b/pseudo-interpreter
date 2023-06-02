@@ -2,6 +2,7 @@ from typing import Callable, TypeVar
 
 from ..constants import Keyword, Symbol, Operator
 from ..syntax_tree import (
+    # Expressions
     Expression,
     Literal,
     Identifier,
@@ -9,11 +10,12 @@ from ..syntax_tree import (
     ArrayIndex,
     BinaryOp,
     UnaryOp,
-    CaseStmt,
+    # Statements
     Statement,
     ProcedureDecl,
     FunctionDecl,
     IfStmt,
+    CaseStmt,
     ForStmt,
     RepeatUntilStmt,
     WhileStmt,
@@ -21,6 +23,14 @@ from ..syntax_tree import (
     ConstantDecl,
     InputStmt,
     OutputStmt,
+    ReturnStmt,
+    FileOpenStmt,
+    FileReadStmt,
+    FileWriteStmt,
+    FileCloseStmt,
+    ProcedureCallStmt,
+    AssignmentStmt,
+    # Types
     Type,
     PrimitiveType,
     ArrayType,
@@ -248,7 +258,20 @@ class Parser:
             return self._input()
         elif self._check(Keyword.OUTPUT):
             return self._output()
-        raise _InvalidMatchError
+        elif self._check(Keyword.RETURN):
+            return self._return()
+        elif self._check(Keyword.OPENFILE):
+            return self._file_open()
+        elif self._check(Keyword.READFILE):
+            return self._file_read()
+        elif self._check(Keyword.WRITEFILE):
+            return self._file_write()
+        elif self._check(Keyword.CLOSEFILE):
+            return self._file_close()
+        elif self._check(Keyword.CALL):
+            return self._procedure_call()
+        else:
+            return self._assignment()
 
     def _procedure_decl(self) -> ProcedureDecl:
         if not self._match(Keyword.PROCEDURE):
@@ -362,6 +385,27 @@ class Parser:
             raise _InvalidMatchError
         values = self._match_multiple(self._expression)
         return OutputStmt(values)
+
+    def _return(self) -> ReturnStmt:
+        pass
+
+    def _file_open(self) -> FileOpenStmt:
+        pass
+
+    def _file_read(self) -> FileReadStmt:
+        pass
+
+    def _file_write(self) -> FileWriteStmt:
+        pass
+
+    def _file_close(self) -> FileCloseStmt:
+        pass
+
+    def _procedure_call(self) -> ProcedureCallStmt:
+        pass
+
+    def _assignment(self) -> AssignmentStmt:
+        pass
 
     # Expressions
 
