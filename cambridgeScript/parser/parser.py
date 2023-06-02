@@ -251,7 +251,11 @@ class Parser:
         raise _InvalidMatchError
 
     def _procedure_decl(self) -> ProcedureDecl:
-        pass
+        if not self._match(Keyword.PROCEDURE):
+            raise _InvalidMatchError
+        name, parameters = self._procedure_header()
+        body = self._statements_until(Keyword.ENDPROCEDURE)
+        return ProcedureDecl(name, parameters, body)
 
     def _function_decl(self) -> FunctionDecl:
         pass
