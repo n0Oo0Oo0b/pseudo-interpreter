@@ -306,7 +306,19 @@ class Parser:
         return CaseStmt(identifier, list(zip(cases, bodies)), otherwise)
 
     def _for_loop(self) -> ForStmt:
-        pass
+        if not self._match(Keyword.FOR):
+            raise _InvalidMatchError
+        identifier = self._advance()  # ensure identifier
+        start_value = self._expression()
+        self._consume(Keyword.TO, error_message="Expected 'TO'")
+        end_value = self._expression()
+        if self._match(Keyword.STEP):
+            step_value = self._expression()
+        else:
+            step_value = None
+        body = self._statements_until(Keyword.NEXT)
+        # TODO optional variable after NEXT
+        return ForStmt(identifier, start_value, end_value, step_value, body)
 
     def _repeat_loop(self) -> RepeatUntilStmt:
         pass
