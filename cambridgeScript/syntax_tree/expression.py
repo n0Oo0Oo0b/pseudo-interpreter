@@ -1,6 +1,7 @@
 __all__ = [
     "ExpressionVisitor",
     "Expression",
+    "Assignable",
     "BinaryOp",
     "UnaryOp",
     "FunctionCall",
@@ -105,3 +106,6 @@ class Identifier(Expression):
 
     def accept(self, visitor: ExpressionVisitor) -> Any:
         return visitor.visit_identifier(self)
+
+
+Assignable = ArrayIndex | Identifier
