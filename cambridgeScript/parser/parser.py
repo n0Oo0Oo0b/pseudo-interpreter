@@ -141,6 +141,12 @@ class Parser:
             raise UnexpectedToken(target, self._peek())
         return res
 
+    def _consume_first(self, target: TokenComparable) -> Token:
+        # Variant of _consume() that raises _InvalidMatch instead
+        if not (res := self._match(target)):
+            raise _InvalidMatch
+        return res
+
     def _consume_type(self, type_: type[Token], *, error_message: str) -> Token:
         # Attempt to match a token type, throw error if fail
         next_token = self._peek()
