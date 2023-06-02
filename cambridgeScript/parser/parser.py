@@ -157,15 +157,10 @@ class Parser:
     # Helper rules
 
     def _primitive_type(self) -> PrimitiveType:
-        next_token = self._peek()
-        # Primitive types and 'ARRAY' are all keywords
-        if not isinstance(next_token, KeywordToken):
+        if not (res := self._match(Keyword.INTEGER, Keyword.REAL, Keyword.CHAR, Keyword.STRING, Keyword.BOOLEAN)):
             raise _InvalidMatch
-        try:
-            type_ = PrimitiveType[next_token.keyword]
-        except KeyError:
-            raise _InvalidMatch
-        self._advance()
+        assert isinstance(res, KeywordToken)
+        type_ = PrimitiveType[res.keyword]
         return type_
 
     def _array_range(self) -> tuple[Expression, Expression]:
