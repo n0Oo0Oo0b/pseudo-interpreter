@@ -135,9 +135,9 @@ class Parser:
             self._advance()
         return res
 
-    def _consume(self, *targets: TokenComparable, error_message: str) -> Token:
+    def _consume(self, target: TokenComparable, *, error_message: str) -> Token:
         # Attempt to match a token, and raise an error if it fails
-        if not (res := self._match(*targets)):
+        if not (res := self._match(target)):
             raise ParserError(error_message)
         return res
 
