@@ -321,7 +321,11 @@ class Parser:
         return ForStmt(identifier, start_value, end_value, step_value, body)
 
     def _repeat_loop(self) -> RepeatUntilStmt:
-        pass
+        if not self._match(Keyword.REPEAT):
+            raise _InvalidMatchError
+        body = self._statements_until(Keyword.UNTIL)
+        condition = self._expression()
+        return RepeatUntilStmt(body, condition)
 
     def _while_loop(self) -> WhileStmt:
         pass
