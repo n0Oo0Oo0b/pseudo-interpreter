@@ -22,7 +22,7 @@ statement       = procDecl
                 | fWriteStmt
                 | fCloseStmt
                 | procedureCall
-                | exprOrAssign ;
+                | assignment ;
 
 procDecl        = "PROCEDURE" IDENTIFIER ( "(" parameters ")" )?
                     block "ENDPROCEDURE" ;
@@ -36,26 +36,28 @@ caseStmt        = "CASE" "OF" IDENTIFIER
                     (literal ":" statement)+
                     ("OTHERWISE" statement)?
                     "ENDCASE" ;
-forLoop         = "FOR" IDENTIFIER "<-" expression "TO" expression ("STEP" expression)?
+forLoop         = "FOR" assignable "<-" expression "TO" expression ("STEP" expression)?
                     block "NEXT" IDENTIFIER ;
 repeatLoop      = "REPEAT" block "UNTIL" expression ;
-whileLoop       = "WHILE" expression "DO" block "ENDWHILE";
+whileLoop       = "WHILE" expression "DO" block "ENDWHILE" ;
 
 declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
 constantDecl    = "CONSTANT" IDENTIFIER "<-" literal ;
-inputStmt       = "INPUT" IDENTIFIER ;
+inputStmt       = "INPUT" assignable ;
 outputStmt      = "OUTPUT" arguments ;
 returnStmt      = "RETURN" expression ;
 fOpenStmt       = "OPENFILE" fileIdentifier "FOR" fileMode ;
-fReadStmt       = "READFILE" fileIdentifier "," IDENTIFIER ;
-fWriteStmt      = "WRITEFILE" fileIdentifier "," IDENTIFIER ;
+fReadStmt       = "READFILE" fileIdentifier "," assignable ;
+fWriteStmt      = "WRITEFILE" fileIdentifier "," assignable ;
 fCloseStmt      = "CLOSEFILE" fileIdentifier ;
 procedureCall   = "CALL" IDENTIFIER ( "(" arguments ")" )? ;
-exprOrAssign    = expression ( "<-" expression )?;
+assignment      = assignable "<-" expression ;
 
 
 
 expression      = logicOr ;
+assignable      = call ;
+
 logicOr         = logicAnd ( "OR" logicAnd )* ;
 logicAnd        = logicNot ( "AND" logicNot )* ;
 logicNot        = "NOT"? logicNot | comparison ;
