@@ -221,7 +221,10 @@ class Parser:
             body = self._statement()
             if case == Keyword.OTHERWISE:
                 otherwise = body
-                self._consume(Keyword.ENDCASE, error_message="'ENDCASE' expected after OTHERWISE case")
+                self._consume(
+                    Keyword.ENDCASE,
+                    error_message="'ENDCASE' expected after OTHERWISE case",
+                )
                 break
             cases.append(case)
             bodies.append(body)
