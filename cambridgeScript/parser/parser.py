@@ -241,7 +241,7 @@ class Parser:
         elif self._check(Keyword.WHILE):
             return self._while_loop()
         elif self._check(Keyword.DECLARE):
-            return self._declare()
+            return self._declare_variable()
         elif self._check(Keyword.CONSTANT):
             return self._declare_constant()
         elif self._check(Keyword.INPUT):
@@ -335,7 +335,7 @@ class Parser:
         body = self._statements_until(Keyword.ENDWHILE)
         return WhileStmt(condition, body)
 
-    def _declare(self) -> VariableDecl:
+    def _declare_variable(self) -> VariableDecl:
         if not self._match(Keyword.DECLARE):
             raise _InvalidMatchError
         name = self._advance()  # ensure identifier
