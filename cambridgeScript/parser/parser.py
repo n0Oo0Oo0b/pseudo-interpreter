@@ -4,6 +4,7 @@ from ..constants import Keyword, Symbol, Operator
 from ..syntax_tree import (
     # Expressions
     Expression,
+    Assignable,
     Literal,
     Identifier,
     FunctionCall,
@@ -411,6 +412,12 @@ class Parser:
 
     def _expression(self) -> Expression:
         return self._logic_or()
+
+    def _assignable(self) -> Assignable:
+        result = self._call()
+        if not isinstance(result, Assignable):
+            raise ParserError("Expected identifier or array index")
+        return self._call()
 
     def _logic_or(self) -> Expression:
         return self._binary_op(self._logic_and, {Keyword.OR: Operator.OR})
