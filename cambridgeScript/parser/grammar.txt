@@ -22,7 +22,7 @@ statement       = procDecl
                 | fWriteStmt
                 | fCloseStmt
                 | procedureCall
-                | exprOrAssign ;
+                | assignment ;
 
 procDecl        = "PROCEDURE" IDENTIFIER ( "(" parameters ")" )?
                     block "ENDPROCEDURE" ;
@@ -51,11 +51,13 @@ fReadStmt       = "READFILE" fileIdentifier "," IDENTIFIER ;
 fWriteStmt      = "WRITEFILE" fileIdentifier "," IDENTIFIER ;
 fCloseStmt      = "CLOSEFILE" fileIdentifier ;
 procedureCall   = "CALL" IDENTIFIER ( "(" arguments ")" )? ;
-exprOrAssign    = expression ( "<-" expression )?;
+assignment      = assignable "<-" expression ;
 
 
 
 expression      = logicOr ;
+assignable      = call ;
+
 logicOr         = logicAnd ( "OR" logicAnd )* ;
 logicAnd        = logicNot ( "AND" logicNot )* ;
 logicNot        = "NOT"? logicNot | comparison ;
