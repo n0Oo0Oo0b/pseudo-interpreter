@@ -230,7 +230,7 @@ class Parser:
             bodies.append(body)
             if self._match(Keyword.ENDCASE):
                 break
-        return CaseStmt(identifier, cases, bodies, otherwise)
+        return CaseStmt(identifier, list(zip(cases, bodies)), otherwise)
 
     # Expressions
 
