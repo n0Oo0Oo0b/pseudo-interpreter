@@ -358,7 +358,10 @@ class Parser:
         return InputStmt(identifier)
 
     def _output(self) -> OutputStmt:
-        pass
+        if not self._match(Keyword.OUTPUT):
+            raise _InvalidMatchError
+        values = self._match_multiple(self._expression)
+        return OutputStmt(values)
 
     # Expressions
 
