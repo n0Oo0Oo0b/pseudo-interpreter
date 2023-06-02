@@ -64,6 +64,22 @@ class Parser:
             raise ParserError(f"Extra token {next_token} found")
         return result
 
+    @classmethod
+    def parse_statement(cls, tokens: list[Token]) -> Statement:
+        """
+        Parses a list of tokens as a single statement
+        :param tokens:
+        :type tokens:
+        :return:
+        :rtype:
+        """
+        instance = cls(tokens)
+        result = instance._statement()
+        if not instance._is_at_end():
+            next_token = instance._peek()
+            raise ParserError(f"Extra token {next_token} found")
+        return result
+
     # Helpers
 
     def _is_at_end(self) -> bool:
@@ -166,10 +182,10 @@ class Parser:
     # Generic helpers
 
     def _match_multiple(
-        self,
-        getter: Callable[[], T],
-        *,
-        delimiter: TokenComparable | None = Symbol.COMMA,
+            self,
+            getter: Callable[[], T],
+            *,
+            delimiter: TokenComparable | None = Symbol.COMMA,
     ) -> list[T]:
         # First item
         try:
@@ -182,7 +198,7 @@ class Parser:
         return result
 
     def _statements_until(
-        self, *tokens: TokenComparable, consume_end: bool = True
+            self, *tokens: TokenComparable, consume_end: bool = True
     ) -> list[Statement]:
         result = []
         while not self._check(*tokens):
@@ -192,9 +208,9 @@ class Parser:
         return result
 
     def _binary_op(
-        self,
-        operand_getter: Callable[[], Expression],
-        operator_mapping: dict[TokenComparable, Callable[[Value, Value], Value]],
+            self,
+            operand_getter: Callable[[], Expression],
+            operator_mapping: dict[TokenComparable, Callable[[Value, Value], Value]],
     ) -> Expression:
         left = operand_getter()
         while op_token := self._match(*operator_mapping):
