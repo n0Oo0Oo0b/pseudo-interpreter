@@ -352,7 +352,10 @@ class Parser:
         return ConstantDecl(name, value)
 
     def _input(self) -> InputStmt:
-        pass
+        if not self._match(Keyword.INPUT):
+            raise _InvalidMatchError
+        identifier = self._expression()
+        return InputStmt(identifier)
 
     def _output(self) -> OutputStmt:
         pass
