@@ -135,10 +135,10 @@ class Parser:
             self._advance()
         return res
 
-    def _consume(self, target: TokenComparable, *, error_message: str) -> Token:
+    def _consume(self, target: TokenComparable) -> Token:
         # Attempt to match a token, and raise an error if it fails
         if not (res := self._match(target)):
-            raise ParserError(error_message)
+            raise UnexpectedToken(target, self._peek())
         return res
 
     def _consume_type(self, type_: type[Token], *, error_message: str) -> Token:
@@ -164,17 +164,17 @@ class Parser:
 
     def _array_range(self) -> tuple[Expression, Expression]:
         left = self._expression()
-        self._consume(Symbol.COLON, error_message="Missing ':' in array range")
+        self._consume(Symbol.COLON)
         right = self._expression()
         return left, right
 
     def _array_type(self) -> ArrayType:
         if not self._match(Keyword.ARRAY):
             raise _InvalidMatch
-        self._consume(Symbol.LBRACKET, error_message="Expected '[' after 'ARRAY'")
+        self._consume(Symbol.LBRACKET)
         ranges = self._match_multiple(self._array_range)
-        self._consume(Symbol.RBRAKET, error_message="Unmatched ']' after array size")
-        self._consume(Keyword.OF, error_message="Expected 'OF' after 'ARRAY[...]'")
+        self._consume(Symbol.RBRAKET)
+        self._consume(Keyword.OF)
         try:
             type_ = self._primitive_type()
         except _InvalidMatch:
@@ -194,7 +194,7 @@ class Parser:
 
     def _parameter(self) -> tuple[Token, Type]:
         name = self._advance()
-        self._consume(Symbol.COLON, error_message="Missing ':' in array range")
+        self._consume(Symbol.COLON)
         type_ = self._type()
         return name, type_
 
@@ -202,7 +202,7 @@ class Parser:
         name = self._advance()  # ensure identifier
         if self._match(Symbol.LPAREN):
             parameters = self._match_multiple(self._parameter)
-            self._consume(Symbol.RPAREN, error_message="')' expected")
+            self._consume(Symbol.RPAREN)
         else:
             parameters = None
         return name, parameters
@@ -302,7 +302,7 @@ class Parser:
         if not self._match(Keyword.FUNCTION):
             raise _InvalidMatch
         name, parameters = self._procedure_header()
-        self._consume(Keyword.RETURNS, error_message="'RETURNS' expected")
+        self._consume(Keyword.RETURNS)
         type_ = self._type()
         body = self._statements_until(Keyword.ENDFUNCTION)
         return FunctionDecl(name, parameters, type_, body)
@@ -311,7 +311,7 @@ class Parser:
         if not self._match(Keyword.IF):
             raise _InvalidMatch
         condition = self._expression()
-        self._consume(Keyword.THEN, error_message="'THEN' expected")
+        self._consume(Keyword.THEN)
         then_branch = self._statements_until(
             Keyword.ELSE, Keyword.ENDIF, consume_end=False
         )
@@ -319,7 +319,7 @@ class Parser:
             else_branch = self._statements_until(Keyword.ENDIF)
         else:
             else_branch = None
-            self._consume(Keyword.ENDIF, error_message="'ENDIF' expected")
+            self._consume(Keyword.ENDIF)
         return IfStmt(condition, then_branch, else_branch)
 
     def _case_stmt(self) -> CaseStmt:
@@ -329,16 +329,13 @@ class Parser:
         otherwise = None
         while True:
             case = self._advance()
-            self._consume(Symbol.COLON, error_message="':' expected after case")
+            self._consume(Symbol.COLON)
             if case == Keyword.OTHERWISE:
                 pass
             body = self._statement()
             if case == Keyword.OTHERWISE:
                 otherwise = body
-                self._consume(
-                    Keyword.ENDCASE,
-                    error_message="'ENDCASE' expected after OTHERWISE case",
-                )
+                self._consume(Keyword.ENDCASE)
                 break
             cases.append(case)
             bodies.append(body)
@@ -351,7 +348,7 @@ class Parser:
             raise _InvalidMatch
         identifier = self._assignable()  # ensure identifier
         start_value = self._expression()
-        self._consume(Keyword.TO, error_message="Expected 'TO'")
+        self._consume(Keyword.TO)
         end_value = self._expression()
         if self._match(Keyword.STEP):
             step_value = self._expression()
@@ -372,7 +369,7 @@ class Parser:
         if not self._match(Keyword.WHILE):
             raise _InvalidMatch
         condition = self._expression()
-        self._consume(Keyword.DO, error_message="Expected 'DO'")
+        self._consume(Keyword.DO)
         body = self._statements_until(Keyword.ENDWHILE)
         return WhileStmt(condition, body)
 
@@ -380,7 +377,7 @@ class Parser:
         if not self._match(Keyword.DECLARE):
             raise _InvalidMatch
         name = self._advance()  # ensure identifier
-        self._consume(Symbol.COLON, error_message="Expected ':' after variable name")
+        self._consume(Symbol.COLON)
         type_ = self._type()
         return VariableDecl(name, type_)
 
@@ -388,7 +385,7 @@ class Parser:
         if not self._match(Keyword.CONSTANT):
             raise _InvalidMatch
         name = self._advance()  # ensure identifier
-        self._consume(Symbol.ASSIGN, error_message="Expected '<-'")
+        self._consume(Symbol.ASSIGN)
         value = self._advance()  # ensure literal
         return ConstantDecl(name, value)
 
