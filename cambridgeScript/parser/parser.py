@@ -49,14 +49,17 @@ T = TypeVar("T")
 
 
 class ParserError(Exception):
-    pass
+    """Base exception class for errors from the parser"""
 
 
 class _InvalidMatch(ParserError):
+    # Raised when the first token of a match is invalid
+    # Indicates that no tokens were consumed
     pass
 
 
 class UnexpectedToken(ParserError):
+    """Raised when the parser encounters an unexpected token"""
     expected: Token
     actual: Token
 
