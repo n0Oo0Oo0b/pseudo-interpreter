@@ -8,6 +8,8 @@ __all__ = [
 from dataclasses import dataclass
 from enum import Enum
 
+from ..syntax_tree import Expression
+
 
 class PrimitiveType(Enum):
     INTEGER = int
@@ -20,7 +22,7 @@ class PrimitiveType(Enum):
 @dataclass(frozen=True)
 class ArrayType:
     type: PrimitiveType
-    ranges: list[tuple[int, int]]
+    ranges: list[tuple[Expression, Expression]]
 
 
 Type = PrimitiveType | ArrayType
