@@ -109,40 +109,40 @@ class Parser:
     # Helpers
 
     def _peek(self) -> Token:
-        """Returns the next token without consuming"""
+        # Returns the next token without consuming
         return self.tokens[self._next_index]
 
     def _is_at_end(self) -> bool:
-        """Returns whether the pointer is at the end"""
+        # Returns whether the pointer is at the end
         return self._peek() == Symbol.EOF
 
     def _advance(self) -> Token:
-        """Consumes and returns the next token"""
+        # Consumes and returns the next token
         res = self._peek()
         if not self._is_at_end():
             self._next_index += 1
         return res
 
     def _check(self, *targets: TokenComparable) -> Token | None:
-        """Return the token if the next token matches"""
+        # Return the token if the next token matches
         next_token = self._peek()
         return next_token if next_token in targets else None
 
     def _match(self, *targets: TokenComparable) -> Token | None:
-        """Consume and return the token if the next token matches"""
+        # Consume and return the token if the next token matches
         res = self._check(*targets)
         if res:
             self._advance()
         return res
 
     def _consume(self, *targets: TokenComparable, error_message: str) -> Token:
-        """Attempt to match a token, and raise an error if it fails"""
+        # Attempt to match a token, and raise an error if it fails
         if not (res := self._match(*targets)):
             raise ParserError(error_message)
         return res
 
     def _consume_type(self, type_: type[Token], *, error_message: str) -> Token:
-        """Attempt to match a token type, throw error if fail"""
+        # Attempt to match a token type, throw error if fail
         next_token = self._peek()
         if not isinstance(next_token, type_):
             raise ParserError(error_message.format(actual_token=next_token))
