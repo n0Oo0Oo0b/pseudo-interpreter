@@ -56,6 +56,18 @@ class _InvalidMatchError(ParserError):
     pass
 
 
+class UnexpectedToken(ParserError):
+    expected: Token
+    actual: Token
+
+    def __init__(self, expected: TokenComparable, actual: Token):
+        self.expected = expected
+        self.actual = actual
+
+    def __str__(self):
+        return f"Expected '{self.expected}' at {self.actual.location}"
+
+
 class Parser:
     def __init__(self, tokens: list[Token]):
         self.tokens = tokens
