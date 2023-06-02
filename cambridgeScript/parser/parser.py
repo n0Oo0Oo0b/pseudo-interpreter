@@ -258,7 +258,13 @@ class Parser:
         return ProcedureDecl(name, parameters, body)
 
     def _function_decl(self) -> FunctionDecl:
-        pass
+        if not self._match(Keyword.FUNCTION):
+            raise _InvalidMatchError
+        name, parameters = self._procedure_header()
+        self._consume(Keyword.RETURNS, error_message="'RETURNS' expected")
+        type_ = self._type()
+        body = self._statements_until(Keyword.ENDFUNCTION)
+        return FunctionDecl(name, parameters, type_, body)
 
     def _if_stmt(self) -> IfStmt:
         pass
