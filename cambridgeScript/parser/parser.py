@@ -80,30 +80,99 @@ class Parser:
 
     # Helper rules
 
-    def _arguments(
-        self, delimiter: TokenComparable = Symbol.COMMA, allow_empty: bool = True
-    ) -> list[Expression]:
-        # Get the first argument
+    def _primitive_type(self) -> PrimitiveType:
+        next_token = self._peek()
+        # Primitive types and 'ARRAY' are all keywords
+        if not isinstance(next_token, KeywordToken):
+            raise _InvalidMatchError
         try:
-            result = [self._expression()]
+            type_ = PrimitiveType[next_token.keyword]
+        except KeyError:
+            raise _InvalidMatchError
+        self._advance()
+        return type_
+
+    def _array_range(self) -> tuple[Expression, Expression]:
+        left = self._expression()
+        self._consume(Symbol.COLON, error_message="Missing ':' in array range")
+        right = self._expression()
+        return left, right
+
+    def _array_type(self) -> ArrayType:
+        if not self._match(Keyword.ARRAY):
+            raise _InvalidMatchError
+        self._consume(Symbol.LBRACKET, error_message="Expected '[' after 'ARRAY'")
+        ranges = self._match_multiple(self._array_range)
+        self._consume(Symbol.RBRAKET, error_message="Unmatched ']' after array size")
+        self._consume(Keyword.OF, error_message="Expected 'OF' after 'ARRAY[...]'")
+        try:
+            type_ = self._primitive_type()
+        except _InvalidMatchError:
+            raise ParserError("Expected primitive type for array")
+        return ArrayType(type_, ranges)
+
+    def _type(self) -> Type:
+        try:
+            return self._primitive_type()
+        except _InvalidMatchError:
+            pass
+        try:
+            return self._array_type()
+        except _InvalidMatchError:
+            pass
+        raise _InvalidMatchError
+
+    def _parameter(self) -> tuple[Token, Type]:
+        name = self._advance()
+        self._consume(Symbol.COLON, error_message="Missing ':' in array range")
+        type_ = self._type()
+        return name, type_
+
+    def _procedure_header(self) -> tuple[Token, list[tuple[Token, Type]]]:
+        name = self._advance()  # ensure identifier
+        if self._match(Symbol.LPAREN):
+            parameters = self._match_multiple(self._parameter)
+            self._consume(Symbol.RPAREN, error_message="')' expected")
+        else:
+            parameters = None
+        return name, parameters
+
+    # Generic helpers
+
+    def _match_multiple(
+        self,
+        getter: Callable[[], T],
+        *,
+        delimiter: TokenComparable | None = Symbol.COMMA,
+    ) -> list[T]:
+        # First item
+        try:
+            result = [getter()]
         except ParserError:
-            if allow_empty:
-                return []
-            else:
-                raise
-        # Get successive arguments
+            return []
+        # Successive items
         while self._match(delimiter):
-            result.append(self._expression())
+            result.append(getter())
+        return result
+
+    def _statements_until(
+        self, *tokens: TokenComparable, consume_end: bool = True
+    ) -> list[Statement]:
+        result = []
+        while not self._check(*tokens):
+            result.append(self._statement())
+        if consume_end:
+            self._advance()
         return result
 
     def _binary_op(
         self,
         operand_getter: Callable[[], Expression],
-        operator_mapping: dict[Symbol | Keyword, Callable[[Value, Value], Value]],
+        operator_mapping: dict[TokenComparable, Callable[[Value, Value], Value]],
     ) -> Expression:
         left = operand_getter()
         while op_token := self._match(*operator_mapping):
-            op = operator_mapping[op_token.value]  # type: ignore
+            op = operator_mapping[op_token]
             right = operand_getter()
             left = BinaryOp(
                 operator=op,
