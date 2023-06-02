@@ -170,8 +170,7 @@ class Parser:
         return left, right
 
     def _array_type(self) -> ArrayType:
-        if not self._match(Keyword.ARRAY):
-            raise _InvalidMatch
+        self._consume_first(Keyword.ARRAY)
         self._consume(Symbol.LBRACKET)
         ranges = self._match_multiple(self._array_range)
         self._consume(Symbol.RBRAKET)
@@ -293,15 +292,13 @@ class Parser:
             return self._assignment()
 
     def _procedure_decl(self) -> ProcedureDecl:
-        if not self._match(Keyword.PROCEDURE):
-            raise _InvalidMatch
+        self._consume_first(Keyword.PROCEDURE)
         name, parameters = self._procedure_header()
         body = self._statements_until(Keyword.ENDPROCEDURE)
         return ProcedureDecl(name, parameters, body)
 
     def _function_decl(self) -> FunctionDecl:
-        if not self._match(Keyword.FUNCTION):
-            raise _InvalidMatch
+        self._consume_first(Keyword.FUNCTION)
         name, parameters = self._procedure_header()
         self._consume(Keyword.RETURNS)
         type_ = self._type()
@@ -309,8 +306,7 @@ class Parser:
         return FunctionDecl(name, parameters, type_, body)
 
     def _if_stmt(self) -> IfStmt:
-        if not self._match(Keyword.IF):
-            raise _InvalidMatch
+        self._consume_first(Keyword.IF)
         condition = self._expression()
         self._consume(Keyword.THEN)
         then_branch = self._statements_until(
@@ -324,6 +320,7 @@ class Parser:
         return IfStmt(condition, then_branch, else_branch)
 
     def _case_stmt(self) -> CaseStmt:
+        self._consume_first(Keyword.CASE_OF)
         identifier = self._expression()
         cases = []
         bodies = []
@@ -345,8 +342,7 @@ class Parser:
         return CaseStmt(identifier, list(zip(cases, bodies)), otherwise)
 
     def _for_loop(self) -> ForStmt:
-        if not self._match(Keyword.FOR):
-            raise _InvalidMatch
+        self._consume_first(Keyword.FOR)
         identifier = self._assignable()  # ensure identifier
         start_value = self._expression()
         self._consume(Keyword.TO)
@@ -360,45 +356,39 @@ class Parser:
         return ForStmt(identifier, start_value, end_value, step_value, body)
 
     def _repeat_loop(self) -> RepeatUntilStmt:
-        if not self._match(Keyword.REPEAT):
-            raise _InvalidMatch
+        self._consume_first(Keyword.REPEAT)
         body = self._statements_until(Keyword.UNTIL)
         condition = self._expression()
         return RepeatUntilStmt(body, condition)
 
     def _while_loop(self) -> WhileStmt:
-        if not self._match(Keyword.WHILE):
-            raise _InvalidMatch
+        self._consume_first(Keyword.WHILE)
         condition = self._expression()
         self._consume(Keyword.DO)
         body = self._statements_until(Keyword.ENDWHILE)
         return WhileStmt(condition, body)
 
     def _declare_variable(self) -> VariableDecl:
-        if not self._match(Keyword.DECLARE):
-            raise _InvalidMatch
+        self._consume_first(Keyword.DECLARE)
         name = self._advance()  # ensure identifier
         self._consume(Symbol.COLON)
         type_ = self._type()
         return VariableDecl(name, type_)
 
     def _declare_constant(self) -> ConstantDecl:
-        if not self._match(Keyword.CONSTANT):
-            raise _InvalidMatch
+        self._consume_first(Keyword.CONSTANT)
         name = self._advance()  # ensure identifier
         self._consume(Symbol.ASSIGN)
         value = self._advance()  # ensure literal
         return ConstantDecl(name, value)
 
     def _input(self) -> InputStmt:
-        if not self._match(Keyword.INPUT):
-            raise _InvalidMatch
+        self._consume_first(Keyword.INPUT)
         identifier = self._assignable()
         return InputStmt(identifier)
 
     def _output(self) -> OutputStmt:
-        if not self._match(Keyword.OUTPUT):
-            raise _InvalidMatch
+        self._consume_first(Keyword.OUTPUT)
         values = self._match_multiple(self._expression)
         return OutputStmt(values)
 
