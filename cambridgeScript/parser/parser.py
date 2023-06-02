@@ -328,7 +328,12 @@ class Parser:
         return RepeatUntilStmt(body, condition)
 
     def _while_loop(self) -> WhileStmt:
-        pass
+        if not self._match(Keyword.WHILE):
+            raise _InvalidMatchError
+        condition = self._expression()
+        self._consume(Keyword.DO, error_message="Expected 'DO'")
+        body = self._statements_until(Keyword.ENDWHILE)
+        return WhileStmt(condition, body)
 
     def _declare(self) -> VariableDecl:
         pass
