@@ -344,7 +344,12 @@ class Parser:
         return VariableDecl(name, type_)
 
     def _declare_constant(self) -> ConstantDecl:
-        pass
+        if not self._match(Keyword.CONSTANT):
+            raise _InvalidMatchError
+        name = self._advance()  # ensure identifier
+        self._consume(Symbol.ASSIGN, error_message="Expected '<-'")
+        value = self._advance()  # ensure literal
+        return ConstantDecl(name, value)
 
     def _input(self) -> InputStmt:
         pass
