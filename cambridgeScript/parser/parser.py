@@ -210,6 +210,37 @@ class Parser:
     # Statements
 
     def _statement(self) -> Statement:
+        if self._check(Keyword.PROCEDURE):
+            return self._procedure_decl()
+        elif self._check(Keyword.FUNCTION):
+            return self._function_decl()
+        elif self._check(Keyword.IF):
+            return self._if_stmt()
+        elif self._check(Keyword.CASE_OF):
+            return self._case_stmt()
+        elif self._check(Keyword.FOR):
+            return self._for_loop()
+        elif self._check(Keyword.REPEAT):
+            return self._repeat_loop()
+        elif self._check(Keyword.WHILE):
+            return self._while_loop()
+        elif self._check(Keyword.DECLARE):
+            return self._declare()
+        elif self._check(Keyword.CONSTANT):
+            return self._declare_constant()
+        elif self._check(Keyword.INPUT):
+            return self._input()
+        elif self._check(Keyword.OUTPUT):
+            return self._output()
+        raise _InvalidMatchError
+
+    def _procedure_decl(self) -> ProcedureDecl:
+        pass
+
+    def _function_decl(self) -> FunctionDecl:
+        pass
+
+    def _if_stmt(self) -> IfStmt:
         pass
 
     def _case_stmt(self) -> CaseStmt:
@@ -235,6 +266,27 @@ class Parser:
             if self._match(Keyword.ENDCASE):
                 break
         return CaseStmt(identifier, list(zip(cases, bodies)), otherwise)
+
+    def _for_loop(self) -> ForStmt:
+        pass
+
+    def _repeat_loop(self) -> RepeatUntilStmt:
+        pass
+
+    def _while_loop(self) -> WhileStmt:
+        pass
+
+    def _declare(self) -> VariableDecl:
+        pass
+
+    def _declare_constant(self) -> ConstantDecl:
+        pass
+
+    def _input(self) -> InputStmt:
+        pass
+
+    def _output(self) -> OutputStmt:
+        pass
 
     # Expressions
 
