@@ -28,6 +28,9 @@ class KeywordToken(Token):
             return self.keyword == other
         return super().__eq__(other)
 
+    def __hash__(self):
+        return hash(self.keyword)
+
 
 @dataclass(frozen=True)
 class SymbolToken(Token):
@@ -37,6 +40,9 @@ class SymbolToken(Token):
         if isinstance(other, Symbol):
             return self.symbol == other
         return super().__eq__(other)
+
+    def __hash__(self):
+        return hash(self.symbol)
 
 
 @dataclass(frozen=True)
@@ -83,7 +89,7 @@ def parse_literal(literal: str) -> Value:
 
 def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
     if token_type == "KEYWORD":
-        return KeywordToken(symbol=Keyword(token_string), **token_kwargs)
+        return KeywordToken(keyword=Keyword(token_string), **token_kwargs)
     elif token_type == "IDENTIFIER":
         return IdentifierToken(value=token_string, **token_kwargs)
     elif token_type == "SYMBOL":
