@@ -24,10 +24,13 @@ __all__ = [
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from .expression import Expression
 from ..parser.tokens import Token
+
+if TYPE_CHECKING:
+    from . import Type
 
 
 class StatementVisitor(ABC):
@@ -120,16 +123,17 @@ class Statement(ABC):
 @dataclass
 class ProcedureDecl(Statement):
     name: Token
-    params: list[Token]
+    params: list[tuple[Token, "Type"]] | None
     body: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_proc_decl(self)
 
 
+@dataclass
 class FunctionDecl(Statement):
     name: Token
-    params: list[Token]
+    params: list[tuple[Token, "Type"]] | None
     return_type: Token
     body: list[Statement]
 
@@ -150,8 +154,7 @@ class IfStmt(Statement):
 @dataclass
 class CaseStmt(Statement):
     expr: Expression
-    cases: list[Token]
-    body: list[Statement]
+    cases: list[tuple[Token, Statement]]
     otherwise: Statement | None = None
 
     def accept(self, visitor: StatementVisitor) -> Any:
@@ -200,7 +203,7 @@ class VariableDecl(Statement):
 @dataclass
 class ConstantDecl(Statement):
     name: Token
-    value: Expression
+    value: Token
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_constant_decl(self)
@@ -208,7 +211,7 @@ class ConstantDecl(Statement):
 
 @dataclass
 class InputStmt(Statement):
-    variable: Token
+    variable: Expression
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_input(self)
