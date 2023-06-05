@@ -477,16 +477,14 @@ class Parser:
                 end_type = Symbol.RBRAKET
                 ast_class = ArrayIndex
             arg_list = self._match_multiple(self._expression)
-            self._consume(end_type, error_message=f"Unmatched '(' at {start.location}")
+            self._consume(end_type)
             left = ast_class(left, arg_list)
         return left
 
     def _primary(self) -> Expression:
-        if start := self._match(Symbol.LPAREN):
+        if self._match(Symbol.LPAREN):
             res = self._expression()
-            self._consume(
-                Symbol.RPAREN, error_message=f"Unmatched '(' at {start.location}"
-            )
+            self._consume(Symbol.RPAREN)
             return res
         next_token = self._peek()
         if isinstance(next_token, LiteralToken):
