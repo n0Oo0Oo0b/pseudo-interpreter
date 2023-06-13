@@ -153,7 +153,7 @@ class IfStmt(Statement):
 class CaseStmt(Statement):
     expr: Expression
     cases: list[tuple[Token, Statement]]
-    otherwise: Statement | None = None
+    otherwise: Statement | None
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_case(self)
@@ -269,7 +269,7 @@ class FileCloseStmt(Statement):
 @dataclass
 class ProcedureCallStmt(Statement):
     name: Token
-    args: list[Expression]
+    args: list[Expression] | None
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_proc_call(self)
