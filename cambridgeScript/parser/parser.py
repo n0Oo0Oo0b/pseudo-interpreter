@@ -166,11 +166,11 @@ class Parser:
             raise _InvalidMatch
         return res
 
-    def _consume_type(self, type_: type[Token], *, error_message: str) -> Token:
+    def _consume_type(self, type_: type[Token]) -> Token:
         # Attempt to match a token type, throw error if fail
         next_token = self._peek()
         if not isinstance(next_token, type_):
-            raise ParserError(error_message.format(actual_token=next_token))
+            raise UnexpectedTokenType(type_, next_token)
         return next_token
 
     # Helper rules
