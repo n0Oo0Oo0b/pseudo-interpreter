@@ -60,7 +60,7 @@ class _InvalidMatch(ParserError):
 
 class UnexpectedToken(ParserError):
     """Raised when the parser encounters an unexpected token"""
-    expected: Token
+    expected: TokenComparable
     actual: Token
 
     def __init__(self, expected: TokenComparable, actual: Token):
@@ -68,7 +68,26 @@ class UnexpectedToken(ParserError):
         self.actual = actual
 
     def __str__(self):
-        return f"Expected '{self.expected}' at {self.actual.location}"
+        return (
+            f"Expected '{self.expected}' at {self.actual.location}, "
+            f"found '{self.actual}' instead"
+        )
+
+
+class UnexpectedTokenType(UnexpectedToken):
+    """Raised when the parser encounters an unexpected token type"""
+    expected: type[Token]
+    actual: Token
+
+    def __init__(self, expected: type[Token], actual: Token):
+        self.expected = expected
+        self.actual = actual
+
+    def __str__(self):
+        return (
+            f"Expected {self.expected.__name__.lower()} at {self.actual.location}, "
+            f"found '{self.actual}' instead"
+        )
 
 
 class Parser:
