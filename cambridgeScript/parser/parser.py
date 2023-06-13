@@ -218,7 +218,7 @@ class Parser:
         return name, type_
 
     def _procedure_header(self) -> tuple[Token, list[tuple[Token, Type]]]:
-        name = self._advance()  # ensure identifier
+        name = self._consume_type(IdentifierToken)
         if self._match(Symbol.LPAREN):
             parameters = self._match_multiple(self._parameter)
             self._consume(Symbol.RPAREN)
@@ -362,7 +362,7 @@ class Parser:
 
     def _for_loop(self) -> ForStmt:
         self._consume_first(Keyword.FOR)
-        identifier = self._assignable()  # ensure identifier
+        identifier = self._assignable()
         start_value = self._expression()
         self._consume(Keyword.TO)
         end_value = self._expression()
@@ -389,16 +389,16 @@ class Parser:
 
     def _declare_variable(self) -> VariableDecl:
         self._consume_first(Keyword.DECLARE)
-        name = self._advance()  # ensure identifier
+        name = self._consume_type(IdentifierToken)
         self._consume(Symbol.COLON)
         type_ = self._type()
         return VariableDecl(name, type_)
 
     def _declare_constant(self) -> ConstantDecl:
         self._consume_first(Keyword.CONSTANT)
-        name = self._advance()  # ensure identifier
+        name = self._consume_type(IdentifierToken)
         self._consume(Symbol.ASSIGN)
-        value = self._advance()  # ensure literal
+        value = self._consume_type(LiteralToken)
         return ConstantDecl(name, value)
 
     def _input(self) -> InputStmt:
