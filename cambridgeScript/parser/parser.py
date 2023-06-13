@@ -417,16 +417,32 @@ class Parser:
         return ReturnStmt(expr)
 
     def _file_open(self) -> FileOpenStmt:
-        pass
+        self._consume_first(Keyword.OPENFILE)
+        identifier = self._consume_type(LiteralToken)
+        self._consume(Keyword.FOR)
+        if self._peek() not in [Keyword.READ, Keyword.WRITE]:
+            raise UnexpectedToken("File mode", self._peek())
+        file_mode = self._advance()
+        return FileOpenStmt(identifier, file_mode)
 
     def _file_read(self) -> FileReadStmt:
-        pass
+        self._consume_first(Keyword.READFILE)
+        file = self._consume_type(LiteralToken)
+        self._consume(Symbol.COMMA)
+        target = self._assignable()
+        return FileReadStmt(file, target)
 
     def _file_write(self) -> FileWriteStmt:
-        pass
+        self._consume_first(Keyword.WRITEFILE)
+        file = self._consume_type(LiteralToken)
+        self._consume(Symbol.COMMA)
+        value = self._expression()
+        return FileWriteStmt(file, value)
 
     def _file_close(self) -> FileCloseStmt:
-        pass
+        self._consume_first(Keyword.CLOSEFILE)
+        file = self._consume_type(LiteralToken)
+        return FileCloseStmt(file)
 
     def _procedure_call(self) -> ProcedureCallStmt:
         pass
