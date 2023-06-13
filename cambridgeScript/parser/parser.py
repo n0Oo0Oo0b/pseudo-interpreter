@@ -445,7 +445,14 @@ class Parser:
         return FileCloseStmt(file)
 
     def _procedure_call(self) -> ProcedureCallStmt:
-        pass
+        self._consume_first(Keyword.CALL)
+        name = self._consume_type(IdentifierToken)
+        if self._match(Symbol.LPAREN):
+            arg_list = self._match_multiple(self._expression)
+            self._consume(Symbol.RPAREN)
+        else:
+            arg_list = None
+        return ProcedureCallStmt(name, arg_list)
 
     def _assignment(self) -> AssignmentStmt:
         pass
