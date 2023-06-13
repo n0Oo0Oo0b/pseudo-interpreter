@@ -412,7 +412,9 @@ class Parser:
         return OutputStmt(values)
 
     def _return(self) -> ReturnStmt:
-        pass
+        self._consume_first(Keyword.RETURN)
+        expr = self._expression()
+        return ReturnStmt(expr)
 
     def _file_open(self) -> FileOpenStmt:
         pass
