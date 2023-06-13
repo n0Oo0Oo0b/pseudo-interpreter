@@ -455,7 +455,10 @@ class Parser:
         return ProcedureCallStmt(name, arg_list)
 
     def _assignment(self) -> AssignmentStmt:
-        pass
+        target = self._assignable()
+        self._consume(Symbol.ASSIGN)
+        value = self._expression()
+        return AssignmentStmt(target, value)
 
     # Expressions
 
