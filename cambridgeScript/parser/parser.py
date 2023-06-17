@@ -125,7 +125,7 @@ class Parser:
         return result
 
     @classmethod
-    def parse_program(cls, tokens: list[Token]) -> list[Statement]:
+    def parse_program(cls, tokens: list[Token]) -> Program:
         """
         Parses a list of tokens as a program (series of statements)
         :param tokens: tokens to parse

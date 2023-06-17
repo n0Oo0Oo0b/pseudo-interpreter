@@ -29,5 +29,5 @@ if __name__ == "__main__":
     tokens = parse_tokens(open(0).read())
     for token in tokens:
         print(token)
-    parsed = Parser.parse_expression(tokens)
+    parsed = Parser.parse_program(tokens)
     print(parsed)
