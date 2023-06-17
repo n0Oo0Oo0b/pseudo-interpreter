@@ -31,6 +31,7 @@ from cambridgeScript.syntax_tree import (
     FileCloseStmt,
     ProcedureCallStmt,
     AssignmentStmt,
+    Program,
     # Types
     Type,
     PrimitiveType,
@@ -130,7 +131,8 @@ class Parser:
         :param tokens: tokens to parse
         :return: list of Statemnets
         """
-        return cls(tokens)._statements_until(EOF)
+        statements = cls(tokens)._statements_until(EOF)
+        return Program(statements)
 
     # Helpers
 
