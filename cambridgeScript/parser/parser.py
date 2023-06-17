@@ -172,7 +172,7 @@ class Parser:
         next_token = self._peek()
         if not isinstance(next_token, type_):
             raise UnexpectedTokenType(type_, next_token)
-        return next_token
+        return self._advance()
 
     # Helper rules
 
