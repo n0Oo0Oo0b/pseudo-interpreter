@@ -1,9 +1,16 @@
 import re
 from dataclasses import dataclass
 
-from cambridgeScript.constants import Keyword, Symbol, EOF
+from cambridgeScript.constants import Keyword, Symbol
 
 Value = str | int | float | bool
+
+
+class _EOFSentinel:
+    pass
+
+
+EOF = _EOFSentinel()
 
 
 @dataclass(frozen=True)
@@ -16,7 +23,7 @@ class Token:
         return f"Line {self.line} Column {self.column}"
 
 
-TokenComparable = Token | Keyword | Symbol | str | Value
+TokenComparable = Token | Keyword | Symbol | str | Value | _EOFSentinel
 
 
 @dataclass(frozen=True)

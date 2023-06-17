@@ -1,6 +1,6 @@
 from typing import Callable, TypeVar
 
-from cambridgeScript.constants import Keyword, Symbol, Operator, EOF
+from cambridgeScript.constants import Keyword, Symbol, Operator
 from cambridgeScript.syntax_tree import (
     # Expressions
     Expression,
@@ -44,6 +44,7 @@ from cambridgeScript.parser.lexer import (
     KeywordToken,
     IdentifierToken,
     Value,
+    EOF,
 )
 
 T = TypeVar("T")

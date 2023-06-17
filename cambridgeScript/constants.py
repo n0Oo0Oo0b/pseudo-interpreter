@@ -2,7 +2,6 @@ __all__ = [
     "Keyword",
     "Symbol",
     "Operator",
-    "EOF",
 ]
 
 
@@ -78,13 +77,6 @@ class Symbol(StrEnum):
     MUL = "*"
     DIV = "/"
     POW = "^"
-
-
-class _EOFSentinel:
-    pass
-
-
-EOF = _EOFSentinel()
 
 
 def _unary_sub(n):
