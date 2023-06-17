@@ -29,7 +29,7 @@ from typing import Any, TYPE_CHECKING
 if TYPE_CHECKING:
     from cambridgeScript.syntax_tree.visitors import StatementVisitor
 
-from cambridgeScript.parser.lexer import Token
+from cambridgeScript.parser.lexer import IdentifierToken, LiteralToken, KeywordToken
 from cambridgeScript.syntax_tree.expression import Expression, Assignable
 from cambridgeScript.syntax_tree.types import Type
 
@@ -42,8 +42,8 @@ class Statement(ABC):
 
 @dataclass
 class ProcedureDecl(Statement):
-    name: Token
-    params: list[tuple[Token, "Type"]] | None
+    name: IdentifierToken
+    params: list[tuple[IdentifierToken, "Type"]] | None
     body: list[Statement]
 
     def accept(self, visitor: "StatementVisitor") -> Any:
@@ -52,8 +52,8 @@ class ProcedureDecl(Statement):
 
 @dataclass
 class FunctionDecl(Statement):
-    name: Token
-    params: list[tuple[Token, "Type"]] | None
+    name: IdentifierToken
+    params: list[tuple[IdentifierToken, "Type"]] | None
     return_type: "Type"
     body: list[Statement]
 
@@ -74,7 +74,7 @@ class IfStmt(Statement):
 @dataclass
 class CaseStmt(Statement):
     expr: Expression
-    cases: list[tuple[Token, Statement]]
+    cases: list[tuple[IdentifierToken | LiteralToken, Statement]]
     otherwise: Statement | None
 
     def accept(self, visitor: "StatementVisitor") -> Any:
@@ -113,7 +113,7 @@ class WhileStmt(Statement):
 
 @dataclass
 class VariableDecl(Statement):
-    name: Token
+    name: IdentifierToken
     type: "Type"
 
     def accept(self, visitor: "StatementVisitor") -> Any:
@@ -122,8 +122,8 @@ class VariableDecl(Statement):
 
 @dataclass
 class ConstantDecl(Statement):
-    name: Token
-    value: Token
+    name: IdentifierToken
+    value: LiteralToken
 
     def accept(self, visitor: "StatementVisitor") -> Any:
         return visitor.visit_constant_decl(self)
@@ -155,8 +155,8 @@ class ReturnStmt(Statement):
 
 @dataclass
 class FileOpenStmt(Statement):
-    file: Token
-    mode: Token
+    file: LiteralToken
+    mode: KeywordToken
 
     def accept(self, visitor: "StatementVisitor") -> Any:
         return visitor.visit_f_open(self)
@@ -164,7 +164,7 @@ class FileOpenStmt(Statement):
 
 @dataclass
 class FileReadStmt(Statement):
-    file: Token
+    file: LiteralToken
     target: Assignable
 
     def accept(self, visitor: "StatementVisitor") -> Any:
@@ -173,7 +173,7 @@ class FileReadStmt(Statement):
 
 @dataclass
 class FileWriteStmt(Statement):
-    file: Token
+    file: LiteralToken
     value: Expression
 
     def accept(self, visitor: "StatementVisitor") -> Any:
@@ -182,7 +182,7 @@ class FileWriteStmt(Statement):
 
 @dataclass
 class FileCloseStmt(Statement):
-    file: Token
+    file: LiteralToken
 
     def accept(self, visitor: "StatementVisitor") -> Any:
         return visitor.visit_f_close(self)
@@ -190,7 +190,7 @@ class FileCloseStmt(Statement):
 
 @dataclass
 class ProcedureCallStmt(Statement):
-    name: Token
+    name: IdentifierToken
     args: list[Expression] | None
 
     def accept(self, visitor: "StatementVisitor") -> Any:
