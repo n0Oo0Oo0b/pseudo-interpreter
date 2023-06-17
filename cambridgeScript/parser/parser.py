@@ -102,6 +102,9 @@ class UnexpectedTokenType(ParserError):
 
 
 class Parser:
+    tokens: list[Token]
+    _next_index: int
+
     def __init__(self, tokens: list[Token]):
         self.tokens = tokens
         self._next_index = 0

@@ -1,4 +1,5 @@
 __all__ = [
+    "Value",
     "EOF",
     "TokenComparable",
     "Token",

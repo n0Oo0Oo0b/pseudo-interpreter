@@ -120,5 +120,5 @@ class StatementVisitor(ABC):
     #     pass
 
     @abstractmethod
-    def visit_program(self, stmt) -> Any:
+    def visit_program(self, stmt: Program) -> Any:
         pass
