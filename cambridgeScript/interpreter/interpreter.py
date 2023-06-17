@@ -55,6 +55,10 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         else:
             return StatementVisitor.visit(self, thing)
 
+    def visit_statements(self, statements: list[Statement]):
+        for stmt in statements:
+            self.visit(stmt)
+
     def visit_binary_op(self, expr: BinaryOp) -> Value:
         left = self.visit(expr.left)
         right = self.visit(expr.right)
@@ -91,7 +95,11 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         pass
 
     def visit_if(self, stmt: IfStmt) -> None:
-        pass
+        condition = self.visit(stmt.condition)
+        if condition:
+            self.visit_statements(stmt.then_branch)
+        elif stmt.else_branch is not None:
+            self.visit_statements(stmt.else_branch)
 
     def visit_case(self, stmt: CaseStmt) -> None:
         pass
@@ -147,5 +155,4 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         self.variable_state.variables[name] = self.visit(stmt.value)
 
     def visit_program(self, stmt: Program) -> None:
-        for s in stmt.statements:
-            self.visit(s)
+        self.visit_statements(stmt.statements)
