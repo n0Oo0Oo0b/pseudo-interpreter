@@ -1,3 +1,15 @@
+__all__ = [
+    "EOF",
+    "TokenComparable",
+    "Token",
+    "KeywordToken",
+    "SymbolToken",
+    "LiteralToken",
+    "IdentifierToken",
+    "EOFToken",
+    "parse_tokens",
+]
+
 import re
 from dataclasses import dataclass
 
@@ -91,7 +103,7 @@ _TOKENS = [
 _TOKEN_REGEX = "|".join(f"(?P<{name}>{regex})" for name, regex in _TOKENS)
 
 
-def parse_literal(literal: str) -> Value:
+def _parse_literal(literal: str) -> Value:
     if literal.startswith('"') and literal.endswith('"'):
         return literal[1:-1]
     try:
@@ -103,7 +115,7 @@ def parse_literal(literal: str) -> Value:
         raise ValueError("Invalid literal")
 
 
-def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
+def _parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
     if token_type == "KEYWORD":
         return KeywordToken(keyword=Keyword(token_string), **token_kwargs)
     elif token_type == "IDENTIFIER":
@@ -113,7 +125,7 @@ def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
     elif token_type == "EOF":
         return EOFToken(**token_kwargs)
     else:
-        value = parse_literal(token_string)
+        value = _parse_literal(token_string)
         return LiteralToken(value=value, **token_kwargs)
 
 
@@ -145,12 +157,7 @@ def parse_tokens(code: str) -> list[Token]:
                 f"Invalid token at line {line_number}, column {token_start - line_start}"
             )
         try:
-            token = parse_token(
-                token_value,
-                token_type,
-                line=line_number,
-                column=token_start - line_start,
-            )
+            token = _parse_token(token_value, token_type, line=line_number, column=token_start - line_start)
         except ValueError:
             print(f"Invalid literal {token_value}")
             raise

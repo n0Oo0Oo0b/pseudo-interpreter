@@ -1,3 +1,10 @@
+__all__ = [
+    "ParserError",
+    "UnexpectedToken",
+    "UnexpectedTokenType",
+    "Parser",
+]
+
 from typing import Callable, TypeVar
 
 from cambridgeScript.constants import Keyword, Symbol, Operator
