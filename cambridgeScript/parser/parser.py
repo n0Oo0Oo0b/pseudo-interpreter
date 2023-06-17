@@ -123,6 +123,15 @@ class Parser:
             raise ParserError(f"Extra token {next_token} found")
         return result
 
+    @classmethod
+    def parse_program(cls, tokens: list[Token]) -> list[Statement]:
+        """
+        Parses a list of tokens as a program (series of statements)
+        :param tokens: tokens to parse
+        :return: list of Statemnets
+        """
+        return cls(tokens)._statements_until(EOF)
+
     # Helpers
 
     def _peek(self) -> Token:
@@ -467,7 +476,7 @@ class Parser:
         result = self._call()
         if not isinstance(result, Assignable):
             raise ParserError("Expected identifier or array index")
-        return self._call()
+        return result
 
     def _logic_or(self) -> Expression:
         return self._binary_op(self._logic_and, {Keyword.OR: Operator.OR})
