@@ -36,7 +36,7 @@ from cambridgeScript.syntax_tree import (
     PrimitiveType,
     ArrayType,
 )
-from cambridgeScript.parser.tokens import (
+from cambridgeScript.parser.lexer import (
     Token,
     TokenComparable,
     LiteralToken,

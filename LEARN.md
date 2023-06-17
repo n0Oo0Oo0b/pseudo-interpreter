@@ -12,7 +12,7 @@ changes are made to the repo, smaller changes may not be reflected here.
 
 # How it works
 
-## [Tokenizer](cambridgeScript/parser/tokens.py)
+## [Tokenizer](cambridgeScript/parser/lexer.py)
 
 The tokens are parsed using a regular expression (TOKEN_REGEX), as defined in [constants.py](cambridgeScript/constants.py).
 Other than that, the tokenizer performs a few rudimentary operations (e.g. resolving escape sequences in string literals) and outputs a list of tokens.

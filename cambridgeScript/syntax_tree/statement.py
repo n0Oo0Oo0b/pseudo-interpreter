@@ -26,7 +26,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any
 
-from cambridgeScript.parser.tokens import Token
+from cambridgeScript.parser.lexer import Token
 from cambridgeScript.syntax_tree.expression import Expression, Assignable
 from cambridgeScript.syntax_tree.types import Type
 

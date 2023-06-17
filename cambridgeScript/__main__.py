@@ -23,7 +23,7 @@
 
 if __name__ == "__main__":
     # cli()
-    from cambridgeScript.parser.tokens import parse_tokens
+    from cambridgeScript.parser.lexer import parse_tokens
     from cambridgeScript.parser.parser import Parser
 
     tokens = parse_tokens(open(0).read())
