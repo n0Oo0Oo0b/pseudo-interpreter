@@ -105,7 +105,19 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         pass
 
     def visit_for_loop(self, stmt: ForStmt) -> None:
-        pass
+        if isinstance(stmt, ArrayIndex):
+            raise NotImplemented
+        name = stmt.variable.token.value
+        current_value = self.visit(stmt.start)
+        end_value = self.visit(stmt.end)
+        if stmt.step is not None:
+            step_value = self.visit(stmt.step)
+        else:
+            step_value = 1
+        while current_value <= end_value:
+            self.variable_state.variables[name] = current_value
+            self.visit_statements(stmt.body)
+            current_value += step_value
 
     def visit_repeat_until(self, stmt: RepeatUntilStmt) -> None:
         pass
