@@ -16,7 +16,7 @@ from typing import Callable, Any, TYPE_CHECKING
 if TYPE_CHECKING:
     from cambridgeScript.syntax_tree.visitors import ExpressionVisitor
 
-from cambridgeScript.parser.lexer import Token, Value
+from cambridgeScript.parser.lexer import Value, LiteralToken, IdentifierToken
 
 
 class Expression(ABC):
@@ -64,7 +64,7 @@ class ArrayIndex(Expression):
 
 @dataclass
 class Literal(Expression):
-    token: Token
+    token: LiteralToken
 
     def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_literal(self)
@@ -72,7 +72,7 @@ class Literal(Expression):
 
 @dataclass
 class Identifier(Expression):
-    token: Token
+    token: IdentifierToken
 
     def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_identifier(self)
