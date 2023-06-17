@@ -397,6 +397,7 @@ class Parser:
     def _for_loop(self) -> ForStmt:
         self._consume_first(Keyword.FOR)
         identifier = self._assignable()
+        self._consume(Symbol.ASSIGN)
         start_value = self._expression()
         self._consume(Keyword.TO)
         end_value = self._expression()
