@@ -247,8 +247,10 @@ class Parser:
         type_ = self._type()
         return name, type_
 
-    def _procedure_header(self) -> tuple[Token, list[tuple[Token, Type]] | None]:
-        name = self._consume_type(IdentifierToken)
+    def _procedure_header(
+            self,
+    ) -> tuple[IdentifierToken, list[tuple[Token, Type]] | None]:
+        name: IdentifierToken = self._consume_type(IdentifierToken)  # type: ignore
         if self._match(Symbol.LPAREN):
             parameters = self._match_multiple(self._parameter)
             self._consume(Symbol.RPAREN)
@@ -419,16 +421,16 @@ class Parser:
 
     def _declare_variable(self) -> VariableDecl:
         self._consume_first(Keyword.DECLARE)
-        name = self._consume_type(IdentifierToken)
+        name: IdentifierToken = self._consume_type(IdentifierToken)  # type: ignore
         self._consume(Symbol.COLON)
         type_ = self._type()
         return VariableDecl(name, type_)
 
     def _declare_constant(self) -> ConstantDecl:
         self._consume_first(Keyword.CONSTANT)
-        name = self._consume_type(IdentifierToken)
+        name: IdentifierToken = self._consume_type(IdentifierToken)  # type: ignore
         self._consume(Symbol.ASSIGN)
-        value = self._consume_type(LiteralToken)
+        value: LiteralToken = self._consume_type(LiteralToken)  # type: ignore
         return ConstantDecl(name, value)
 
     def _input(self) -> InputStmt:
@@ -448,35 +450,35 @@ class Parser:
 
     def _file_open(self) -> FileOpenStmt:
         self._consume_first(Keyword.OPENFILE)
-        identifier = self._consume_type(LiteralToken)
+        file: LiteralToken = self._consume_type(LiteralToken)  # type: ignore
         self._consume(Keyword.FOR)
         if self._peek() not in [Keyword.READ, Keyword.WRITE]:
             raise UnexpectedToken("File mode", self._peek())
-        file_mode = self._advance()
-        return FileOpenStmt(identifier, file_mode)
+        file_mode: KeywordToken = self._advance()  # type: ignore
+        return FileOpenStmt(file, file_mode)
 
     def _file_read(self) -> FileReadStmt:
         self._consume_first(Keyword.READFILE)
-        file = self._consume_type(LiteralToken)
+        file: LiteralToken = self._consume_type(LiteralToken)  # type: ignore
         self._consume(Symbol.COMMA)
         target = self._assignable()
         return FileReadStmt(file, target)
 
     def _file_write(self) -> FileWriteStmt:
         self._consume_first(Keyword.WRITEFILE)
-        file = self._consume_type(LiteralToken)
+        file: LiteralToken = self._consume_type(LiteralToken)  # type: ignore
         self._consume(Symbol.COMMA)
         value = self._expression()
         return FileWriteStmt(file, value)
 
     def _file_close(self) -> FileCloseStmt:
         self._consume_first(Keyword.CLOSEFILE)
-        file = self._consume_type(LiteralToken)
+        file: LiteralToken = self._consume_type(LiteralToken)  # type: ignore
         return FileCloseStmt(file)
 
     def _procedure_call(self) -> ProcedureCallStmt:
         self._consume_first(Keyword.CALL)
-        name = self._consume_type(IdentifierToken)
+        name: IdentifierToken = self._consume_type(IdentifierToken)  # type: ignore
         if self._match(Symbol.LPAREN):
             arg_list = self._match_multiple(self._expression)
             self._consume(Symbol.RPAREN)

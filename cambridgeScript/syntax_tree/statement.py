@@ -199,7 +199,7 @@ class ProcedureCallStmt(Statement):
 
 @dataclass
 class AssignmentStmt(Statement):
-    target: Expression
+    target: Assignable
     value: Expression
 
     def accept(self, visitor: "StatementVisitor") -> Any:
