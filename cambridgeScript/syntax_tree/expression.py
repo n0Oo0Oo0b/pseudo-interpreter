@@ -1,5 +1,4 @@
 __all__ = [
-    "ExpressionVisitor",
     "Expression",
     "Assignable",
     "BinaryOp",
@@ -10,46 +9,19 @@ __all__ = [
     "Identifier",
 ]
 
-
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Callable, Any
+from typing import Callable, Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from cambridgeScript.syntax_tree.visitors import ExpressionVisitor
 
 from cambridgeScript.parser.lexer import Token, Value
 
 
-class ExpressionVisitor(ABC):
-    def visit(self, expr: "Expression") -> Any:
-        return expr.accept(self)
-
-    @abstractmethod
-    def visit_binary_op(self, expr: "BinaryOp") -> Any:
-        pass
-
-    @abstractmethod
-    def visit_unary_op(self, expr: "UnaryOp") -> Any:
-        pass
-
-    @abstractmethod
-    def visit_function_call(self, expr: "FunctionCall") -> Any:
-        pass
-
-    @abstractmethod
-    def visit_array_index(self, expr: "ArrayIndex") -> Any:
-        pass
-
-    @abstractmethod
-    def visit_literal(self, expr: "Literal") -> Any:
-        pass
-
-    @abstractmethod
-    def visit_identifier(self, expr: "Identifier") -> Any:
-        pass
-
-
 class Expression(ABC):
     @abstractmethod
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         pass
 
 
@@ -59,7 +31,7 @@ class BinaryOp(Expression):
     left: Expression
     right: Expression
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_binary_op(self)
 
 
@@ -68,7 +40,7 @@ class UnaryOp(Expression):
     operator: Callable[[Value], Value]
     operand: Expression
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_unary_op(self)
 
 
@@ -77,7 +49,7 @@ class FunctionCall(Expression):
     function: Expression
     params: list[Expression]
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_function_call(self)
 
 
@@ -86,7 +58,7 @@ class ArrayIndex(Expression):
     array: Expression
     index: list[Expression]
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_array_index(self)
 
 
@@ -94,7 +66,7 @@ class ArrayIndex(Expression):
 class Literal(Expression):
     token: Token
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_literal(self)
 
 
@@ -102,7 +74,7 @@ class Literal(Expression):
 class Identifier(Expression):
     token: Token
 
-    def accept(self, visitor: ExpressionVisitor) -> Any:
+    def accept(self, visitor: "ExpressionVisitor") -> Any:
         return visitor.visit_identifier(self)
 
 
