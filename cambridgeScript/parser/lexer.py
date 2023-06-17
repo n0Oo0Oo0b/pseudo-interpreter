@@ -157,7 +157,12 @@ def parse_tokens(code: str) -> list[Token]:
                 f"Invalid token at line {line_number}, column {token_start - line_start}"
             )
         try:
-            token = _parse_token(token_value, token_type, line=line_number, column=token_start - line_start)
+            token = _parse_token(
+                token_value,
+                token_type,
+                line=line_number,
+                column=token_start - line_start,
+            )
         except ValueError:
             print(f"Invalid literal {token_value}")
             raise

@@ -69,6 +69,7 @@ class _InvalidMatch(ParserError):
 
 class UnexpectedToken(ParserError):
     """Raised when the parser encounters an unexpected token"""
+
     expected: TokenComparable
     actual: Token
 
@@ -85,6 +86,7 @@ class UnexpectedToken(ParserError):
 
 class UnexpectedTokenType(ParserError):
     """Raised when the parser encounters an unexpected token type"""
+
     expected_type: type[Token]
     actual: Token
 
@@ -193,7 +195,15 @@ class Parser:
     # Helper rules
 
     def _primitive_type(self) -> PrimitiveType:
-        if not (res := self._match(Keyword.INTEGER, Keyword.REAL, Keyword.CHAR, Keyword.STRING, Keyword.BOOLEAN)):
+        if not (
+                res := self._match(
+                    Keyword.INTEGER,
+                    Keyword.REAL,
+                    Keyword.CHAR,
+                    Keyword.STRING,
+                    Keyword.BOOLEAN,
+                )
+        ):
             raise _InvalidMatch
         assert isinstance(res, KeywordToken)
         type_ = PrimitiveType[res.keyword]
