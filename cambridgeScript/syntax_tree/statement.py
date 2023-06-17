@@ -20,6 +20,7 @@ __all__ = [
     "ProcedureCallStmt",
     "AssignmentStmt",
     # "ExprStmt",
+    "Program",
 ]
 
 from abc import ABC, abstractmethod
@@ -110,6 +111,10 @@ class StatementVisitor(ABC):
     # @abstractmethod
     # def visit_expr_stmt(self, stmt) -> Any:
     #     pass
+
+    @abstractmethod
+    def visit_program(self, stmt) -> Any:
+        pass
 
 
 class Statement(ABC):
@@ -283,9 +288,18 @@ class AssignmentStmt(Statement):
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_assign(self)
 
+
 # @dataclass
 # class ExprStmt(Statement):
 #     expr: Expression
 #
 #     def accept(self, visitor: StatementVisitor) -> Any:
 #         return visitor.visit_expr_stmt(self)
+
+
+@dataclass
+class Program(Statement):
+    statements: list[Statement]
+
+    def accept(self, visitor: StatementVisitor) -> Any:
+        return visitor.visit_program(self)
