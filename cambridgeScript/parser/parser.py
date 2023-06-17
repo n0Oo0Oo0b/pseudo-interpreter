@@ -241,15 +241,15 @@ class Parser:
             pass
         raise _InvalidMatch
 
-    def _parameter(self) -> tuple[Token, Type]:
-        name = self._advance()
+    def _parameter(self) -> tuple[IdentifierToken, Type]:
+        name: IdentifierToken = self._consume_type(IdentifierToken)  # type: ignore
         self._consume(Symbol.COLON)
         type_ = self._type()
         return name, type_
 
     def _procedure_header(
             self,
-    ) -> tuple[IdentifierToken, list[tuple[Token, Type]] | None]:
+    ) -> tuple[IdentifierToken, list[tuple[IdentifierToken, Type]] | None]:
         name: IdentifierToken = self._consume_type(IdentifierToken)  # type: ignore
         if self._match(Symbol.LPAREN):
             parameters = self._match_multiple(self._parameter)
@@ -386,6 +386,8 @@ class Parser:
                 otherwise = body
                 self._consume(Keyword.ENDCASE)
                 break
+            if not isinstance(case, (IdentifierToken, LiteralToken)):
+                raise ParserError("Invalid case for case statement")
             cases.append(case)
             bodies.append(body)
             if self._match(Keyword.ENDCASE):
