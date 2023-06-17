@@ -15,9 +15,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, Any
 
-from cambridgeScript.parser.lexer import Token
-
-Value = str | int | float | bool
+from cambridgeScript.parser.lexer import Token, Value
 
 
 class ExpressionVisitor(ABC):
