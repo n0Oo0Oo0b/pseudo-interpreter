@@ -42,6 +42,7 @@ from cambridgeScript.parser.tokens import (
     LiteralToken,
     KeywordToken,
     IdentifierToken,
+    EOFToken,
     Value,
 )
 
@@ -133,7 +134,7 @@ class Parser:
 
     def _is_at_end(self) -> bool:
         # Returns whether the pointer is at the end
-        return self._peek() == Symbol.EOF or self._next_index >= len(self.tokens)
+        return isinstance(self._peek(), EOFToken)
 
     def _advance(self) -> Token:
         # Consumes and returns the next token

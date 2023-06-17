@@ -77,7 +77,6 @@ class Symbol(StrEnum):
     MUL = "*"
     DIV = "/"
     POW = "^"
-    EOF = "EOF"
 
 
 def _unary_sub(n):

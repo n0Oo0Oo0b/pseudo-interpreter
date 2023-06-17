@@ -62,6 +62,12 @@ class IdentifierToken(Token):
         return self.value == other or super().__eq__(other)
 
 
+@dataclass(frozen=True)
+class EOFToken(Token):
+    def __eq__(self, other):
+        return isinstance(other, EOFToken)
+
+
 # Regex patterns for tokens
 _TOKENS = [
     ("IGNORE", r"/\*.*\*/|(?://|#).*$|[ \t]+"),
@@ -96,7 +102,7 @@ def parse_token(token_string: str, token_type: str, **token_kwargs) -> Token:
     elif token_type == "SYMBOL":
         return SymbolToken(symbol=Symbol(token_string), **token_kwargs)
     elif token_type == "EOF":
-        return SymbolToken(symbol=Symbol.EOF, **token_kwargs)
+        return EOFToken(**token_kwargs)
     else:
         value = parse_literal(token_string)
         return LiteralToken(value=value, **token_kwargs)
