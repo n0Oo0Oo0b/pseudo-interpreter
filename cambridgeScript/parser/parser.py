@@ -113,10 +113,8 @@ class Parser:
     def parse_statement(cls, tokens: list[Token]) -> Statement:
         """
         Parses a list of tokens as a single statement
-        :param tokens:
-        :type tokens:
-        :return:
-        :rtype:
+        :param tokens: tokens to parse
+        :return: a Statement
         """
         instance = cls(tokens)
         result = instance._statement()
