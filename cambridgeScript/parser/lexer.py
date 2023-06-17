@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-from cambridgeScript.constants import Keyword, Symbol
+from cambridgeScript.constants import Keyword, Symbol, EOF
 
 Value = str | int | float | bool
 
@@ -65,7 +65,9 @@ class IdentifierToken(Token):
 @dataclass(frozen=True)
 class EOFToken(Token):
     def __eq__(self, other):
-        return isinstance(other, EOFToken)
+        if other is EOF:
+            return True
+        return super().__eq__(other)
 
 
 # Regex patterns for tokens

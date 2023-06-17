@@ -1,6 +1,6 @@
 from typing import Callable, TypeVar
 
-from cambridgeScript.constants import Keyword, Symbol, Operator
+from cambridgeScript.constants import Keyword, Symbol, Operator, EOF
 from cambridgeScript.syntax_tree import (
     # Expressions
     Expression,
@@ -42,7 +42,6 @@ from cambridgeScript.parser.lexer import (
     LiteralToken,
     KeywordToken,
     IdentifierToken,
-    EOFToken,
     Value,
 )
 
@@ -134,7 +133,7 @@ class Parser:
 
     def _is_at_end(self) -> bool:
         # Returns whether the pointer is at the end
-        return isinstance(self._peek(), EOFToken)
+        return self._peek() == EOF
 
     def _advance(self) -> Token:
         # Consumes and returns the next token
