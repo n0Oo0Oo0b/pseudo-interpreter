@@ -75,18 +75,18 @@ class UnexpectedToken(ParserError):
         )
 
 
-class UnexpectedTokenType(UnexpectedToken):
+class UnexpectedTokenType(ParserError):
     """Raised when the parser encounters an unexpected token type"""
-    expected: type[Token]
+    expected_type: type[Token]
     actual: Token
 
     def __init__(self, expected: type[Token], actual: Token):
-        self.expected = expected
+        self.expected_type = expected
         self.actual = actual
 
     def __str__(self):
         return (
-            f"Expected {self.expected.__name__.lower()} at {self.actual.location}, "
+            f"Expected {self.expected_type.__name__.lower()} at {self.actual.location}, "
             f"found '{self.actual}' instead"
         )
 
