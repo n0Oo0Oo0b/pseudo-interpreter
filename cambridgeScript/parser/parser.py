@@ -227,7 +227,7 @@ class Parser:
         type_ = self._type()
         return name, type_
 
-    def _procedure_header(self) -> tuple[Token, list[tuple[Token, Type]]]:
+    def _procedure_header(self) -> tuple[Token, list[tuple[Token, Type]] | None]:
         name = self._consume_type(IdentifierToken)
         if self._match(Symbol.LPAREN):
             parameters = self._match_multiple(self._parameter)
@@ -242,7 +242,7 @@ class Parser:
             self,
             getter: Callable[[], T],
             *,
-            delimiter: TokenComparable | None = Symbol.COMMA,
+            delimiter: TokenComparable = Symbol.COMMA,
     ) -> list[T]:
         # First item
         try:
@@ -477,7 +477,7 @@ class Parser:
 
     def _assignable(self) -> Assignable:
         result = self._call()
-        if not isinstance(result, Assignable):
+        if not isinstance(result, (ArrayIndex, Identifier)):
             raise ParserError("Expected identifier or array index")
         return result
 

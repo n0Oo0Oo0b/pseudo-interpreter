@@ -137,7 +137,7 @@ class ProcedureDecl(Statement):
 class FunctionDecl(Statement):
     name: Token
     params: list[tuple[Token, "Type"]] | None
-    return_type: Token
+    return_type: "Type"
     body: list[Statement]
 
     def accept(self, visitor: StatementVisitor) -> Any:
@@ -197,7 +197,7 @@ class WhileStmt(Statement):
 @dataclass
 class VariableDecl(Statement):
     name: Token
-    type: Token
+    type: "Type"
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_variable_decl(self)
@@ -248,7 +248,7 @@ class FileOpenStmt(Statement):
 @dataclass
 class FileReadStmt(Statement):
     file: Token
-    variable: Token
+    target: Assignable
 
     def accept(self, visitor: StatementVisitor) -> Any:
         return visitor.visit_f_read(self)
