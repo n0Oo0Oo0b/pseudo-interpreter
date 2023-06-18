@@ -1,0 +1,5 @@
+DECLARE x: INTEGER
+
+x <- 1
+
+OUTPUT x

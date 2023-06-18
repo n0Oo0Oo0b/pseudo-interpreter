@@ -1,0 +1,93 @@
+program         = block EOF ;
+
+
+block           = block ;
+
+
+
+statement       = procDecl
+                | functionDecl
+                | ifStmt
+                | caseStmt
+                | forLoop
+                | repeatLoop
+                | whileLoop
+                | declareStmt
+                | constantDecl
+                | inputStmt
+                | outputStmt
+                | returnStmt
+                | fOpenStmt
+                | fReadStmt
+                | fWriteStmt
+                | fCloseStmt
+                | procedureCall
+                | assignment ;
+
+procDecl        = "PROCEDURE" IDENTIFIER ( "(" parameters ")" )?
+                    block "ENDPROCEDURE" ;
+functionDecl    = "FUNCTION" IDENTIFIER ( "(" parameters ")" )? "RETURNS" datatype
+                    block "ENDFUNCTION";
+ifStmt          = "IF" expression
+                    "THEN" block
+                    ("ELSE" block)?
+                    "ENDIF" ;
+caseStmt        = "CASE" "OF" IDENTIFIER
+                    (literal ":" statement)+
+                    ("OTHERWISE" statement)?
+                    "ENDCASE" ;
+forLoop         = "FOR" assignable "<-" expression "TO" expression ("STEP" expression)?
+                    block "NEXT" IDENTIFIER ;
+repeatLoop      = "REPEAT" block "UNTIL" expression ;
+whileLoop       = "WHILE" expression "DO" block "ENDWHILE" ;
+
+declareStmt     = "DECLARE" IDENTIFIER ":" datatype ;
+constantDecl    = "CONSTANT" IDENTIFIER "<-" literal ;
+inputStmt       = "INPUT" assignable ;
+outputStmt      = "OUTPUT" arguments ;
+returnStmt      = "RETURN" expression ;
+fOpenStmt       = "OPENFILE" fileIdentifier "FOR" fileMode ;
+fReadStmt       = "READFILE" fileIdentifier "," assignable ;
+fWriteStmt      = "WRITEFILE" fileIdentifier "," expression ;
+fCloseStmt      = "CLOSEFILE" fileIdentifier ;
+procedureCall   = "CALL" IDENTIFIER ( "(" arguments ")" )? ;
+assignment      = assignable "<-" expression ;
+
+
+
+expression      = logicOr ;
+assignable      = call ;
+
+logicOr         = logicAnd ( "OR" logicAnd )* ;
+logicAnd        = logicNot ( "AND" logicNot )* ;
+logicNot        = "NOT"? logicNot | comparison ;
+comparison      = term ( ( "<>" | "=" | "<=" | ">=" | "<" | ">") term )* ;
+term            = factor ( ( "-" | "+" ) factor )* ;
+factor          = call ( ( "/" | "*" ) call )* ;
+call            = primary ( "(" arguments? ")" | "[" arguments "]" )* ;
+primary         = literal | IDENTIFIER | "(" expression ")" ;
+
+
+
+datatype        = basicType | arrayType ;
+arrayType       = "ARRAY" "[" arrayRange ("," arrayRange)* "]" "OF" basicType ;
+arrayRange      = expression ":" expression ;
+basicType       = "INTEGER" | "REAL" | "CHAR" | "STRING" | "BOOLEAN" ;
+literal         = INTEGER | REAL | CHAR | STRING | BOOLEAN ;
+arguments       = expression ("," expression)* ;
+parameters      = IDENTIFIER ":" datatype ("," IDENTIFIER ":" datatype)* ;
+
+fileIdentifier  = STRING ;
+fileMode        = "READ" | "WRITE" ;
+
+
+
+INTEGER         = "-"? DIGIT+ ;
+REAL            = "-"? DIGIT+ "." DIGIT+ ;
+CHAR            = "'" ( ~"'" ) "'" ;
+STRING          = "\"" ( ~"\"" )* "\"" ;
+BOOLEAN         = "TRUE" | "FALSE" ;
+IDENTIFIER      = ALPHA ( ALPHA | DIGIT )* ;
+ALPHA           = "a" ... "z" | "A" ... "Z" ;
+DIGIT           = "0" ... "9" ;
+NEWLINE         = "\n" ;
