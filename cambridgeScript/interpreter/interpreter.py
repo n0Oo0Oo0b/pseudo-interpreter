@@ -69,10 +69,10 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         return expr.operator(operand)
 
     def visit_function_call(self, expr: FunctionCall) -> Value:
-        raise NotImplemented
+        raise NotImplementedError
 
     def visit_array_index(self, expr: ArrayIndex) -> Value:
-        raise NotImplemented
+        raise NotImplementedError
 
     def visit_literal(self, expr: Literal) -> Value:
         if not isinstance(expr.token, LiteralToken):
@@ -89,10 +89,10 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         return value
 
     def visit_proc_decl(self, stmt: ProcedureDecl) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_func_decl(self, stmt: FunctionDecl) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_if(self, stmt: IfStmt) -> None:
         condition = self.visit(stmt.condition)
@@ -102,7 +102,7 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
             self.visit_statements(stmt.else_branch)
 
     def visit_case(self, stmt: CaseStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_for_loop(self, stmt: ForStmt) -> None:
         if isinstance(stmt, ArrayIndex):
@@ -120,19 +120,19 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
             current_value += step_value
 
     def visit_repeat_until(self, stmt: RepeatUntilStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_while(self, stmt: WhileStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_variable_decl(self, stmt: VariableDecl) -> None:
         self.variable_state.variables[stmt.name.value] = None
 
     def visit_constant_decl(self, stmt: ConstantDecl) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_input(self, stmt: InputStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_output(self, stmt: OutputStmt) -> None:
         values = []
@@ -141,22 +141,22 @@ class Interpreter(ExpressionVisitor, StatementVisitor):
         print("".join(map(str, values)))
 
     def visit_return(self, stmt: ReturnStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_f_open(self, stmt: FileOpenStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_f_read(self, stmt: FileReadStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_f_write(self, stmt: FileWriteStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_f_close(self, stmt: FileCloseStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_proc_call(self, stmt: ProcedureCallStmt) -> None:
-        pass
+        raise NotImplementedError
 
     def visit_assign(self, stmt: AssignmentStmt) -> None:
         if isinstance(stmt.target, ArrayIndex):
